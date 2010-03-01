@@ -14,7 +14,7 @@ development:
   adapter: mysql
   database: yp-cms_development
   username: root
-  password: abbadon
+  password: password
   host: localhost
   encoding: utf8
 
@@ -25,7 +25,7 @@ test:
   adapter: mysql
   database: yp-cms_test
   username: root
-  password: abbadon
+  password: password
   host: localhost
   encoding: utf8
 
@@ -33,6 +33,6 @@ production:
   adapter: mysql
   database: yp-cms_production
   username: root
-  password: abbadon
+  password: password
   host: localhost
   encoding: utf8

@@ -2,17 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
- 		<meta name="generator" content="YP-cms - Yaron Producties Open source content management platform" /> 
-    <title>Avans Login: <%= controller.controller_name %></title>
-    <link rel="stylesheet" type="text/css" href="http://db199.weserve.nl/sites/site-1/themes/avans-internationaal/stylesheets/mbContainer.css" title="style" media="screen" />
-    <link rel="stylesheet" type="text/css" href="http://db199.weserve.nl/sites/site-1/themes/avans-internationaal/stylesheets/style.css" title="style"  media="screen" />
-    <link rel="stylesheet" type="text/css" href="http://db199.weserve.nl/sites/site-1/themes/avans-internationaal/stylesheets/lavalamp.css" title="style"  media="screen" />
-    <link rel="stylesheet" type="text/css" href="http://db199.weserve.nl/sites/site-1/themes/avans-internationaal/stylesheets/jquery-ui.css" title="style"  media="screen" />
-    <link rel="stylesheet" type="text/css" href="http://db199.weserve.nl/sites/site-1/themes/avans-internationaal/stylesheets/playlist.css" />
-    <link rel="stylesheet" type="text/css" href="http://db199.weserve.nl/sites/site-1/themes/avans-internationaal/stylesheets/playerskin.css" />
-    <link rel="stylesheet" type="text/css" href="http://db199.weserve.nl/sites/site-1/themes/avans-internationaal/stylesheets/hulu.css" />
-    <link rel="stylesheet" type="text/css" href="http://db199.weserve.nl/sites/site-1/themes/avans-internationaal/stylesheets/sifr.css" />
+ 		<meta name="generator" content="YP-CMS - Yaron Producties Open source content management platform" /> 
+    <title>YP-CMS: <%= controller.controller_name %></title>
 
+    <%= stylesheet_link_tag :login, :cache => 'cache/admin/login' %>
     <%= javascript_include_tag :common, :login, :cache => 'cache/admin/login' %>
 
     <%= yield :head %>

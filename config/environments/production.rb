@@ -27,11 +27,5 @@ config.action_view.cache_template_loading            = true
 # Enable threaded mode
 # config.threadsafe!
 
-ActionMailer::Base.delivery_method = :smtp 
-
-config.action_mailer.smtp_settings = { 
-    :address        => "smtp.weserve.nl", 
-    :port           => 25, 
-    :domain         => "yaronproducties.nl"
-}
+#ActionMailer::Base.delivery_method = :smtp 
 ActionMailer::Base.default_charset = "utf-8"
