@@ -1,0 +1,38 @@
+<% content_for :sidebar do -%>
+ 	<div class="tabs">
+		<ul>
+			<li class="active"><a href="#filters" onclick="return false;"><%= t(:'adva.titles.filters') %></a></li>
+		</ul>
+		<div class="tab active" id="tab_filters">
+			<% filter_for(Comment) %>
+		</div>
+	</div>
+<% end -%>
+
+<ul id="comments_list">
+  <% if @comments.present? %>
+    <% @comments.each do |comment, i| %>
+    <li class="<%= cycle 'alt', '' %>" id="<%= dom_id(comment) %>">
+			<h4><%= link_to_content(comment.commentable, :namespace => nil) %></h4>
+			<div class="actions">
+				<%= comment.approved? ?
+					    link_to(t(:'adva.comments.links.unapprove'), admin_comment_path(comment, "comment[approved]" => 0, :return_to => request.request_uri), :class => 'text', :method => :put) :
+					 	  link_to(t(:'adva.comments.links.approve'), admin_comment_path(comment, "comment[approved]" => 1, :return_to => request.request_uri), :class => 'text', :method => :put) %> 
+			  <%= link_to_edit(comment, :url => edit_admin_comment_path(comment, :return_to => request.request_uri)) %> 
+			  <%= link_to_delete(comment, :url => admin_comment_path(comment, :return_to => request.request_uri)) %> 
+			  <%= link_to_content_comment(t(:'adva.comments.links.view'), comment, :class => 'show') %>
+			</div>
+			<cite>
+			  <%= comment.author_link %>
+			  <%= "(#{comment.author_email})" %> 
+			  <%= t(:'adva.comments.said_time_ago', :time => time_ago_in_words(comment.created_at)) %> 
+			</cite>
+			<blockquote>
+			  <%= strip_tags(comment.body) %>
+			</blockquote>
+    </li>
+    <% end %>
+  <% else %>
+    <li class="alt"><%= params[:filters] ? t(:'adva.comments.no_filtered_comments') : t(:'adva.comments.no_comments') %></li>
+  <% end %>
+</ul>

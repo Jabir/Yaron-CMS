@@ -1,0 +1,61 @@
+body {
+	background-color:#fff;	
+
+}
+
+#page {
+	background-color:#efefef;
+	width:600px;
+	margin:50px auto;
+	padding:20px 150px 20px 50px;
+	min-height:600px;
+	border:2px solid #fff;
+	outline:1px solid #ccc;
+	text-align:left;
+}
+
+h1, h2 {
+	font-weight:normal;		
+	margin-bottom:-10px;
+}
+
+h1 {
+	font-size:33pt;
+}
+
+h2 {
+	font-size:18px;
+}
+
+.less {
+	color:#999;
+	font-size:12px;
+}
+
+a {
+	color:#295c72;		
+}
+
+a.player {	
+	margin-top:40px;
+	display:block;
+	background:url(../images/splash.png) no-repeat;
+	width:425px;
+	height:298px;
+	padding:0 126px 75px 127px;	
+	text-align:center;
+	color:#fff;
+	text-decoration:none;
+	cursor:pointer;
+}
+
+/* splash image */
+a.player img {
+	margin-top:115px;
+	border:0;	
+}
+
+	a.player {
+		margin-top:0px;		
+	}
+	

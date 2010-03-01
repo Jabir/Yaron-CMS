@@ -1,0 +1,320 @@
+<% form_for :site, @site, :url => admin_site_path, :html => { :method => :put } do |f| -%>
+  <%= render :partial => 'form', :locals => {:f => f, :site => @site} %>  
+  <% save_or_cancel_links(f, :cancel_url => admin_site_path) %>
+  <div id="error_messages_for"><%= error_messages_for :site %></div>
+  <script type="text/javascript" charset="utf-8">
+    //
+    // De lico_adva_skin-plugin laat standaard de gehele
+    // pagina met een extJS omkadering zien. Om nu ook de
+    // inhoud van de huidige pagina in extJS te krijgen
+    // verwacht de plugin een functie genaamd:
+    //
+    // function extjs_body_items() {}
+    //
+    // Voor de sidebar geldt een:
+    //
+    // function extjs_sidebar_items() {}
+    //
+    // De extjs_body_items moet de items volgens de
+    // standaard extJS structuur teruggeven. Let er
+    // daarbij op dat het hoofditem al een onderdeel
+    // is van een een groter geheel en een verplicht
+    // attribuut region: 'center' heeft.
+    //
+    // Wanneer in de bronpagina één FORM-element gevonden
+    // wordt, wordt het extJS-geheel binnen dit formulier
+    // geplaatst, zodat een submit nog gewoon werkt.
+    //    
+    // Todo's:
+    //
+    // - vertalen (via config/locales/nl...)
+    // - extra velden toevoegen
+    // - mogelijk moet er iets gedaan worden met deferredRender,
+    //   aangezien nu alleen de zichtbaar gemaakte tabs gepost
+    //   worden. Eventueel handig: http://examples.extjs.eu/
+    //
+    
+    function extjs_body_items() {
+      return {
+        region: 'center',
+        layout: 'border',
+        bodyStyle: 'padding: 15px; background-color: white',
+        border: true,
+        items: {
+          bodyStyle: 'padding: 15px; padding-bottom: 0px;',
+          region: 'center',
+          xtype: 'form',
+          errorReader: new Ext.data.CrudReader(),
+          border: false,
+          items: [{
+            region: 'center',
+            xtype: 'tabpanel',
+            baseCls: 'tab-white',
+            activeItem: 0,
+            anchor: '100% 100%',
+            defaults: {
+              layout: 'form',
+              labelWidth: 120,
+              defaultType: 'textfield',
+              bodyStyle: 'padding:10px; border-top: 0px',
+              border: true
+            },
+            items: [{
+              title: '<%= t(:'adva.titles.general_settings') %>',
+              items: [{
+  				fieldLabel: '<%= t(:'adva.sites.label.name') %>',
+  				name: 'site[name]',
+  				value: document.getElementById('site_name').value,
+  				type: 'textfield',
+  				width: 200
+  			},{
+  				fieldLabel: '<%= t(:'adva.sites.label.host') %>',
+  				name: 'site[host]',
+  				value: document.getElementById('site_host').value,
+  				type: 'textfield',
+  				width: 200
+  			},{
+  				fieldLabel: '<%= t(:'adva.sites.label.subtitle') %>',
+  				name: 'site[subtitle]',
+  				value: document.getElementById('site_subtitle').value,
+  				type: 'textfield',
+  				width: 200
+  			},{
+  				fieldLabel: '<%= t(:'adva.sites.label.title') %>',
+  				name: 'site[title]',
+  				value: document.getElementById('site_title').value,
+  				type: 'textfield',
+  				width: 200
+  			},{
+  				fieldLabel: '<%= t(:'adva.sites.label.admin_email') %>',
+  				name: 'site[email]',
+  				value: document.getElementById('site_email').value,
+  				type: 'textfield',
+  				width: 200
+  			},{
+      			  //
+      			  // In het originele form (_form.html.erb) kunnen we zien
+      			  // dat de waarde van deze combobox uit het standaard
+      			  // Rails element time_zone_select komt...
+      			  //
+      			  // Gekeken op de Rails api (http://api.rubyonrails.org/classes/ActionView/Helpers/FormOptionsHelper.html#M001626)
+      			  // vinden we een time_zone_options_for_select. Helaas
+      			  // geeft deze de elementen als HTML terug. In de bron
+      			  // staat een 'zones = model.all' en een 'model =
+      			  // ::ActiveSupport::TimeZone'. en blijkbaar wordt
+      			  // een .name gebruikt voor de waarde en een .to_s
+      			  // voor een leesbare variant
+      			  //
+      			  // Samengevat: ExtJS slaat de plank volledig mis als
+      			  // het gaat om logica en eenvoud... de combobox is
+      			  // onnodig complexe uitwerking van een eenvoudig iets
+      			  //
+  				fieldLabel: '<%= t(:'adva.sites.label.timezone') %>',
+  				name: 'site[timezone]',
+  				xtype: 'combo',
+  				mode: 'local',
+  				width: 200,
+  				triggerAction: 'all',
+                  editable: true,
+                  mode: 'local',
+                  store: new Ext.data.SimpleStore({
+                    fields: ['name','string'],
+                    data: <%= ActiveSupport::TimeZone.all.collect{|z| [z.name, z.to_s]}.to_json %>
+                  }),
+                  displayField: 'name',
+                  valueField: 'string',
+                  value: document.getElementById("site_timezone").value
+  			},{
+      			//
+      			// 4 dingen:
+      			//
+      			// Een checkbox heeft een checked in plaats van
+      			// een value. De value vervangen door checked en
+      			// gegkeken of document.get... gechecked is in plaats
+      			// van de value ervan over te nemen
+      			//
+      			// Tweede: je geeft dit veld eenzelfde id als een
+      			// veld wat ADVA standaard laat zien. Om te bepalen
+      			// of de checkbox aan staat gebruiken we dit id.
+      			// we kijken we dus naar ons nieuwe veld in plaats
+      			// van het oude. De id:-regel verwijderd
+      			//
+      			// Blijkbaar is er een fieldset met het id
+      			// site_email_notification terwijl we een input
+      			// nodig hebben om te bepalen of het ding gechecked
+      			// moet worden. We kunnen het bepalen met:
+      			// document.getElementById('site_email_notification').getElementsByTagName("input")[1]
+      			//
+      			// Laatste: een checkbox wordt alleen gesubmit als
+      			// hij gechecked is. ADVA verwacht een submit van
+      			// een 0 als het niet gechecked is. We moeten hiervoor
+      			// een hidden element _voor_ de checkbox plaatsen
+      			//
+      			// Dus:
+      			//
+      			// 1) checked gebruiken in plaats van value
+      			// 2) geen id aan je velden geven (alleen naam is nodig voor submit)
+      			// 3) waarde (ofwel checked) juist bepalen.
+      			// 4) hidden element ervoor plaatsen
+      			//
+  			    xtype: 'hidden',
+  				name: 'site[email_notification]',
+  				value: '0'
+  		    },{
+  				fieldLabel: '<%= t(:'adva.titles.email_notifications') %>',
+  				name: 'site[email_notification]',
+  				inputValue: '1',
+  				xtype: 'checkbox',
+  				checked: document.getElementById('site_email_notification').getElementsByTagName("input")[1].checked
+  			}]
+  		},{
+  			title: '<%= t(:'adva.titles.comments') %>',
+  			items: [{
+  				fieldLabel: '<%= t(:'adva.labels.comment_filter') %>',
+  				name: 'site[comment_filter]',
+  				xtype: 'combo',
+  				triggerAction: 'all',
+  				forceSelection: true,
+  				transform:     'site_comment_filter',
+  				lazyRender:     true
+  			}]
+  		},{
+  			title: 'Google Analytics',
+  			items: [{
+  				fieldLabel: 'Google Analytics Tracking Code',
+  				name: 'site[google_analytics_tracking_code]',
+  				value: document.getElementById('site_google_analytics_tracking_code').value,
+  				type: 'textfield',
+  				width: 200
+  			}]
+  		},{
+  			title: '<%= t(:'adva.titles.meta_tags') %>',
+  			items: [{
+  				fieldLabel: '<%= t(:'YP-CMS.meta_tags.label.meta_keywords') %>',
+  				name: 'site[meta_keywords]',
+  				value: document.getElementById('site_meta_keywords').value,
+  				type: 'textfield',
+  				width: 300
+  			},{
+  				fieldLabel: '<%= t(:'YP-CMS.meta_tags.label.meta_description') %>',
+  				name: 'site[meta_description]',
+  				value: document.getElementById('site_meta_description').value,
+  				xtype: 'textarea',
+  				width: 175
+  			},{
+  				fieldLabel: '<%= t(:'YP-CMS.meta_tags.label.meta_author') %>',
+  				name: 'site[meta_author]',
+  				value: document.getElementById('site_meta_author').value,
+  				type: 'textfield',
+  				width: 200
+  			},{
+  				fieldLabel: '<%= t(:'YP-CMS.meta_tags.label.meta_copyright') %>',
+  				name: 'site[meta_copyright]',
+  				value: document.getElementById('site_meta_copyright').value,
+  				type: 'textfield',
+  				width: 200
+  			},{
+  				fieldLabel: '<%= t(:'YP-CMS.meta_tags.label.meta_geourl') %>',
+  				name: 'site[meta_geourl]',
+  				value: document.getElementById('site_meta_geourl').value,
+  				type: 'textfield',
+  				width: 200
+  			}]
+  		},{
+              title: '<%= t(:'adva.titles.spam_protection') %>',
+  			items: [{
+  			    //
+  			    // Je radio was correct... weer een patch toe moeten
+  			    // passen in lico_adva_skin.js om een bug uit extjs
+  			    // te verhelpen..
+  			    //
+  			    // Wat hier nog miste was de checked.
+  			    //
+  				boxLabel: '<%= t(:'adva.spam.options.default_ham_none') %>',
+  				name: 'site[spam_options][default][ham]',
+  				inputValue: 'none',
+  				xtype: 'radio',
+  				checked: document.getElementById('site_spam_options_default_ham_none').checked
+  			},{
+  				boxLabel: '<%= t(:'adva.spam.options.default_ham_authenticated') %>',
+  				name: 'site[spam_options][default][ham]',
+  				inputValue: 'authenticated',
+  				xtype: 'radio',
+  				checked: document.getElementById('site_spam_options_default_ham_authenticated').checked
+  			},{
+  				boxLabel: '<%= t(:'adva.spam.options.default_ham_all') %>',
+  				name: 'site[spam_options][default][ham]',
+  				inputValue: 'all',
+  				xtype: 'radio',
+  				checked: document.getElementById('site_spam_options_default_ham_all').checked
+  			},{
+  				fieldLabel: '<%= t(:'adva.spam.labels.enable_akismet') %>',
+  				name: 'site[spam_options][filters][]',
+  				inputValue: 'Akismet',
+  				xtype: 'checkbox',
+  				checked: document.getElementById('site_spam_options_filter_akismet').checked
+  			},{
+  				fieldLabel: '<%= t(:'adva.spam.labels.api_key') %>',
+  				name: 'site[spam_options][akismet][key]',
+  				value: document.getElementById('site_spam_options_akismet_key').value,
+  				type: 'textfield',
+  				width: 300
+  			},{
+  				fieldLabel: '<%= t(:'adva.spam.labels.site_url') %>',
+  				name: 'site[spam_options][akismet][url]',
+  				value: document.getElementById('site_spam_options_akismet_url').value,
+  				type: 'textfield',
+  				width: 200
+  			},{
+  				fieldLabel: '<%= t(:'adva.spam.labels.enable_defensio') %>',
+  				name: 'site[spam_options][filters][]',
+  				inputValue: 'Defensio',
+  				xtype: 'checkbox',
+  				checked: document.getElementById('site_spam_options_filter_defensio').checked
+  			},{
+  				fieldLabel: '<%= t(:'adva.spam.labels.api_key') %>',
+  				name: 'site[spam_options][defensio][key]',
+  				value: document.getElementById('site_spam_options_defensio_key').value,
+  				type: 'textfield',
+  				width: 300
+  			},{
+  				fieldLabel: '<%= t(:'adva.spam.labels.site_url') %>',
+  				name: 'site[spam_options][defensio][url]',
+  				value: document.getElementById('site_spam_options_defensio_url').value,
+  				type: 'textfield',
+  				width: 200
+  			}]
+
+  		}]
+  	}],
+          buttons: [{
+            text: 'Opslaan',
+            iconCls: 'silk-accept',
+            handler: function() {
+              var mask = new Ext.LoadMask(Ext.getBody(), {
+                  msg: t['loader_text']
+              });
+              mask.show();
+              this.ownerCt.ownerCt.getForm().submit({
+                url: '<%= admin_site_path %>',
+                params: {
+                  id: <%= @site.id.to_s %>,
+                  authenticity_token: '<%= form_authenticity_token %>',
+                  _method: 'put'
+                },
+                success: function(form, action) {
+                  mask.hide();
+                },
+                failure: function(form, action) {
+                  mask.hide();
+                  Ext.Msg.minWidth = 400;
+                  Ext.MessageBox.alert(strip_error_from_response(action.response));
+                }
+              });
+            }
+          }]
+        }
+      };
+    }
+  </script>
+<% end %>

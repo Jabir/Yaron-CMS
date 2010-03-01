@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+  <results><%= @total_amount.to_s %></results>
+  <% @users.each do |user| %>
+    <record>
+      <id><%= user.id.to_s %></id>
+      <first_name><%= h user.first_name %></first_name>
+      <last_name><%= h user.last_name %></last_name>
+      <email><%= h user.email %></email>
+      <homepage><%= h user.homepage %></homepage>
+    </record>
+  <% end %>
+</dataset>

@@ -1,0 +1,28 @@
+<root>
+	<record>
+		<id><%= @event.id.to_s %></id>
+		<title><%= h @event.title %></title>
+		<host><%= h @event.host %></host>
+		<location><%=h @event.location %></location>
+		<start_date><%= @event.start_date.strftime("%Y-%m-%d %H:%M:%S")%></start_date>
+		<end_date><%= @event.end_date.strftime("%Y-%m-%d %H:%M:%S") %></end_date>
+		<all_day><%= @event.all_day %></all_day>
+		<author><%= h @event.user_id%></author>
+		<body><%= @event.body %></body>
+		<date><%= @event.updated_at.strftime("%Y-%m-%d %H:%M:%S") %></date>
+		<draft><%= @event.draft? ? "1" : "0" %></draft>
+		
+		<options>
+			<permalink><%= h @event.permalink %></permalink>
+			<tag_list><%= h @event.tag_list %></tag_list>
+			<filter><%= h @event.filter %></filter>
+		</options>
+		<categories>
+			<% @event.categories.each do |category| %>
+				<category>
+					<id><%= category.id.to_s %></id>
+				</category>
+			<% end %>
+		</categories>
+	</record>
+</root>

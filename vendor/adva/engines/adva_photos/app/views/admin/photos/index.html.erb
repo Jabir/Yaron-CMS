@@ -1,0 +1,38 @@
+<%
+	table_for @photos do |t|
+		t.column :photo, :title, :comments, :published, :author, :actions
+
+		# t.head.row do |r|
+		# 	r.cell t(:'adva.photos.admin.photos.total', :total_entries => @photos.total_entries), :class => :total, :colspan => :all
+		# end
+		
+		t.row do |r, photo|
+			r.cell link_to(image_tag(photo.base_url(:tiny)), photo.base_url)
+  		r.cell content_status(photo) + link_to(photo.title, edit_admin_photo_path(@site, @section, photo), :class => photo.state)
+			r.cell photo.accept_comments? && photo.comments.present? ? link_to(photo.comments.size, admin_comments_path) : t(:"adva.common.none")
+			r.cell published_at_formatted(photo)
+			r.cell link_to(h(photo.author_name), admin_site_user_path(@site, photo.author))
+			r.cell links_to_actions([:edit, :delete], photo)
+		end
+		
+		t.foot.row do |r|
+			r.cell will_paginate(@photos), :class => :pagination, :colspan => :all
+		end
+
+		t.empty :p, :class => 'empty' do
+			t(:'adva.photos.admin.photos.no_photo_in_album') + "\n" + 
+			link_to(t(:'adva.photos.admin.photos.upload_now'), new_admin_photo_path(@site))
+		end
+	end
+%>
+
+<% content_for :sidebar do -%>
+ 	<div class="tabs">
+		<ul>
+			<li class="active"><a href="#filters" onclick="return false;">Filters</a></li>
+		</ul>
+		<div class="tab active" id="tab_filters">
+			<% filter_for(Album, :categories => Section.first.categories) %>
+		</div>
+	</div>
+<% end -%>

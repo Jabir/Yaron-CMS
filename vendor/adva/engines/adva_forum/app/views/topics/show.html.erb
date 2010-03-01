@@ -1,0 +1,27 @@
+<h2>
+  <%= @topic.title %>  
+  <span class="meta">
+    <%= topic_attributes @topic %>
+    <% authorized_tag :span, :update, @topic do %>
+      &middot; <%= link_to_edit(:'adva.common.edit', @topic) %>
+    <% end %>
+    <% authorized_tag :span, :destroy, @topic do %>
+      &middot; <%= link_to_delete(:'adva.common.delete', @topic, :url => topic_path(@section, @topic.permalink, :return => true)) %>
+    <% end %>
+  </span>
+</h2>
+
+<%= render :partial => 'topics/post', :collection => @posts %>
+
+<p class="clearing">
+  <%= will_paginate @posts, :id => 'pagination' %>
+</p>
+
+<p class="clearing">
+  <%= link_to_prev_topic('&larr; ' + t(:'adva.common.previous'), @topic, :class => :previous) %>
+  <%= link_to_next_topic(t(:'adva.common.next') + ' &rarr;', @topic, :class => :next) %>
+</p>
+
+<% authorized_tag :span, :create, @post do %>
+	<%= render :partial => 'posts/form' %>
+<% end %>

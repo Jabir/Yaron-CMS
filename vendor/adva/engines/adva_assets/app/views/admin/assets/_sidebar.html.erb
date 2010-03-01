@@ -1,0 +1,21 @@
+<% content_for :sidebar do -%>
+ 	<div class="tabs">
+		<ul>
+			<li class="active"><a href="#filters" onclick="return false;"><%= t(:'adva.titles.filters') %></a></li>
+		</ul>
+		<div class="tab active" id="tab_filters">
+			<% filter_for(Asset) %>
+			<h3>
+			  <%= t(:'adva.assets.your_bucket') %>
+			  <%= link_to t(:'adva.assets.clear_bucket'), admin_assets_bucket_path, :id => "clear_bucket" %>
+			</h3>
+			<p><%=t :'adva.assets.add_files' %></p>
+			<ul id="bucket_assets">
+			  <%= render :partial => "admin/assets/widget/asset", :collection => @site.assets.bucket(session[:bucket]), :locals => { :content => nil, :prefix => 'bucket' } %>
+			</ul>
+
+			<h3><%= t(:'adva.assets.stats') %></h3>
+			<p id="upload_summary"><%= upload_summary %></p>
+		</div>
+	</div>
+<% end -%>

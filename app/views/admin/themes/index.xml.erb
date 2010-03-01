@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<results><%= @themes.length.to_s %></results>
+	<% @themes.each do |theme| %>
+		<record>
+			<id><%= theme.id.to_s %></id>
+			<name><%= h theme.name %></name>
+			<author><%= h theme.author %></author>
+			<version><%= theme.version %></version>
+			<active><%= theme.active %></active>
+		</record>
+	<% end %>
+</dataset>

@@ -1,0 +1,85 @@
+   <div id="summary_big>">
+                    <h2>START! DeJaap.nl is live</h2>
+                        <h3>Bert Brussen - 01-10-2009</h3>
+                        
+                       
+                        <p><a href="http://www.dejoop.nl">DeJoop</a> nog niet, maar dat hou je toch met Jopen. 
+						Japen daarentegen gooien gewoon hun 2.0-beta site online op 1 oktober, gewoon omdat op 
+						deze Grandioze Dag <a href="http://edition.cnn.com/2009/WORLD/asiapcf/09/30/china.60years.preview/index.html">de Volksrepubliek China</a> 
+						60 jaar bestaat (opdat alle godenkinderen bloemen mogen worden voor de komende 10000 jaar). 
+						Met 2.0-beta zit het dus zo: de komende dagen wordt er nog van alles toegevoegd 
+						(colofon, bio’s, foto’s, klikbare biografietjes, een kwetsend taalgebruik generator, 
+						editknopjes voor wegjaapers) en aan gesleuteld. Ook daarna mag er nog meer worden veranderd, 
+						want 2.0 is nooit af zegt de paarse broek, dus dan is het zo. Mensen die kekke ideetjes met 
+						2.0 sites hebben mogen zich dus melden. 2.0 is namelijk “flow in source maar dynamisch met 
+						een stukje compatibiliteit naar de user toe”. Dus. Later meer.</p> 
+						
+						
+
+                        
+            </div>
+		                    
+                    
+                      <div id="main_right">
+                      	<div id="main_right_block">
+                    <h2>BANDIRAH...</h2>
+<!-- trigger elements -->
+<div id="triggers">
+    <img 
+src="http://db666.weserve.nl/sites/site-1/themes/de-jaap/images/HierMirckIkthumb.gif" 
+rel="#bandirah"/>
+
+</div>
+
+<!-- overlays -->
+<div class="simple_overlay" id="bandirah">
+    <img 
+src="http://db666.weserve.nl/sites/site-1/themes/de-jaap/images/HierMirckIk.gif" 
+/>
+
+    <div class="details">
+        <h3>Hier Mirck Ik</h3>
+    </div>
+</div>
+                   
+
+<div id="main_right_block">
+  <h2>OPINIE</h2>
+  <ul>
+    <% num = 0 %>
+    <% @section.articles.find(:all, :include => :categories, :conditions => ["categories.title = ? and published_at is not null", "opinie"], :limit => 3, :order => 'created_at DESC').each do |article| %>
+      <% num = num + 1 %>
+      <li<%= num == 1 ? " id='last'" : ""%>>
+        <a href="#"><%= article.title %></a>
+        <br />
+        <%= article.excerpt_html %>
+      </li>
+    <% end %>
+  </ul>
+</div> 
+<div id="main_right_block">
+  <h2>COLUMNN</h2>
+  <ul>
+    <% num = 0 %>
+    <% @section.articles.find(:all, :include => :categories, :conditions => ["categories.title = ? and published_at is not null", "column"], :limit => 3, :order => 'created_at DESC').each do |article| %>
+      <% num = num + 1 %>
+      <li<%= num == 1 ? " id='last'" : ""%>>
+        <a href="#"><%= article.title %></a>
+        <br />
+        <%= article.excerpt_html %>
+      </li>
+    <% end %>
+  </ul>
+</div> 
+</div>
+		      <div id ="container_main_left">
+		      	       <%= render :partial => 'shared/flash' %>  
+    </div></div>
+ 
+ <div id="summary_normal">
+
+
+
+<%= render :partial => 'blogs/articles/article', :collection => @articles, :locals => { :mode => :many }, :order => 'created_at DESC' %>
+
+</div>

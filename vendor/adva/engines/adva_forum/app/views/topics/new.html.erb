@@ -1,0 +1,10 @@
+<h2><%= t(:'adva.topics.titles.new') %></h2>
+<%= error_messages_for :topic %>
+<% form_for :topic, @topic, :url => topics_path(@section), :html => { :method => :post } do |f| -%>
+  <%= render :partial => 'form', :locals => {:f => f} %>
+  <p>
+    <%= submit_tag t(:'adva.topics.titles.post_topic') %>
+    <%= link_to_remote_comment_preview %> <%= t(:'adva.common.connector.or') %>
+    <%= link_to t(:'adva.common.cancel'), forum_path(@section) %>
+  </p>
+<% end %>

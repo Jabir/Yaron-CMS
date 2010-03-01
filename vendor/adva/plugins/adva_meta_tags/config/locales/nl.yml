@@ -1,0 +1,14 @@
+nl:
+  adva:
+    meta_tags:
+      hints:
+        meta_geourl_link: http://geourl.org/
+        meta_geourl: "Zie {{meta_geourl_link}} voor details."
+  YP-CMS:
+    meta_tags:
+      label:
+        meta_keywords: "Meta keywords"
+        meta_description: "Meta beschrijving"
+        meta_author: "Meta auteur"
+        meta_copyright: "Meta copyright"
+        meta_geourl: "Meta geourl"

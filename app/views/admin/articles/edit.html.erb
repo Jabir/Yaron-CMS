@@ -1,0 +1,5 @@
+<% if @article && @article.errors && @article.errors.size > 0 %>
+  <%= error_messages_for(:article) %>
+<% else %>
+  CRUD_OK
+<% end %>

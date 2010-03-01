@@ -1,0 +1,10 @@
+html {background-color:#4F90C8;}
+body {background:url("../images/blauwelucht.jpg");background-color:#4F90C8;font-family:Verdana;}
+
+#main {
+  width: 30%;
+	padding-top: 0px;
+}
+#content {
+	padding: 20px 30px 30px 30px;
+}

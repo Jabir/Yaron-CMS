@@ -1,0 +1,9 @@
+<h2><%= t(:'adva.topics.titles.edit') %></h2>
+<% form_for :topic, :url => topic_path(@section, @topic.permalink), :html => {:method => :put} do |f| -%>
+  <%= render :partial => 'form', :locals => {:f => f} %>
+  <p>
+    <%= submit_tag t(:'adva.common.save') %>
+    <%= link_to_remote_comment_preview %> <%= t(:'adva.common.connector.or') %>
+    <%= link_to t(:'adva.common.cancel'), topic_path(@section, @topic.permalink) %>
+  </p>
+<% end %>

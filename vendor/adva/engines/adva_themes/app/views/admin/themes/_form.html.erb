@@ -1,0 +1,13 @@
+<% f.field_set do %>
+  <% column do %>
+    <%= f.text_field :name, :label => true %>
+    <%= f.text_field :author, :label => true %>
+    <%= f.text_field :homepage, :label => true %>
+    <%= f.text_field :theme_id, :label => true %>
+  <% end %>
+
+  <% column do %>
+    <%= f.text_field :version, :class => 'small', :label => true, :tabindex => :theme_name %>
+    <%= f.text_area :summary, :class => 'small', :label => true, :tabindex => :theme_author %>
+  <% end %>
+<% end %>

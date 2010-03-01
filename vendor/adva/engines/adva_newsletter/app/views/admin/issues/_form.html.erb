@@ -1,0 +1,26 @@
+<% f.field_set do %>
+  <%= hidden_field_tag "adva_newsletter_issue_confirm_remove_body_plain", t(:"adva_newsletter.issue.confirm.remove_body_plain") %>
+
+  <%= f.text_field :title, :class => 'big', :label => :'adva_newsletter.issue.label.title' %>
+  <%= f.text_area :body, :class => 'big wysiwyg', :rows => 25, :label => :'adva_newsletter.issue.label.body' %>
+  <div class="double-label">
+    <label>
+      <%= link_to t(:"adva_newsletter.issue.link.add_body_plain"), "#", 
+        :class => "issue_body_plain_controls", :style => ('display: none;' if issue.body_plain?) %>
+      <%= link_to t(:"adva_newsletter.issue.link.remove_body_plain"), "#", 
+        :class => "issue_body_plain_controls", :style => ('display: none;' unless issue.body_plain?) %>
+    </label>
+    <label for="issue_body_plain" style="<%= 'display: none;' unless issue.body_plain? %>">
+      <%= t(:"adva_newsletter.issue.label.body_plain") %>
+    </label>
+  </div>
+  <%= f.text_area :body_plain, :class => "big", :rows => 25, :style => ('display: none;' unless issue.body_plain?) %>
+
+  <%= f.label :draft, t(:'adva.newsletter.question_save_issue_as_draft') %>
+  <label class="light">
+    <%= check_box :issue, :draft, :id => "issue_draft" %>
+    <%= t(:'adva.newsletter.confirm.save_issue_as_draft') %>
+  </label>
+<% end %>
+
+<%= render :partial => 'options', :locals => { :f => f } %>

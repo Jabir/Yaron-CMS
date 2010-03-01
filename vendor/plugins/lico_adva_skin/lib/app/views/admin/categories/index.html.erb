@@ -1,0 +1,77 @@
+<script type="text/javascript" charset="utf-8">
+  function modify_main_menu(menu) {
+    var new_menu = [];
+    $.each(
+      menu,
+      function (index,item) {
+				if (!(/right/.test(item.id))) {
+          new_menu[new_menu.length] = item;
+        }
+      }
+    );
+    return new_menu;
+  }
+  
+  //
+  // Init CRUD
+  //
+  function extjs_body_items() {
+    return init_lico_adva_crud({
+      columns: [{
+          label: 'Titel',
+          name: 'title',
+          type: 'string',
+          submit_value: 'category[title]'
+      }],
+      add_record_path: '<%= admin_categories_path(@site, @section) %>',
+      store: {
+        url: '<%= url_for admin_categories_url(@site, @section) %>.xml',
+        sort: {
+          by: 'title',
+          order: 'asc'
+        }
+      },
+      grid: {
+        empty_details: 'Selecteer een categorie voor details.'
+      },
+      show: {
+        url: '<%= edit_admin_category_path(@site, @section, '!recordid!') %>',
+        custom_form: edit_category_form,
+        custom_form_values: edit_category_form_values
+      },
+      edit: {
+        url: '<%= admin_category_path(@site, @section, '!recordid!') %>'
+      },
+      destroy: {
+        url: '<%= admin_category_path(@site, @section, '!recordid!') %>',
+        message: "Wil je de geselecteerde categorie echt verwijderen?<br /><br />Het verwijderen kan niet ongedaan gemaakt worden."
+      }
+    });
+  }
+  
+  function edit_category_form_values (parameters) {
+    parameters["category[title]"] = document.getElementById('record_title').value;
+  	return parameters;
+  }
+  
+  function edit_category_form (record) {
+    var title = xmlvalue(record,"title");
+    selected_record_title = title;
+  	return [
+  	{
+      layout: 'form',
+      border: false,
+      items: [
+      {
+          xtype: 'textfield',
+          fieldLabel: 'Titel',
+          id: 'record_title',
+          name: 'title',
+          anchor: '95%',
+          value: title
+      }
+      ]
+  	}
+  	];
+  }
+</script>

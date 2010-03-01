@@ -1,0 +1,47 @@
+<root>
+  <record>
+    <id><%= @article.id.to_s %></id>
+    <title><%= h @article.title %></title>
+    <draft><%= @article.draft? ? "1" : "0" %></draft>
+    <fixed_top><%= @article.position < 0 ? "1" : "0" %></fixed_top>
+    <date><%= @article.updated_at.strftime("%Y-%m-%d %H:%M:%S") %></date>
+    <author><%= h @article.author.id if @article.author %></author>
+    <excerpt><%= h @article.excerpt_html %></excerpt>
+    <body><%= h @article.body_html %></body>
+  
+    <meta>
+      <keywords><%= h meta_value_from(@article.meta_keywords, @site.meta_keywords) %></keywords>
+      <description><%= h meta_value_from(@article.meta_description, @site.meta_description) %></description>
+      <author><%= h meta_value_from(@article.meta_author, @site.meta_author) %></author>
+      <copyright><%= h meta_value_from(@article.meta_copyright, @site.meta_copyright) %></copyright>
+      <geourl><%= h meta_value_from(@article.meta_geourl, @site.meta_geourl) %></geourl>
+    </meta>
+  
+    <options>
+      <permalink><%= h @article.permalink %></permalink>
+      <tag_list><%= h @article.tag_list %></tag_list>
+      <filter><%= h @article.filter %></filter>
+    </options>
+
+    <categories>
+      <% @article.categories.each do |category| %>
+        <category>
+          <id><%= category.id.to_s %></id>
+        </category>
+      <% end %>
+    </categories>
+    
+    <assets>
+      <% @article.assets.each do |asset| %>
+        <asset>
+          <id><%= asset.id.to_s %></id>
+          <title><%= h asset.title %></title>
+          <data_content_type><%= asset.data_content_type %></data_content_type>
+          <data_file_name><%= asset.data_file_name %></data_file_name>
+          <css_class><%= asset.css_class %></css_class>
+          <thumb_url><%= asset_image_args_for(asset) %></thumb_url>
+        </asset>
+      <% end %>
+    </assets>
+  </record>
+</root>

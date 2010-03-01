@@ -1,0 +1,106 @@
+<script type="text/javascript" charset="utf-8">
+  function modify_main_menu(menu) {
+    var new_menu = [];
+    $.each(
+      menu,
+      function (index,item) {
+        var add_tab = true;
+        
+        add_tab = !(/right/.test(item.id));
+        // alleen tab new
+        //         if (/right/.test(item.id)) {
+        //           var target_index = item.id.replace(/^right_/,"");
+        //  $("#page #main_menu .actions > li ").each(function(index, li) {
+        //    if (index == target_index) {
+        //      if (/articles\/new/.test(li.getElementsByTagName("A")[0].href)) {
+        //        add_tab = false;
+        //      }
+        //    }
+        //  });
+        // }
+					
+				if (add_tab) {
+          new_menu[new_menu.length] = item;
+        }
+      }
+    );
+    return new_menu;
+  }
+  
+  
+  //
+  // Init CRUD
+  //
+	function extjs_body_items() {
+		return init_lico_adva_crud({
+			columns: [{
+				label: 'titel',
+				name: 'title',
+				type: 'string',
+				submit_value: 'set[title]'
+			}],
+      add_record_path: '<%= admin_sets_path(@site.id, @section) %>',
+      store: {
+        url: '<%= url_for admin_sets_path(@site.id, @section) %>.xml',
+        sort: {
+          by: 'title',
+          order: 'asc'
+        }
+      },
+      grid: {
+        //empty_details: t['board']['selection_empty']
+      },
+      show: {
+        url: '<%= edit_admin_set_path(@site, @section, '!recordid!') %>',
+        custom_form: edit_set_form,
+        custom_form_values: edit_set_form_values
+      },
+      edit: {
+        url: '<%= admin_set_path(@site, @section, '!recordid!') %>'
+      },
+      destroy: {
+        url: '<%= admin_set_path(@site, @section, '!recordid!') %>',
+        //message: t['board']['delete_confirm']
+      }
+    });
+  }
+  
+	function edit_set_form_values (parameters) {
+		parameters["set[title]"] = document.getElementById('title').value;
+
+  	return parameters;
+  }
+  
+  function edit_set_form (record) {
+    var title = xmlvalue(record,"title");
+    selected_record_title = title;
+
+  	return [{
+      xtype: 'tabpanel',
+      plain: true,
+      activeTab: 0,
+      defaults: {
+        bodyStyle: 'padding:10px'
+      },
+			items: [{
+				title: 'Foto sets',
+				layout: 'column',
+				border: false,
+				items: [{
+					columnWidth: .5,
+					layout: 'form',
+					border: false,
+					items: [{
+						xtype: 'textfield',
+						fieldLabel: 'titel',
+						id: 'title',
+						name: 'title',
+						value: title
+					}]
+        }]
+      }]
+    }];
+  }
+</script>
+<% content_for :sidebar do -%>
+<% end -%>

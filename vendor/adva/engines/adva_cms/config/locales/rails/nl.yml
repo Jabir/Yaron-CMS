@@ -1,0 +1,137 @@
+# Dutch translations for Ruby on Rails 
+# by Jeroen Hoogeweij (jeroen@yaronproducties.nl)
+
+nl:
+  date:
+    formats:
+      default: "%d.%m.%Y"
+      short: "%e %b"
+      long: "%e %B %Y"
+      only_day: "%e"
+      mdy: "%d.%m.%Y"
+
+    day_names: [zondag, maandag, dinsdag, woensdag, donderdag, vrijdag, zaterdag]
+    abbr_day_names: [Zo, Ma, Di, Wo, Do, Vr, Za]
+    month_names: [~, Januari, Februari, Maart, April, Mei, Juni, Juli, Augustus, September, Oktober, November, December]
+    abbr_month_names: [~, jan, feb, mar, apr, mei, jun, jul, aug, sep, okt, nov, dec]
+    order: [ :day, :month, :year ]
+  
+  time:
+    formats:
+      default: "%A, %e %B %Y, %H:%M uur"
+      short: "%e %B, %H:%M uur"
+      long: "%A, %e %B %Y, %H:%M uur"
+      time: "%H:%M uur"
+      mdy: "%d.%m.%Y"
+
+    am: "voor de middag"
+    pm: "na de middag"
+      
+  datetime:
+    distance_in_words:
+      half_a_minute: 'een halve minuut'
+      less_than_x_seconds:
+        zero: 'minder dan 1 seconde'
+        one: 'exact een seconde'
+        other: 'minder dan {{count}} seconden'
+      x_seconds:
+        one: '1 seconde'
+        other: '{{count}} seconden'
+      less_than_x_minutes:
+        zero: 'minder dan 1 minuut'
+        one: 'precies een minuut'
+        other: 'minder dan {{count}} minuten'
+      x_minutes:
+        one: '1 minuut'
+        other: '{{count}} minuten'
+      about_x_hours:
+        one: 'ongeveer 1 uur'
+        other: 'ongeveer {{count}} uren'
+      x_days:
+        one: '1 dag'
+        other: '{{count}} dagen'
+      about_x_months:
+        one: 'ongeveer 1 maand'
+        other: 'omgeveer {{count}} maanden'
+      x_months:
+        one: '1 maand'
+        other: '{{count}} maanden'
+      about_x_years:
+        one: 'ongeveer 1 jaar'
+        other: 'ongeveer {{count}} jaren'
+      over_x_years:
+        one: 'meer dan 1 jaar'
+        other: 'meer dan {{count}} jaren'
+      
+  number:
+    format:
+      precision: 2
+      separator: ','
+      delimiter: '.'
+    currency:
+      format:
+        unit: '€'
+        format: '%n%u'
+        separator: 
+        delimiter: 
+        precision: 
+    percentage:
+      format:
+        delimiter: ""
+    precision:
+      format:
+        delimiter: ""
+    human:
+      format:
+        delimiter: ""
+        precision: 1
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            one: "Byte"
+            other: "Bytes"
+          kb: "KB"
+          mb: "MB"
+          gb: "GB"
+          tb: "TB"
+
+  support:
+    array:
+      # older Rails versions
+      # sentence_connector: "und"
+      # skip_last_comma: true
+      # Rails >= v.2.3
+      words_connector: ", "
+      two_words_connector: " en "
+      last_word_connector: " en "
+        
+  activerecord:
+    errors:
+      template:
+        header:
+          one:    "Kon dit {{model}} object niet opslaan: 1 Fout."
+          other:  "Kon dit {{model}} object niet opslaan: {{count}} fouten."
+        body: "Kijk nog eens naar de volgende velden:"
+
+      messages:
+        inclusion: "is een ongeldige waarde"
+        exclusion: "is niet uitvoerbaar"
+        invalid: "is ongeldig"
+        confirmation: "stemt niet met het andere overeen"
+        accepted: "moet geaccepteerd worden"
+        empty: "moet ingevuld worden"
+        blank: "moet ingevuld worden"
+        too_long: "is te lang (niet meer dan {{count}} tekens)"
+        too_short: "is te kort (niet minder dan {{count}} tekens)"
+        wrong_length: "heeft de verkeerde lengte (moet uit precies {{count}} tekens bestaan)"
+        taken: "bestaat al"
+        not_a_number: "is geen getal"
+        greater_than: "moet groter dan {{count}} zijn"
+        greater_than_or_equal_to: "moet groter of gelijk aan {{count}} zijn"
+        equal_to: "moet precies {{count}} zijn"
+        less_than: "Moet kleiner dan {{count}} zijn"
+        less_than_or_equal_to: "moet kleiner of gelijk aan {{count}} zijn"
+        odd: "moet oneven zijn"
+        even: "moet even zijn"
+      models:

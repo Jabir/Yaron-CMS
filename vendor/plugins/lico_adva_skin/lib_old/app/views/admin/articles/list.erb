@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+  <results><%= @total_amount.to_s %></results>
+  <% @articles.each do |article| %>
+    <record>
+      <id><%= article.id.to_s %></id>
+      <title><%= h article.title %></title>
+      <draft><%= article.draft? ? "1" : "0" %></draft>
+      <created_at><%= article.created_at.strftime("%Y/%m/%d") %></created_at>
+      <author><%= h article.author_name %></author>
+      <category><%= h article.category.title if article.category %></category>
+    </record>
+  <% end %>
+</dataset>

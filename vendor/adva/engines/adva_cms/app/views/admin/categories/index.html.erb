@@ -1,0 +1,23 @@
+<% content_for :sidebar do %>
+	<p class="hint text_only large padded">
+		<%= t(:'adva.categories.hints.reorder')%>
+	</p>
+<% end %>
+
+<%
+	table_for @section.categories, :class => 'categories list tree' do |t|
+		t.column :category, :actions
+
+		t.row do |r, category|
+			r.add_class "level_#{category.level}"
+			r.cell link_to_edit(category.title, category, :class => 'category')
+			r.cell link_to_edit(category) + "\n" +
+			       link_to_delete(category)
+		end
+
+		t.empty :p, :class => 'empty' do
+	    t(:'adva.categories.no_categories_in_section', :section => @section.title) + "\n" +
+			link_to_new(:'adva.categories.links.create_now', [@section, :category])
+		end
+	end
+%>

@@ -1,0 +1,11 @@
+<h2><%= t(:'adva.photos.common.album_settings') %></h2>
+
+<% f.field_set :album_settings do %>
+  <% column do %>
+    <%= f.text_field :photos_per_page, :class => 'small', :label => true %>
+	<% end %>
+
+  <% column do %>
+    <%= f.select :content_filter, filter_options, {}, :label => true, :hint => :'adva.sections.hints.content_filter', :tabindex => :section_photos_per_page %>
+	<% end %>
+<% end %>

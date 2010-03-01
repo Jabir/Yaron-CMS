@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+  <results><%= @site.assets.count.to_s %></results>
+  <% @site.assets.each do |asset| %>
+    <% if !(params.include?(:only)) || asset.matches?(params[:only]) %>
+      <record>
+        <id><%= asset.id.to_s %></id>
+        <title><%= h asset.title %></title>
+        <data_content_type><%= asset.data_content_type %></data_content_type>
+        <data_file_name><%= asset.data_file_name %></data_file_name>
+        <css_class><%= asset.css_class %></css_class>
+        <thumb_url><%= asset_image_args_for(asset) %></thumb_url>
+      </record>
+    <% end %>
+  <% end %>
+</dataset>

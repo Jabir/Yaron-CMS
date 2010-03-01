@@ -1,0 +1,136 @@
+<script type="text/javascript" charset="utf-8">
+  function modify_main_menu(menu) {
+    var new_menu = [];
+    $.each(
+      menu,
+      function (index,item) {
+        var add_tab = true;
+        
+        add_tab = !(/right/.test(item.id));
+        // alleen tab new
+        //         if (/right/.test(item.id)) {
+        //           var target_index = item.id.replace(/^right_/,"");
+        //  $("#page #main_menu .actions > li ").each(function(index, li) {
+        //    if (index == target_index) {
+        //      if (/articles\/new/.test(li.getElementsByTagName("A")[0].href)) {
+        //        add_tab = false;
+        //      }
+        //    }
+        //  });
+        // }
+					
+				if (add_tab) {
+          new_menu[new_menu.length] = item;
+        }
+      }
+    );
+    return new_menu;
+  }
+  
+  //
+  // Init CRUD
+  //
+	function extjs_body_items() {
+		return init_lico_adva_crud({
+			columns: [{
+				label: 'titel',
+				name: 'title',
+				type: 'string',
+				submit_value: 'issue[title]'
+			},{
+				label: 'Concept',
+				name: 'draft',
+				type: 'boolean',
+			}],
+			add_record_path: '<%= admin_adva_issues_path(@site.id, @newsletter.id) %>',
+			add_record_post: [{
+				key: "issue[body]",
+				value: "&nbsp;"
+			}],
+      store: {
+        url: '<%= url_for admin_adva_issues_path(@site.id, @newsletter) %>.xml',
+        sort: {
+          by: 'title',
+          order: 'asc'
+        }
+      },
+      grid: {
+        //empty_details: t['board']['selection_empty']
+      },
+      show: {
+        url: '<%= edit_admin_adva_issue_path(@site, @newsletter, '!recordid!') %>',
+        custom_form: edit_issue_form,
+        custom_form_values: edit_issue_form_values
+      },
+      edit: {
+        url: '<%= admin_adva_issue_path(@site, @newsletter, '!recordid!') %>'
+      },
+      destroy: {
+        url: '<%= admin_adva_issue_path(@site, @newsletter, '!recordid!') %>',
+        //message: t['board']['delete_confirm']
+      }
+    });
+  }
+  
+	function edit_issue_form_values (parameters) {
+		parameters["issue[title]"] = document.getElementById('title').value;
+		parameters["issue[body]"] = document.getElementById('body').value;
+		parameters["issue[draft]"] = document.getElementById('state').checked ? "1" : "0";
+
+		return parameters;
+	}
+  
+	function edit_issue_form (record) {
+		var title = xmlvalue(record,"title");
+		var body = xmlvalue(record,"body");
+		var state = xmlvalue(record,"state");
+		selected_record_title = title;
+
+		return [{
+			xtype: 'tabpanel',
+			plain: true,
+			activeTab: 0,
+			defaults: {
+				bodyStyle: 'padding:10px'
+			},
+			items: [{
+				title: 'Issue',
+				layout: 'column',
+				border: false,
+				items: [{
+					columnWidth: .5,
+					layout: 'form',
+					border: false,
+					items: [{
+						xtype: 'textfield',
+						fieldLabel: 'titel',
+						id: 'title',
+						name: 'title',
+						value: title
+					},{
+						fieldLabel: 'Body',
+						xtype: 'htmleditor',
+						height: 150,
+						name: 'body',
+						id: 'body',
+						value: body
+					}]
+				},{
+					columnWidth: .5,
+					layout: 'form',
+					border: false,
+					items: [{
+						xtype: 'checkbox',
+						fieldLabel: 'Concept',
+						id: 'state',
+						name: 'state',
+						checked: state == "draft",
+						mode: 'local'
+					}]
+				}]
+			}]
+		}];
+	}
+</script>
+<% content_for :sidebar do -%>
+<% end -%>

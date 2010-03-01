@@ -1,0 +1,15 @@
+<root>
+		<record>
+			<id><%= @theme.id.to_s %></id>
+			<name><%= h @theme.name %></name>
+			<author><%= h @theme.author %></author>
+			<version><%= @theme.version %></version>
+			<homepage><%= @theme.homepage %></homepage>
+			<summary><%= @theme.summary %></summary>
+			<active><%= @theme.active %></active>
+			<site_id><%= @theme.site_id %></site_id>
+			<active_link><%= admin_site_selected_themes_path(@theme.site, :id => @theme.id) %></active_link>
+			<deactive_link><%= admin_site_selected_theme_path(@theme.site, @theme.id.to_s) %></deactive_link>
+			<files_link><%= index_path([@theme, :'theme/file']) if @theme.preview %></files_link>
+		</record>
+</root>

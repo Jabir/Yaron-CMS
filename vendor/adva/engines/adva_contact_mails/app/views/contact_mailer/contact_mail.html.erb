@@ -1,0 +1,5 @@
+<% if @params.present? %>
+	<% @params.each do |key, value| %>
+	  <%= URI.decode(key) %>: <%= value %>
+	<% end %>
+<% end %>

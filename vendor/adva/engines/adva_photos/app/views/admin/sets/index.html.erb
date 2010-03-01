@@ -1,0 +1,24 @@
+<% content_for :sidebar do %>
+	<p class="hint text_only large padded">
+		<%= t(:'adva.sets.hints.reorder') %>
+	</p>
+<% end %>
+
+<%
+	table_for @section.sets, :class => 'sets list tree' do |t|
+		t.column :title, :actions
+
+		t.row do |r, set|
+			r.add_class "level_#{set.level}"
+  		r.cell link_to(set.title, edit_admin_set_path(@site, @section, set))
+			# r.cell links_to_actions([:edit, :delete], set) FIXME can't use this here because set is a Category, not a Set
+			r.cell link_to_edit(set, :url => edit_admin_set_path(@site, @section, set)) + "\n" +
+						 link_to_delete(set, :url => admin_set_path(@site, @section, set), :confirm => :'adva.photos.admin.sets.delete_confirmation')
+		end
+
+		t.empty :p, :class => 'empty' do
+			t(:'adva.photos.admin.sets.no_set') + "\n" + 
+			link_to(t(:'adva.photos.admin.sets.create_now'), new_admin_set_path(@site, @section))
+		end
+	end
+%>

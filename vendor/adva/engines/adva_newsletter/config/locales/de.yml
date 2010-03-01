@@ -1,0 +1,115 @@
+de:
+  adva:
+    titles:
+      newsletters: Newsletter
+      issues: Ausgaben
+      subscriptions: Abonnements
+
+    adva_newsletters:
+      columns:
+        name: Name
+        issues: Ausgaben
+        subscribers: Abonnenten
+    adva_issues:
+      columns:
+        name: Name
+        created_at: Erstellungsdatum
+    adva_subscriptions:
+      columns:
+        name: Name
+        email: E-Mail
+        subscribed_at: Abonnement seit
+    newsletter:
+      no_issues: Keine Ausgaben vorhanden.
+      no_newsletters: Keine Newsletter vorhanden.
+      question_publish_newsletter: Newsletter veröffentlichen?
+      confirm_save_as_draft: Ja, diese Ausgabe als Entwurf speichern
+      deleted_issues: Gelöschte Ausgaben
+      no_deleted_issues: Keine gelöschten Ausgaben im Papierkorb.
+      total_newsletters: "Gesamt: {{newsletters_count}} Newsletter"
+      total_issues: "Gesamt: {{issues_count}} Ausgaben"
+      total_subscribers: "Gesamt: {{subscriptions_count}} Abonnenten"
+      delivery_due_time: "Versandzeit: {{delivery_time}}"
+      delivered_at: "Versendet am {{delivered_time}}"
+      question_save_issue_as_draft: Ausgabe als Entwurf speichern?
+      confirm:
+        save_issue_as_draft: Ja, diese Ausgabe als Entwurf speichern
+      flash:
+        delivery_cancellation_success: Die Auslieferung wurde erfolgreich abgebrochen.
+        delivery_cancellation_failed: Die Auslieferung konnte nicht abgebrochen werden, da die Ausgabe bereits ausgeliefert wurde.
+        delivery_start_failed: Die Auslieferung konnte nicht eingetragen werden, da die Ausgabe bereits ausgeliefert oder zur Auslieferung freigegeben ist.
+        issue_moved_to_trash_success: Die Ausgabe wurde erfolgreich in den Papierkorb verschoben.
+        newsletter_moved_to_trash_success: Der Newsletter wurde erfolgreich in den Papierkorb verschoben.
+        update_success: Der Newsletter wurde erfolgreich geändert!
+        send_preview_issue: Die Vorschau der Ausgabe wurde erfolgreich an Sie versendet.
+        send_preview_issue_failed: Die Vorschau der Ausgabe konnte nicht an Sie versendet werden.
+        send_all: Die Ausgabe wurde erfolgreich zur Auslieferung freigegeben.
+        send_all_later: Die Ausgabe wurde erfolgreich zur späteren Auslieferung freigegeben.
+        issue_create_success: Die Ausgabe wurde erfolgreich angelegt.
+        issue_update_success: Die Ausgabe wurde erfolgreich geändert.
+      button:
+        send_issue: Versenden
+        preview_issue: Vorschau
+        cancel_delivery: Versand abbrechen
+      link:
+        index: Newsletter
+        new: Einen neuen Newsletter anlegen &raquo;
+        new_issue: Neue Ausgabe anlegen &raquo;
+        issues: Ausgaben
+        subscribers: Abonnenten
+      label:
+        header: Newsletter
+        title: Titel
+        desc: Beschreibung
+        name: Name
+        issues: Ausgaben
+        subscribers: Abonnenten
+        deleted_issues: Gelöschte Ausgaben
+        issue_body: Text
+        issue_deliver_at: "oder später versenden:"
+        issue_title: Titel
+        email: Absender (E-Mail)
+        published: Newsletter veröffentlichen
+      title:
+        edit: Newsletter bearbeiten
+        new: Newsletter anlegen
+
+    issues:
+      columns:
+        name: Name
+        created_at: Erstellungsdatum
+    issue:
+      confirm_save_as_draft: Ja, diese Ausgabe als Entwurf speichern.
+      question_save_as_draft: Als Entwurf speichern?
+      no_issues: Keine Ausgaben vorhanden.
+      button:
+        send_now: Jetzt versenden
+        send_later: Später versenden
+      flash:
+        create_success: Der Newsletter wurde angelegt.
+        update_success: Der Newsletter wurde aktualisiert.
+        send_now: Die Ausgabe wurde zum Versand freigegeben.
+        send_later: Die Ausgabe wurde zum späteren Versand freigegeben und eingetragen.
+        send_test: Die Ausgabe wurde an Sie verschickt.
+      label:
+        title: Titel/Betreff
+        body: Text
+        name: Name
+        created_at: Erstellungsdatum
+        issues: Ausgaben
+        send_test: Nur an mich
+      link:
+        index: Ausgaben
+        new: Eine neue Ausgabe anlegen
+        edit: Ausgabe bearbeiten
+      titles:
+        edit: Ausgabe bearbeiten
+
+    subscriptions:
+      no_users_available: Es gibt momentan keine Benutzer, die als neue Abonnenten eingetragen werden können.
+      label:
+        user: Benutzer
+      columns:
+        name: Name
+        email: E-Mail
+        subscribed_at: Abonnent seit

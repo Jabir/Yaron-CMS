@@ -1,0 +1,370 @@
+<script type="text/javascript" charset="utf-8">
+	//
+	// Voor artikelen specifieke combo-data
+	//
+	var author_store;
+
+	function load_custom_stores () {
+		var author_store_data = new Array();
+		<% User.find(:all).each do |user| %>
+			author_store_data[author_store_data.length] = [<%= user.id.to_s %>, "<%= h user.name.gsub(/\"/,"\\") %>"];
+		<% end %>
+
+		author_store = new Ext.data.ArrayStore({
+			fields: ['user_id', 'name'],
+			data: author_store_data
+		});
+	}
+  function modify_main_menu(menu) {
+    var new_menu = [];
+    $.each(
+      menu,
+      function (index,item) {
+        var add_tab = true;
+        
+        add_tab = !(/right/.test(item.id));
+        // alleen tab new
+        //         if (/right/.test(item.id)) {
+        //           var target_index = item.id.replace(/^right_/,"");
+        //  $("#page #main_menu .actions > li ").each(function(index, li) {
+        //    if (index == target_index) {
+        //      if (/articles\/new/.test(li.getElementsByTagName("A")[0].href)) {
+        //        add_tab = false;
+        //      }
+        //    }
+        //  });
+        // }
+					
+				if (add_tab) {
+          new_menu[new_menu.length] = item;
+        }
+      }
+    );
+    return new_menu;
+  }
+  
+  
+  //
+  // Init CRUD
+  //
+  function extjs_body_items() {
+		load_custom_stores();
+		return init_lico_adva_crud({
+			columns: [{
+				label: 'titel',
+				name: 'title',
+				type: 'string',
+				submit_value: 'calendar_event[title]'
+			},{
+				label: 'host',
+				name: 'host', 
+				type: 'string',
+				submit_value: 'calendar_event[host]'
+			},{
+				label: 'locatie',
+				name: 'location', 
+				type: 'string',
+				submit_value: 'calendar_event[location]'
+			},{
+				label: 'Start',
+				name: 'start_date', 
+				type: 'datetime',
+				dateFormat: "d-m-Y",
+				timeFormat: "h:i",
+				submit_value: 'calendar_event[start_date]'
+			},{
+				label: 'Eind',
+				name: 'end_date', 
+				type: 'datetime',
+				dateFormat: "d-m-Y",
+				timeFormat: "h:i",
+				submit_value: 'calendar_event[end_date]'
+			},{
+				label: 'Concept',
+				name: 'draft',
+				type: 'boolean',
+			}],
+			add_record_path: '<%= admin_calendar_events_path(@site.id, @section) %>',
+			add_record_post: [{
+				key: "calendar_event[body]",
+				value: "&nbsp;"
+			},{
+				key: "calendar_event[updated_at]",
+				value: ""
+			}],
+      store: {
+        url: '<%= url_for admin_calendar_events_path(@site.id, @section) %>.xml',
+        sort: {
+          by: 'title',
+          order: 'asc'
+        }
+      },
+      grid: {
+        //empty_details: t['board']['selection_empty']
+      },
+      show: {
+        url: '<%= edit_admin_calendar_event_path(@site, @section, '!recordid!') %>',
+        custom_form: edit_calendar_event_form,
+        custom_form_values: edit_calendar_event_form_values
+      },
+      edit: {
+        url: '<%= admin_calendar_event_path(@site, @section, '!recordid!') %>',
+        custom_actions: function(doc) {
+          var id = xmlvalue(doc,"id");
+          var draft = xmlvalue(doc,"draft");
+          if (draft=="1") {
+            return [{
+                text: 'Publiceren',
+                iconCls: 'silk-accept',
+                handler: function(btn, ev) {
+                    if (grid.getSelectionModel().hasSelection()) {
+                        var cell = grid.getSelectionModel().getSelected();
+
+                      	Ext.Msg.show({
+                      		id: 'publish-confirm',
+                      		title: t['article']['publish']['title'],
+                      		msg: t['article']['publish']['confirm'],
+                      		buttons: {
+                      			ok: t['article']['publish']['ok'],
+                      			cancel: t['cancel_text']
+                      		},
+                      		icon: Ext.MessageBox.QUESTION,
+                      		fn: function(btn) {
+                      			if (btn == "ok") {
+                      				var mask = new Ext.LoadMask(Ext.getBody(), {
+                      					msg: t['loader_text']
+                      				});
+                      				mask.show();
+
+                              d = new Date();
+                              
+                      				$.ajax({
+                      					url: crud_options.edit.url.replace(/!recordid!/, id),
+                      					cache: false,
+                      					data: {
+                      						authenticity_token: window._auth_token,
+                                  _method: 'put',
+                      						"calendar_event[published_at]": d.getDate()+"-"+(d.getMonth()+1)+"-"+d.getFullYear(),
+                                  "calendar_event[updated_at]": xmlvalue(selected_record,"date")
+                      					},
+                      					type: 'POST',
+                      					success: function(html) {
+                      						store.reload();
+                      						mask.hide();
+                      					}
+                      				});
+                      			}
+                      		}
+                      	});
+                    }
+                },
+                scope: this
+              }]
+          } else {
+            return [{
+                text: 'Publicatie intrekken',
+                iconCls: 'silk-delete',
+                handler: function(btn, ev) {
+                    if (grid.getSelectionModel().hasSelection()) {
+                        var cell = grid.getSelectionModel().getSelected();
+
+                      	Ext.Msg.show({
+                      		id: 'publish-confirm',
+                      		title: t['article']['publish_revoke']['title'],
+                      		msg: t['article']['publish_revoke']['confirm'],
+                      		buttons: {
+                      			ok: t['article']['publish_revoke']['ok'],
+                      			cancel: t['cancel_text']
+                      		},
+                      		icon: Ext.MessageBox.QUESTION,
+                      		fn: function(btn) {
+                      			if (btn == "ok") {
+                      				var mask = new Ext.LoadMask(Ext.getBody(), {
+                      					msg: t['loader_text']
+                      				});
+                      				mask.show();
+
+                              d = new Date();
+                              
+                      				$.ajax({
+                      					url: crud_options.edit.url.replace(/!recordid!/, id),
+                      					cache: false,
+                      					data: {
+                      						authenticity_token: window._auth_token,
+                                  _method: 'put',
+                      						"calendar_event[published_at]": "",
+                                  "calendar_event[updated_at]": xmlvalue(selected_record,"date")
+                      					},
+                      					type: 'POST',
+                      					success: function(html) {
+                      						store.reload();
+                      						mask.hide();
+                      					}
+                      				});
+                      			}
+                      		}
+                      	});
+                    }
+                },
+                scope: this
+              }]
+          }
+        }
+      },
+      destroy: {
+        url: '<%= admin_calendar_event_path(@site, @section, '!recordid!') %>',
+        //message: t['board']['delete_confirm']
+      }
+    });
+  }
+  
+	function edit_calendar_event_form_values (parameters) {
+		parameters["calendar_event[title]"] = document.getElementById('title').value;
+		parameters["calendar_event[host]"] = document.getElementById('host').value;
+		parameters["calendar_event[location]"] = document.getElementById('location').value;
+		parameters["calendar_event[start_date]"] = document.getElementById('start_date').value;
+		parameters["calendar_event[end_date]"] = document.getElementById('end_date').value;
+		if (document.getElementById('body')) {
+			parameters["calendar_event[body]"] = document.getElementById('body').value;
+		}
+		if (document.getElementById('user_id').value!="") {
+			parameters["calendar_event[user_id]"] = document.getElementById('user_id').value;
+		}
+		
+		parameters["calendar_event[permalink]"] = document.getElementById('permalink').value;
+		parameters["calendar_event[tag_list]"] = document.getElementById('tag_list').value;
+
+		parameters["save_revision"] = "Save";
+		parameters["cl"] = "en";
+
+  	return parameters;
+  }
+  
+	function edit_calendar_event_form (record) {
+		var title = xmlvalue(record,"title");
+		var host = xmlvalue(record,"host");
+		var location = xmlvalue(record,"location");
+		var start_date = xmlvalue(record,"start_date");
+		var end_date = xmlvalue(record,"end_date");
+		var body = xmlvalue(record,"body");
+		var user_id = xmlvalue(record,"user_id");
+		selected_record_title = title;
+		
+		var options = record.getElementsByTagName("options")[0];
+		var permalink = xmlvalue(options,"permalink");
+		var tag_list = xmlvalue(options,"tag_list");
+		var filter = xmlvalue(options,"filter");
+
+  	return [{
+      xtype: 'tabpanel',
+      plain: true,
+      activeTab: 0,
+      defaults: {
+        bodyStyle: 'padding:10px'
+      },
+			items: [{
+				title: 'Kalender',
+				layout: 'column',
+				border: false,
+				items: [{
+					columnWidth: .5,
+					layout: 'form',
+					defaults: {
+						width: 230
+					},
+					border: false,
+					items: [{
+						xtype: 'textfield',
+						fieldLabel: 'Titel',
+						id: 'title',
+						name: 'title',
+						value: title
+					},{
+						xtype: 'textfield',
+						fieldLabel: 'Host',
+						id: 'host',
+						name: 'host',
+						value: host
+					},{
+						xtype: 'textfield',
+						fieldLabel: 'Locatie',
+						id: 'location',
+						name: 'location',
+						value: location
+					}]
+				},{
+					columnWidth: .5,
+					layout: 'form',
+					border: false,
+					items: [{
+						xtype: 'xdatetime',
+						fieldLabel: 'Start',
+						id: 'start_date',
+						name: 'start_date', 
+						dateFormat: "d-m-Y",
+						timeFormat: "h:i",
+						value: start_date//xmlvalue(record,"start_date").replace(/(\d*)\:(\d*) (\d*)\-(\d*)\-(\d*)/,"$5-$4-$3 $1:$2:00")
+					},{
+						xtype: 'xdatetime',
+						fieldLabel: 'Eind',
+						id: 'end_date',
+						name: 'end_date',
+						dateFormat: "d-m-Y",
+						timeFormat: "h:i",
+						value: end_date//xmlvalue(record,"end_date").replace(/(\d*)\:(\d*) (\d*)\-(\d*)\-(\d*)/,"$5-$4-$3 $1:$2:00")
+					},{
+						xtype: 'combo',
+						fieldLabel: 'Gewijzigd door',
+						//name: 'user_id',
+						//value: user_id,
+						//store: author_store,
+						//valueField: 'user_id',
+						//displayField: 'name',
+						//mode: 'local',
+						//hiddenName: 'record_user_id',
+						//hiddenId: 'record_user_id'
+					}],
+				}]
+			},{
+				title: 'Body',
+				layout: 'form',
+				items: [{
+					fieldLabel: 'Body',
+					xtype: 'htmleditor',
+					height: 175,
+					name: 'body',
+					id: 'body',
+					value: body
+				}]
+			},{
+				title: 'Opties',
+				layout: 'form',
+				defaults: {
+					width: 230
+				},
+				defaultType: 'textfield',
+				items: [{
+					fieldLabel: 'Permalink',
+					name: 'permalink',
+					id: 'permalink',
+					value: permalink
+				},{
+					fieldLabel: 'Tag list',
+					name: 'tag_list',
+					id: 'tag_list',
+					value: tag_list
+				},{
+					fieldLabel: '<%= t(:'adva.labels.comment_filter') %>',
+					name: 'filter',
+					xtype: 'combo',
+					//triggerAction: 'all',
+					//forceSelection: true,
+					//transform:     'calendar_event_filter',
+					//lazyRender:     true
+				}]
+			}]
+		}];
+  }
+</script>
+<% content_for :sidebar do -%>
+<% end -%>

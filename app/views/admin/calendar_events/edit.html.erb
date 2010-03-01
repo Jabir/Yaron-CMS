@@ -1,0 +1,12 @@
+<% if @calendar_event && @calendar_event.errors && @calendar_event.errors.size > 0 %>
+  <%= error_messages_for(:board) %>
+<% elsif !request.xhr? %>
+  <script type="text/javascript" charset="utf-8">
+  	alert(1);
+    Ext.onReady(function(){
+      window.location = '<%= admin_calendar_event_path(@site, @section) %>';
+    });
+  </script>
+<% else %>
+  CRUD_OK
+<% end %>

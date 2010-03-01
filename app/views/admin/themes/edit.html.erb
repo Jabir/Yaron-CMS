@@ -1,0 +1,12 @@
+<% if @theme && @theme.errors && @theme.errors.size > 0 %>
+  <%= error_messages_for(:theme) %>
+<% elsif !request.xhr? %>
+  <script type="text/javascript" charset="utf-8">
+  	alert(1);
+    Ext.onReady(function(){
+      window.location = '<%= admin_themes_path(@site) %>';
+    });
+  </script>
+<% else %>
+  CRUD_OK
+<% end %>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<results><%#= @boards.total_entries.to_s %></results>
+	<% @photos.each do |photo| %>
+		<record>
+			<id><%= photo.id.to_s %></id>
+			<title><%= h photo.title %></title>
+			<author><%= photo.author %></author>
+			<comments><%#= photo.comments.present : t(:"adva.common.none") %></comments>
+			<published><%= photo.published_at %></published>
+			<data_file_name><%= photo.data_file_name %></data_file_name>
+		</record>
+	<% end %>
+</dataset>

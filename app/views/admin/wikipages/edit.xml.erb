@@ -1,0 +1,16 @@
+<root>
+	<record>
+		<id><%= @wikipage.id.to_s %></id>
+		<title><%= h @wikipage.title %></title>
+		<author><%= h @wikipage.author.id if @wikipage.author %></author>
+		<body><%= h @wikipage.body %></body>
+		<updated_at><%= @wikipage.updated_at.strftime('%d-%m-%Y %H:%M') %></updated_at>
+
+		<options>
+			<permalink><%= h @wikipage.permalink %></permalink>
+			<tag_list><%= h @wikipage.tag_list %></tag_list>
+			<comment_age><%= @wikipage.comment_age %></comment_age>
+			<filter><%= h @wikipage.filter %></filter>
+		</options>
+	</record>
+</root>

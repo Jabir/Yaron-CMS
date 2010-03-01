@@ -1,0 +1,9 @@
+<root>
+	<record>
+		<id><%= @issue.id.to_s %></id>
+		<title><%= h @issue.title %></title>
+		<body><%= h @issue.body %></body>
+		<deliver_at><%= @issue.deliver_at %></deliver_at>
+		<state><%= @issue.state %></state>
+	</record>
+</root>

@@ -1,0 +1,48 @@
+<script type="text/javascript" charset="utf-8">
+  register_tab('forum');
+  function forum_tab() {
+    return {
+      title: '<%= t(:'adva.sections.titles.forum_settings') %>',
+      defaults: {
+        layout: 'form',
+        labelWidth: 120,
+        bodyStyle: 'padding:10px'
+      },
+      items: [{
+        fieldLabel: 'Topics per page',
+        name: 'section[topics_per_page]',
+        value: document.getElementById('section_topics_per_page').value,
+        xtype: 'textfield',
+        width: 200
+      },{
+        fieldLabel: 'Section per page',
+        name: 'section[posts_per_page]',
+        value: document.getElementById('section_posts_per_page').value,
+        xtype: 'textfield',
+        width: 200
+      },{
+        fieldLabel: 'Content filter',
+        name: 'section[content_filter]',
+        xtype: 'combo',
+        triggerAction: 'all',
+        forceSelection: true,
+        transform:     'section_content_filter',
+        lazyRender:     true
+      }]
+    }
+  }
+</script>
+
+<h2><%= t(:'adva.sections.titles.forum_settings') %></h2>
+
+<% f.field_set :forum_settings do %>
+  <% column do %>
+		<%= f.text_field :topics_per_page, :label => true, :class => 'small' %>
+		<%= f.text_field :posts_per_page, :label => true, :class => 'small' %>
+	<% end %>
+
+  <% column do %>
+    <%= f.select :content_filter, filter_options, {}, :label => true, :tabindex => :section_topics_per_page %>
+    <span class="hint"><%= t(:'adva.forums.labels.post_content_filter') %></span>
+	<% end %>
+<% end %>

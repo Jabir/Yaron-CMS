@@ -1,0 +1,52 @@
+<%= render :partial => 'search' %>
+
+<div id="events">
+	<h2><%= collection_title(@category, @tags) %></h2>
+
+	<% if @events.present? -%>
+	<div class="containerPlus  {skin:'education', buttons:'m',icon:'education.png', width:'500'}">
+          <div class="no">
+            <div class="ne">
+              <div class="n">
+              </div>
+            </div>
+            <div class="o">
+              <div class="e"> 
+                <div class="c">
+                  <div class="mbcontainercontent">
+		<table>
+		  <thead>
+		    <tr>
+		      <th><%= t(:'adva.calendar.titles.title') %></th>
+		      <th><%= t(:'adva.calendar.titles.starting_at') %></th>
+		      <th><%= t(:'adva.calendar.titles.ending_at') %></th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <%= render :partial => 'event', :collection => @events %>
+		  </tbody>
+		</table>
+		<%= will_paginate @events, :id => 'pagination' %>
+	<% else -%>
+		<div class="empty">
+		  <%= t(:'adva.calendar.errors.no_events', :title => @section.title) %>.
+		</div>
+	<% end -%>
+</div>
+                </div>
+              </div>
+            </div>
+              <div class="so">
+                <div class="se">
+                  <div class="s"></div>
+                </div>
+              </div>
+          </div>
+        </div>
+
+<%= render :partial => 'calendar', :locals => { :calendar_section => @section } %>
+<%= render :partial => 'footer' %>
+</div>
+
+                  	 
+                  

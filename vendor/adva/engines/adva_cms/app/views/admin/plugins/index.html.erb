@@ -1,0 +1,16 @@
+<% 
+	table_for @plugins do |t|
+		t.column :name, :version, :author, :homepage
+
+		t.row do |r, plugin|
+  		r.cell link_to_show(plugin.name, plugin, :class => 'plugin')
+			r.cell plugin.about['version']
+			r.cell plugin.about['author']
+			r.cell plugin.about['homepage']
+		end
+
+		t.empty :p, :class => 'empty' do
+			t(:'adva.plugins.no_plugins_installed')
+		end
+	end 
+%>

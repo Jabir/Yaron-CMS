@@ -1,0 +1,123 @@
+nl:
+  adva_newsletter:
+    issue:
+      confirm:
+        remove_body_plain: "Weet je zeker dat je de platte tekst versie wil verwijderen?" 
+      label:
+        body: HTML versie
+        body_plain: Platte tekst versie
+        title: Uitgave Titel/Onderwerp
+      link:
+        add_body_plain: "Voeg platte tekst versie toe"
+        remove_body_plain: "Verwijder platte tekst versie"
+    subscription:
+      title:
+        section: 
+          one: Abonneer je op deze nieuwsbrief
+          other: Abonneer je op deze nieuwsbrieven
+  adva:
+    adva_newsletters:
+      columns:
+        name: Naam
+        issues: Titels
+        subscribers: Abonnees
+    adva_issues:
+      columns:
+        name: Naam
+        created_at: Gemaakt op
+    adva_suscriptions:
+      columns:
+        name: Naam
+        email: E-Mail
+        subscribed_at: Aangemeld op
+    newsletters:
+      links:
+        index: Nieuwsbrieven
+        new: Nieuw
+        create_now: Maak er nu een
+        edit: Wijzig
+        delete: Verwijder
+      hints:
+        newsletter: Use the Newsletters feature to send e-mail messages to users on your site. Manage multiple newsletters for multiple groups of subscribers. Create issues to deliver e-mail messages to subscribers.
+    issues:
+      confirm_delete: Weet je zeker dat je deze uitgave wil verwijderen?
+      links:
+        index: Titels
+        new: Nieuw
+        edit: Wijzig
+        delete: Verwijder
+      hints:
+        tracking: If you'd like to use Google Analytics to track your issue, enable Google Analytics by entering your tracking code on the main Settings page.
+    subscriptions:
+      confirm_delete: Weet je zeker dat je dit abonnement wil verwijderen?
+      links:
+        index: Abonnees
+        new: Nieuw
+        edit: Wijzig
+        delete: Verwijder
+      no_users_available: Er zijn gebruikers beschikbaar als nieuwe abonnees.
+    newsletter:
+      confirm_delete: Weet je zeker dat je deze nieuwsbrief wil verwijderen?
+      no_newsletters: Er zijn geen nieuwsbrieven.
+      question_publish_newsletter: Moeten we het openbaar maken?
+      confirm_save_as_draft: Ja, sla deze uitgave op als concept
+      deleted_issues: Verwijder titel
+      no_deleted_issues: Prullenbak is leeg.
+      total_newsletters: "Totaal aantaal nieuwsbrieven: {{newsletters_count}}"
+      total_issues: "Totaal aantal titels: {{issues_count}}"
+      total_subscribers: "Totaal aantal abonnees: {{subscriptions_count}}"
+      delivered_at: "Afgeleverd op {{delivered_time}}"
+      no_issues: Er zijn geen titels.
+      question_save_issue_as_draft: Ja, sla deze titel op als concept.
+      flash:
+        delivery_cancellation_success: De verzending is geannuleerd.
+        delivery_cancellation_failed: Cannot cancel delivery because the issue has already been delivered.
+        delivery_start_failed: Cannot start delivery, probably issue is already in the queue or delivered.
+        issue_moved_to_trash_success: De nieuwsbrief is verplaatst naar de prullenbak.
+        newsletter_moved_to_trash_success: De nieuwsbrief is verplaatst naar de prullenbak.
+        update_success: Het bijwerken van de nieuwsbrief is gelukt!
+        send_preview_issue: Preview issue was successfully sent to you.
+        send_preview_issue_failed: Something went wrong when sending out preview issue.
+        send_all: Issue was successfully added to the delivery queue.
+        send_all_later: Issue was successfully added to the queue to deliver later. 
+        issue_create_success: Newsletter issue was successfully created.
+        issue_update_success: Newsletter issue was successfully updated.
+      button:
+        send_issue: Verzend
+        preview_issue: Voorbeeld
+        cancel_delivery: Annuleer verzending
+        send_now: Verzend nu
+        send_later: Verzend later
+      link:
+        index: Nieuwsbrieven
+        new: Nieuw
+        issues: Titels
+        subscribers: Abonnees
+        send_preview_issue: Verzend voorbeeld
+        new_issue: Maak een nieuwe uitgave
+        issue_index: Titels
+        edit_issue: Wijzig titel
+        delete_issue: Verwijder titel
+      label:
+        header: Nieuwsbrieven
+        title: Nieuwsbrief naam
+        desc: Omschrijving
+        name: Naam
+        issues: Uitgaven
+        subscribers: Abonnees
+        deleted_issues: Verwijderde titels
+        email: Newsletter emails are coming from
+        published: Maak het openbaar, dan kunnen gebruikers zich abonneren
+        issue_name: Naam
+        issue_created_at: Gemaakt
+        issue_deliver_at: Afgeleverd op
+        issue_deliver_at_long: "Uitgave zal afgeleverd worden op {{delivery_time}}"
+        autocopy: Autocopy
+      title:
+        new: Nieuwe nieuwsbrief
+        edit: Wijzig nieuwsbrief
+        edit_issue: Wijzig titel
+      confirm:
+        send_preview_issue: "It will send issue only to your email, so you can preview it."
+        save_as_draft: Opslaan als concept?
+        save_issue_as_draft: Opslaan als concept?

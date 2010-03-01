@@ -1,0 +1,39 @@
+<script type="text/javascript" charset="utf-8">
+  register_tab('album');
+  function album_tab() {
+    return {
+      title: '<%= t(:'adva.photos.common.album_settings') %>',
+      defaults: {
+        layout: 'form',
+        labelWidth: 120,
+        bodyStyle: 'padding:10px'
+      },
+      items: [{
+        fieldLabel: '<%= t(:'activerecord.attributes.album.photos_per_page') %>',
+        name: 'section[photos_per_page]',
+        value: document.getElementById('section_photos_per_page').value,
+        xtype: 'textfield',
+        width: 200
+      },{
+        fieldLabel: '<%= t(:'activerecord.attributes.album.content_filter') %>',
+        name: 'section[content_filter]',
+        xtype: 'combo',
+        triggerAction: 'all',
+        forceSelection: true,
+        transform:     'section_content_filter',
+        lazyRender:     true
+      }]
+    }
+  }
+</script>
+<h2><%= t(:'adva.photos.common.album_settings') %></h2>
+
+<% f.field_set :album_settings do %>
+  <% column do %>
+    <%= f.text_field :photos_per_page, :class => 'small', :label => true %>
+	<% end %>
+
+  <% column do %>
+    <%= f.select :content_filter, filter_options, {}, :label => true, :hint => :'adva.sections.hints.content_filter', :tabindex => :section_photos_per_page %>
+	<% end %>
+<% end %>

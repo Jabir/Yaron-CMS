@@ -1,0 +1,19 @@
+<% if comments.present? %>
+  <div id="comments">  <div class="containerPlus  {skin:'yplight'}">
+	        <div class="no"><div class="ne"><div class="n">
+	        	<%= t(:'adva.comments.titles.comment_with_count', :count => comments.size) %>
+				</div></div>
+	          <div class="o"><div class="e"><div class="c">
+	            <div class="mbcontainercontent">
+    <ol>
+      <%= render :partial => 'comments/comment', :collection => comments %>
+    </ol>
+	 </div></div></div></div>
+	          <div >
+	            <div class="so"><div class="se"><div class="s"></div></div></div>
+	          </div>
+	        </div>
+	      </div>
+
+  </div>
+<% end %>

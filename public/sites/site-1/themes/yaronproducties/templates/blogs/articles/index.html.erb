@@ -1,0 +1,5 @@
+<%#<%= articles_title @category, @tags, params, :format => '<h2 class="list_header">%s</h2>' %>
+
+<%= render :partial => 'blogs/articles/fixed_top_article', :collection => @articles %>
+<%= render :partial => 'blogs/articles/article', :collection => @articles, :locals => { :mode => :many } %>
+<%= render :partial => 'blogs/articles/footer' %>

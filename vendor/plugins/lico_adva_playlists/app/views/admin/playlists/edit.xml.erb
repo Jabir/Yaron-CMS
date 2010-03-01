@@ -1,0 +1,19 @@
+<root>
+  <record>
+    <id><%= @playlist.id.to_s %></id>
+    <title><%= h @playlist.title %></title>
+  
+    <assets>
+      <% @playlist.assets.each do |asset| %>
+        <asset>
+          <id><%= asset.id.to_s %></id>
+          <title><%= h asset.title %></title>
+          <data_content_type><%= asset.data_content_type %></data_content_type>
+          <data_file_name><%= asset.data_file_name %></data_file_name>
+          <css_class><%= asset.css_class %></css_class>
+          <thumb_url><%= asset_image_args_for(asset) %></thumb_url>
+        </asset>
+      <% end %>
+    </assets>
+  </record>
+</root>

@@ -1,0 +1,14 @@
+<div id="calender">
+<% @events.each do |event| %>
+  <div class="containerPlus {skin:'white', buttons:'m',icon:'browser.png'}" style="visibility: visible"><div class="no"><div class="ne">
+    <div class="n">
+      <%= @t.strftime("%d-%m-%Y")%> <%= link_to event.title, calendar_event_url(event.section_id, event.permalink) %>
+    </div>
+    </div><div class="o"><div class="e"><div class="c"><div class="mbcontainercontent"><div class="list_header">
+      <%= datetime_with_microformat(event_dates_from_to(event)[0], :format => (event.all_day? ? :mdy : :long)) %><br />
+      <%= datetime_with_microformat(event_dates_from_to(event)[1], :format => (event.all_day? ? :mdy : :long)) if event_dates_from_to(event)[1] %>
+        <%= t(:'adva.calendar.attributes.all_day') if event.all_day? %><br />
+    </div>
+  </div></div></div></div><div><div class="so"><div class="se"><div class="s"></div></div></div></div></div></div>
+<% end %>
+</div>

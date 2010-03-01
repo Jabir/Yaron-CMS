@@ -1,0 +1,122 @@
+<script type="text/javascript" charset="utf-8">
+    //
+    // De lico_adva_skin-plugin laat standaard de gehele
+    // pagina met een extJS omkadering zien. Om nu ook de
+    // inhoud van de huidige pagina in extJS te krijgen
+    // verwacht de plugin een functie genaamd:
+    //
+    // function extjs_body_items() {}
+    //
+    // Voor de sidebar geldt een:
+    //
+    // function extjs_sidebar_items() {}
+    //
+    // De extjs_body_items moet de items volgens de
+    // standaard extJS structuur teruggeven. Let er
+    // daarbij op dat het hoofditem al een onderdeel
+    // is van een een groter geheel en een verplicht
+    // attribuut region: 'center' heeft.
+    //
+    // Wanneer in de bronpagina één FORM-element gevonden
+    // wordt, wordt het extJS-geheel binnen dit formulier
+    // geplaatst, zodat een submit nog gewoon werkt.
+    //    
+    // Todo's:
+    //
+    // - vertalen (via config/locales/nl...)
+    // - extra velden toevoegen
+    // - mogelijk moet er iets gedaan worden met deferredRender,
+    //   aangezien nu alleen de zichtbaar gemaakte tabs gepost
+    //   worden. Eventueel handig: http://examples.extjs.eu/
+    //
+
+	
+	function extjs_body_items() {
+		return {
+			region: 'center',
+			xtype: 'form',
+			errorReader: new Ext.data.CrudReader(),
+			border: false,
+			items: [{
+				region: 'center',
+				xtype: 'tabpanel',
+				activeItem: 0,
+				anchor: '100% 100%',
+				defaults: {
+					layout: 'form',
+					labelWidth: 120,
+					defaultType: 'textfield',
+					bodyStyle: 'padding:10px'
+				},
+			items: [{
+				title: '<%= t(:'adva.newsletter.title.edit') %>',
+				items: [{
+					fieldLabel: '<%= t(:'adva.newsletter.label.title') %>',
+					name: 'newsletter[title]',
+					value: document.getElementById('newsletter_title').value,
+					type: 'textfield',
+					width: 200
+				},{
+					fieldLabel: '<%= t(:'adva.newsletter.label.desc') %>',
+					name: 'newsletter[desc]',
+					value: document.getElementById('newsletter_desc').value,
+					xtype: 'textarea',
+					width: 175
+				},{
+					xtype: 'hidden',
+					name: 'newsletter[published]',
+					value: '0'
+				},{
+					fieldLabel: '<%= t(:'adva.newsletter.label.published') %>',
+					name: 'newsletter[published]',
+					inputValue: '1',
+					xtype: 'checkbox',
+					checked: document.getElementById('newsletter_published').checked
+				}]
+			}]
+			}],
+		buttons: [{
+			text: 'Opslaan',
+			iconCls: 'silk-accept',
+			handler: function() {
+  			var mask = new Ext.LoadMask(Ext.getBody(), {
+  				msg: t['loader_text']
+  			});
+  			mask.show();
+
+        $.post('<%= admin_adva_newsletters_path %>',
+          $(document.getElementsByTagName("form")[0]).serialize(),
+          function(responseText) {
+            responseText = responseText.replace(/[\r\n]/g, "").replace(/.*?(<div class="errorExplanation".*?<\/div>).*/, "$1").replace(/^.*\}/,"");
+            if (/errorExplanation/.test(responseText)) {
+               mask.hide();
+               Ext.Msg.minWidth = 400;
+               Ext.Msg.show({
+                   title: t['error_title'],
+                   msg: responseText,
+                   buttons: {
+                       ok: t['ok_text']
+                   },
+                   icon: Ext.MessageBox.WARNING
+               });
+            } else {
+              window.location = '<%= admin_adva_newsletters_path %>';
+            }
+          }
+        );
+      }
+		},{
+			text: 'Annuleren',
+			iconCls: 'silk-delete',
+			handler: function() {
+        window.location = '<%= admin_adva_newsletters_path %>';
+			}
+		}]
+      };
+	}
+</script>
+<h2><%= t(:'adva.newsletter.title.edit') %></h2>
+<% split_form_for :newsletter, @newsletter, :url => admin_adva_newsletter_path, :html => { :method => :put, :multipart => true } do |f| %>
+  <%= render :partial => 'form', :locals => {:f => f} %>  
+  <% save_or_cancel_links(f, :cancel_url => admin_adva_newsletter_path(@site)) %>
+<% end %>

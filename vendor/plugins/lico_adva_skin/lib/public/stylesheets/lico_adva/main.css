@@ -1,0 +1,221 @@
+.x-tab-panel.right ul {
+	width: auto;
+}
+.x-tab-panel.right li {
+	float: right;
+}
+#sb .x-panel-body {
+	background-color: rgb(223, 232, 246);
+	padding-top: 1em;
+	padding-right: 5px;
+	overflow: auto;
+}
+.x-plain-panel-body {
+	background-color: rgb(223, 232, 246);
+}
+#top {
+  background: #7F99BE url(/images/extjs/hd-bg.gif) repeat-x center;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+}
+#top h1 {
+  font-size: 16px;
+  color: #fff;
+  font-weight: normal;
+  padding: 5px 10px;
+}
+
+#top img {
+	margin-top: 2px;
+	margin-left: 2px;
+	margin-bottom: 0px;
+	margin-right: 2px;
+}
+
+#header {
+	background-color: rgb(223, 232, 246);
+	padding: 5px;
+}
+ul#breadcrumbs {
+	margin-top: 0px;
+}
+.x-panel-body #header .right {
+	padding: 0px;
+}
+#content {
+	padding: 1em;
+}
+.x-panel-body.x-panel-body-noheader.x-box-layout-ct {
+	background-color: rgb(223, 232, 246);
+}
+.main #main_menu {
+	margin-top: 0px;
+}
+#content form fieldset {
+/*	border: 0px;*/
+	margin-bottom: 1em;
+	margin-top: 1em;
+	padding: 1em;
+}
+#content label {
+	margin-top: 0px;
+}
+#content form fieldset h3, #content form input {
+	margin-bottom: 1em;
+}
+#page-container .x-panel-body.x-panel-body-noheader {
+	overflow: auto;
+}
+/*input[type="text"], input[type="password"], textarea {
+	width: 75%;
+	padding: 1px;
+	padding-left: 8px;
+	padding-right: 8px;
+}*/
+#main_menu_left_text div {
+	background-color: rgb(223, 232, 246);
+	line-height: 19px;
+	padding-left: 3px;
+	padding-bottom: 3px;
+	padding-top: 1px;
+}
+
+.thumb-wrap {
+	width: 80px;
+	text-align: center;
+	float: left;
+	border: 1px solid #8DB2E3;
+	margin: 5px;
+	margin-top: 0px;
+	padding: 5px;
+}
+.thumb-wrap span {
+	display: block;
+	width: 70px;
+	overflow: hidden;
+}
+#asset-drop-zone .x-plain-body.x-plain-body-noheader.x-plain-body-noborder {
+	overflow: auto;
+}
+#categories_select .x-panel-body.x-panel-body-noheader.x-panel-body-noborder {
+	overflow: auto;
+}
+#categories_select .x-panel-body.x-panel-body-noheader.x-panel-body-noborder div {
+	margin-bottom: 5px;
+}
+#categories_select label {
+	display: inline;
+	padding-left: 0.5em;
+}
+.thumb .image {
+	background-position: bottom right;
+	background-repeat: no-repeat;
+	background-image: url('/stylesheets/extjs/fam/picture.gif');
+	position: relative;
+	height: 16px;
+	top: 18px;
+	width: 65px;
+	margin-top: -18px;
+}
+.thumb .movie {
+	background-position: bottom right;
+	background-repeat: no-repeat;
+	background-image: url('/stylesheets/extjs/fam/film.gif');
+	position: relative;
+	height: 16px;
+	top: 18px;
+	width: 65px;
+	margin-top: -18px;
+}
+.thumb .pdf {
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-image: url('/images/pdf.png');
+}
+.thumb_for_pdf img {
+	display: none;
+}
+.thumb_for_pdf span {
+	width: 50px;
+	height: 50px;
+	margin: auto;
+}
+.x-form-item-label {
+	margin-top: 0px;
+}
+
+#extjs_body_items .x-tab-panel.left .x-tab-strip, #extjs_body_items .x-tab-panel.right .x-tab-strip {
+	background-image: none;
+	background-color: rgb(223, 232, 246);
+	border-bottom: 0px;
+}
+
+.tab-white-header .x-tab-strip {
+	background-color: white;
+	background-image: none;
+}
+
+#record_edit_form {
+	margin-top: 10px;
+	border: 1px solid rgb(153, 187, 232);
+	background-color: white;
+}
+
+.x-form-file-wrap {
+    position: relative;
+    height: 22px;
+	width: 195px;
+}
+.x-form-file-text {
+	width: 127px;
+}
+.x-form-file-wrap .x-form-file {
+	position: absolute;
+	right: 0;
+	-moz-opacity: 0;
+	filter:alpha(opacity: 0);
+	opacity: 0;
+	z-index: 2;
+    height: 22px;
+}
+.x-form-file-wrap .x-form-file-btn {
+	position: absolute;
+	right: 0;
+	z-index: 1;
+}
+.x-form-file-wrap .x-form-file-text {
+    position: absolute;
+    left: 0;
+    z-index: 3;
+    color: #777;
+}
+
+
+.x-edit-pictures {background: url(/images/extjs/editor/image_add.png) 0 0 no-repeat !important;}
+
+/*
+	These styles are used for the character map
+*/
+.char-item {
+	float: left; 
+	border: 1px solid #99BBE8; 
+	margin: 3px; 
+	text-align: center; 
+	vertical-align: middle; 
+	width: 20px; 
+	height: 20px; 
+	font-size: 14px;
+	color: #15428B;
+	cursor: pointer;
+}
+
+.char-item.x-view-selected {
+	background-color: #777;
+}
+
+.char-over {
+	border: 1px solid #15428B;
+	background-color:#d0def0;
+}

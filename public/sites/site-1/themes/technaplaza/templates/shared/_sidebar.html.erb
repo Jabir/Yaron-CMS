@@ -1,0 +1,19 @@
+<div id="sidebar">
+  <% if @section and @section.categories.present? %>
+    <h4><%= t(:'adva.sidebar.titles.topics') %></h4>
+    <ul>
+    <% @section.categories.each do |category| %>
+      <li><%= link_to_category @section, category %></li>
+    <% end %>
+    </ul>
+  <% end %>
+
+  <% if @section and @section.tag_counts.present? %>
+    <h4><%= t(:'adva.sidebar.titles.tags') %></h4>
+    <ul>
+    <% @section.tag_counts.each do |tag| %>
+      <li><%= link_to_tag @section, tag %></li>
+    <% end %>
+    </ul>
+  <% end %>
+</div>

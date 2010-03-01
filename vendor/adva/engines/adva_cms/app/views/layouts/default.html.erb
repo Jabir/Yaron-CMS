@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+ 		<meta name="generator" content="YP-CMS - Yaron Producties Open source content management platform" />
+    <%#= meta_tags(@article) if @article %>
+    <title>YP-CMS: <%= @site.title %></title>
+    <%= stylesheet_link_tag :default %>
+    <%= javascript_include_tag :common, :default %>
+
+    <%= authorize_elements %>
+    <%= yield :head %>
+  </head>
+  <body>
+    <div id="page">
+      <div id="header" class="clearing">
+        <h1><%= @site.title %></h1>
+        <h2><%= @site.subtitle %></h2>
+
+        <p id="login_links" class="navigation">
+					<%= link_to(t(:'adva.titles.login'), login_path(:return_to => request.request_uri), :id => 'login_link') %>
+        </p>
+        <p id="logout_links" class="navigation" style="display: none;">
+          <%= t(:'adva.users.info.logged_in_as', :name => '<span class="user_name"></span>') %> &middot;
+					<%= link_to(t(:'adva.titles.logout'), logout_path(:return_to => request.request_uri), :id => 'logout_link') %>
+        </p>
+        <%= yield :header %>
+				<%= Menus::Sections.new.build(self).root.render(:id => 'sections') %>
+      </div>
+      <div id="main">
+        <%= render :partial => 'shared/flash' %>  
+        <%= yield %>
+      </div>
+      <%= yield :footer or render :partial => 'shared/footer' %>
+    </div>
+		<%= yield :foot %>
+  </body>
+</html>

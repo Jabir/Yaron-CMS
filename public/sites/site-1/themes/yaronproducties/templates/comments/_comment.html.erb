@@ -1,0 +1,22 @@
+    	  <div id="comments">  
+<%#<li%>
+<div id="<%= dom_id(comment) %>" class="<%= cycle 'alt', '' %> clearing">
+	<div id=comment-box>
+	<div class="gravatar"><img src= "<%= gravatar_url('comment.author_email',40) %>" alt="Gravatar" /></div>
+	<div class="comment">
+  		<%= comment.body_html %>
+		<a href="#<%= dom_id(comment) %>" title="" style="display:none;">#</a>
+	</div>
+	</div>
+  <div class="meta">
+  	
+    <%= datetime_with_microformat(comment.created_at, :format => :long) %>
+    <%= comment.author_link %>
+	<%#= gravatar_url('comment.author_email') %>
+	<% unless comment.approved? %>
+      <p><%= t(:'adva.comments.info.under_review') %></p>
+    <% end  %>
+  </div>
+<%#</li>%>
+</div>
+	      </div>

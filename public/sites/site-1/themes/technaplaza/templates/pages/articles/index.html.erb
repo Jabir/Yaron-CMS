@@ -1,0 +1,28 @@
+
+	<% @articles.each do |article| %>
+		<div class="containerPlus  {buttons:'m', skin:'white'}">
+	        <div class="no"><div class="ne"><div class="n"><%= link_to_content(article) %></div></div>
+	          <div class="o"><div class="e"><div class="c">
+	            <div class="mbcontainercontent">
+			
+			<% if article.excerpt.present? %>
+			
+			<% article.assets.each do |asset| %>
+			
+			<br/><div class="floatleft"><%= image_tag(asset.base_url(:tiny)) %></div>
+			
+			<% end %>
+			
+				<p><%= article.excerpt %></p>
+				
+			<% end %>
+		     </div>
+	          </div></div></div>
+	          <div >
+	            <div class="so"><div class="se"><div class="s"></div></div></div>
+	          </div>
+	        </div>
+	      </div>
+	<% end %>
+
+	

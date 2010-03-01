@@ -1,0 +1,16 @@
+<%
+	table_for @newsletter.issues do |t|
+		t.column :name, :created_at, :actions
+
+		t.row do |r, issue|
+  		r.cell content_status(issue) + link_to_show(issue.title, issue, :class => issue.state)
+			r.cell issue.created_at.to_s(:db)
+			r.cell links_to_actions([:show, :edit, :delete], issue)
+		end
+
+		t.empty :p, :class => 'empty' do
+			t(:'adva.newsletter.no_issues') + "\n" +
+			link_to(t(:'adva.newsletter.link.new_issue'), new_admin_adva_issue_path(@site, @newsletter))
+		end
+	end
+%>

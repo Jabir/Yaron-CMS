@@ -1,0 +1,362 @@
+
+html, body{
+	height:100%;
+}
+
+body {
+	/*background:url("../images/blauwelucht.jpg");*/
+	background:url("../images/background.jpg");
+	/*background-color:#4F90C8;*/
+	font-family:Verdana;
+	width:1024px
+	text-align: center;
+	}
+
+#maincontainer {
+	width:1024px;
+/*	margin:0 80px 0 50px;*/
+	margin-left: auto;
+	margin-right: auto;
+	}
+
+#topsection{
+      /*height: 225px; /*Height of top section*/
+	  width:1024px;
+    }
+	
+#header {
+	background-image:url("../images/header.jpg");
+	background-repeat:no-repeat;
+	width:1024px;
+	/*height:250px;*/
+	height:215px;
+	margin-top:50px;
+	}
+	
+#logo {
+	float:right;
+	/*border:1px #ccc;*/
+	border:0px none;
+	width:175px;
+	height:53px;
+	margin-right:60px;
+	/*margin-top:-65px;*/
+	text-decoration:none;
+	}
+
+#logo a {
+	/*background-image:url("/sites/site-2/themes/technaplaza/images/logo.png");
+	float:right;
+	/*border:1px #ccc;*/
+	border:0px none;
+	width:175px;
+	height:53px;
+	margin-right:60px;
+	/*margin-top:-65px;*/
+}
+
+#logo a:hover {
+	text-decoration:none;
+}
+	
+#contentwrapper{
+    float: left;
+    width: 99%;
+    }
+
+#contentcolumn{
+    margin-left:270px; /*Margins for content column. Should be "0 right-column-width 0 left-column-width*/
+	width:500px;
+    }
+
+#leftcolumn{
+	float: left;
+	width: 260px; /*Width of left column in percentage*/
+	margin-left: -99%;
+    }
+
+#rightcolumn{
+      float: left;
+	  width: 245px; /*Width of right column in pixels*/
+      margin-left: -235px; /*Set margin to -(RightColumnWidth)*/
+    }
+	
+#footer{
+	clear: left;
+	width: 99%;
+	color: #FFF;
+	text-align: center;
+	padding: 4px 0;
+	}
+    
+.content a{
+	text-decoration:none;
+	border: 0px;
+}
+
+.content a:hover{
+	text-decoration:none;
+	border: 0px;
+}
+
+.content img{
+	border:none;
+}
+
+.head_button {
+	font-size: 22px;
+	font-weight: bold;
+	float: left;
+	margin-right: 17px;
+}
+
+.head_button_a {
+	margin-top: 0px;
+}
+
+.head_button_b {
+	margin-top: +2px;
+}
+
+.head_button_c {
+	margin-top: -3px;
+}
+
+.linklist a {
+	font-family:"Trebuchet MS";
+	font-size: 11pt;
+	color:white;
+	text-decoration:none;
+	}
+	
+	.linklist a:hover {
+		color:#E27B12;
+	}
+	
+	.linklist a:selected {
+		color:#E27B12;	
+	}
+
+    .innertube{
+    margin: 5px; /*Margins for inner DIV inside each column (to provide padding)*/
+    margin-top: 0;
+    }
+	
+table td{
+   	white-space:nowrap;
+	}
+	
+ul {
+	list-style-type:none;
+	padding-left:5px;
+}
+
+#chatgirl {
+	background:url("../images/chatgirl.png") no-repeat;
+	height:300px;
+	margin-left:155px;
+	margin-top:-80px;
+	}
+	
+#notepad {
+	background:url("../images/NOTEPAD.png") no-repeat;
+	width:228px;
+	height:210px;
+	padding:40px 0 0 4px;
+	/*float:right;*/
+	/*margin-top:-18px;*/
+}
+	
+#notepad h3{
+	color:#D90046;
+	}
+
+#center-box {
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:100px;
+	position:relative;
+	width:500px;
+}
+	
+/* tooltip styling */ 
+.tooltip { 
+    display:none; 
+    background:url(../images/purple_balloon_big.png) no-repeat; 
+    height:236px; 
+    padding:20px 60px 40px 20px; 
+    width:410px; 
+    font-size:11px; 
+    color:#fff; 
+} 
+
+/* form styling */
+/*#register, #login {
+/*	border:1px outset #ccc;*/
+/*	background:#fff url(../images/gradient/h600.png) repeat-x;
+	padding:20px;
+	width:460px;
+	margin-left:50%;
+	margin-right:50%;
+/*	-moz-border-radius:4px;*/
+}
+
+#register-form, #login-form {
+/*	border:1px outset #ccc;*/
+	background:#fff url(../images/gradient/h600.png) repeat-x;
+	padding:20px;
+	width:460px;
+	margin-left:50%;
+	margin-right:50%;
+/*	-moz-border-radius:4px;*/
+}
+
+/* http://www.quirksmode.org/css/forms.html */
+#inputs label, #inputs input, #inputs textarea, #inputs select {
+	display: block;
+	width: 120px;
+	float: right;
+	}
+
+#inputs label {
+	text-align: right;
+	width: 75px;
+}
+
+#inputs br {
+	clear: left;
+}
+
+/* the overlayed element */
+div.overlay {
+	
+	/* growing background image */
+	background-image:url(../images/white.png);
+	
+	/* dimensions after the growing animation finishes  */
+	width:270px;
+	height:470px;		
+	
+	/* initially overlay is hidden */
+	display:none;
+	
+	/* some padding to layout nested elements nicely  */
+	padding:55px;
+}
+
+/* default close button positioned on upper right corner */
+div.overlay div.close {
+	background-image:url(../images/close.png);
+	position:absolute;
+	right:5px;
+	top:5px;
+	cursor:pointer;
+	height:35px;
+	width:35px;
+}
+
+/* black */
+div.overlay.black {
+	background:url(../images/transparent.png) no-repeat !important;
+	color:#fff;
+}
+
+div.black h2, div.petrol h2 {
+	color:#ddd;		
+}
+
+/*floaters*/
+.floatleft {float:left;padding-right:8px;}
+.floatright {float:right;}
+
+#buddy {
+	background:url(../images/purple-banner.png) no-repeat !important;
+	width:272px;
+	height:100px;
+	padding:43px 0 0 60px;
+}
+
+#join {
+	background:url(../images/redbanner.png) no-repeat !important;
+	width:275px;
+	height:155px;
+	padding:90px 0 0 120px;
+	margin-right:50px;
+}
+
+.goog-te-gadget {
+	height:30px;
+	overflow-y:hidden;
+	margin-bottom:10px;
+}
+
+.goog-logo-link, .goog-logo-link:link, .goog-logo-link:visited, .goog-logo-link:hover, .goog-logo-link:active {
+display:none;
+}
+
+/* tooltip */ 
+/* trigger button */ 
+
+/* the styling of the exposed element */
+#layover {
+	/*border:1px solid #ccc;*/
+	/*margin-left: auto; 
+	margin-right: auto;
+	margin-top: 100px;*/
+	/*text-align:center;*/
+	/*width:500px;*/
+	position:relative;
+	/*height: 100%; 
+	overflow: visible;*/
+}
+
+.meta {
+	font-size: 8pt;
+}
+
+.meta a {
+	font-size: 8pt;
+}
+
+.comment {
+	float:left;
+}
+
+.technaplaza {
+	padding-top:45px;
+	padding-left:320px;
+	overflow:visible;
+	position:absolute;
+}
+
+.technaplaza-logo {
+	font-size:55px;
+	overflow:visible;
+	/*position:absolute;*/
+}
+
+#comment-box {
+	display:inline-block;
+}
+
+.gravatar {
+	margin-top:4px;
+	margin-right:5px;
+	float:left;
+}
+
+#calender {
+	font-size:12px;
+}
+
+#calender a{
+	font-size:13px;
+}
+
+.clearer {
+	clear:both;
+}
+
+.error_message {
+	color:red;
+}

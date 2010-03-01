@@ -1,0 +1,31 @@
+<% if @section.boards.empty? -%>
+	<%= f.hidden_field :board_id %>
+<% elsif @section.boards.size == 1 -%>
+	<%= f.hidden_field :board_id, :value => @section.boards.first.id %>
+<% else -%>
+	<% authorized_tag :p, :moderate, @topic do -%>
+      <%= f.label :board_id, @topic.new_record? ? t(:'adva.boards.labels.board') : t(:'adva.boards.labels.board') %>
+      <%= f.select :board_id, forum_boards_select(@section) %>
+	<% end -%>
+<% end %>
+
+<% fields_for User.anonymous do |author| %>
+  <div id="anonymous_author">
+    <%= author.text_field :name, :label => :'adva.labels.author_name' %>
+    <%= author.text_field :email, :label => :'adva.labels.author_email' %>
+    <%= author.text_field :homepage, :label => true %>
+  </div>
+<% end %>
+
+<%= f.text_field :title, :class => 'wide', :label => true %>
+
+<% if @topic.new_record? %>
+ 	<%= f.text_area :body, :label => true %>
+<% end %>
+
+<% authorized_tag :p, :moderate, @topic do %>
+  <%= f.check_box :sticky, :label => :'adva.topics.states.sticky' %>
+  <%= f.check_box :locked, :label => :'adva.topics.states.locked' %>
+<% end %>
+
+<p id="preview"></p>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+  <results><%= @section.categories.count.to_s %></results>
+  <% @section.categories.each do |category| %>
+    <record>
+      <id><%= category.id.to_s %></id>
+      <title><%= h category.title %></title>
+    </record>
+  <% end %>
+</dataset>

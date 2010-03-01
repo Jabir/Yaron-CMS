@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<%
+  @scheduled_sessions = @conference.scheduled_sessions
+%>
+<dataset>
+  <results><%= @scheduled_sessions.length.to_s %></results>
+  <% @scheduled_sessions.each do |scheduled_session| %>
+    <record>
+      <id><%= scheduled_session.id.to_s %></id>
+      <name><%= h scheduled_session.name %></name>
+      <description><%= h scheduled_session.description %></description>
+      <moderator_password><%= h scheduled_session.moderator_password %></moderator_password>
+      <attendee_password><%= h scheduled_session.attendee_password %></attendee_password>
+      <start_datetime><%= Time.parse(scheduled_session.start_date_time).strftime("%H:%M %d-%m-%Y") %></start_datetime>
+      <end_datetime><%= Time.parse(scheduled_session.end_date_time).strftime("%H:%M %d-%m-%Y") %></end_datetime>
+      <link><%= h scheduled_session.link %></link>
+    </record>
+  <% end %>
+</dataset>

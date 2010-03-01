@@ -1,0 +1,132 @@
+FAQ
+
+- how to configure fckeditor
+
+
+FILTERS
+
+assets:
+	- type checkboxes for :audio, :movie, :picture, :other
+	- tagged with :text
+	- title contains :text
+	- (name contains :text?)
+
+blog articles:
+	- in category :name (select)
+	- tagged with :text 
+	- body contains :text
+	- title contains :text
+	- not published
+	- (published?)
+
+calendar events:
+	- tagged with: text
+	- title contains: text
+	- body contains: text
+	- upcoming
+	- elapsed
+	- recently_added
+
+cached_pages:
+	- x contains: text
+	
+comments:
+	- body contains: text
+	- author name/email/url contains: text
+	- approved
+	- unapproved
+
+
+
+------------------------------------------------------------------------------
+
+    Photo.any_instance.stubs(:save_attached_files).returns(true)
+    Photo.any_instance.stubs(:delete_attached_files).returns(true)
+    Paperclip::Attachment.any_instance.stubs(:post_process).returns(true)
+
+------------------------------------------------------------------------------
+
+
+compare what scrooge is doing to observe active_records to what our cache_references
+plugin is doing: http://github.com/methodmissing/scrooge/tree/master
+
+
+
+# Sections refactoring
+
+Sections are now Contents and Contents are nested sets.
+
+Introduce a new Section type Page, which basically does the same thing as the
+current Section does but adds the ability to configure a single- or 
+multi-article mode. 
+
+
+# Documents refactoring
+
+We have:
+
+Assets       - belong to a Site, can be attached to Contents, have a Paperclip file, don't have a title
+Photos       - belong to an Album, can not be attached to others, have a Paperclip file, have a title
+Documents    - belong to a ?, can be attached to anything, have a Paperclip file, have a title (name)
+Theme::Files - belong to a Theme, can not be attached to others, have a Paperclip file, don't have a title
+
+Obviously we should refactor these to use a single, or maybe two common base classes.
+
+
+------------------------------------------------------------------------------
+
+<component name="blog/recent_articles" section_id="1" count="10" />
+<component name="user/recent_users" section_id="1" count="10" />
+
+------------------------------------------------------------------------------
+
+adva_cms/lib/time_hacks.rb -- i18nize or replace with localize
+adva_cms/helpers/base_helper -- date stuff
+adva_cms/helpers/cached_pages_helper.rb -- i18nize
+adva_cms/helpers/content_helper.rb -- link_to_content_comments
+adva_cms Type, does this have to be localized? see: models/section.rb:66 and line 57
+
+$ grep -R "\Wt('"  *
+engines/adva_cms/app/views/admin/articles/index.html.erb:    <%= t('adva.articles.total_with_count', :count => @articles.total_entries) %>
+engines/adva_cms/app/views/admin/cached_pages/index.html.erb:    <%= t('adva.cached_pages.total_with_count', :count => @cached_pages.total_entries) %>
+engines/adva_cms/app/views/admin/categories/index.html.erb:    <%= t('adva.categories.total_with_count', :count => @categories.total_entries) %>
+engines/adva_user/app/views/password_mailer/reset_password_email.html.erb:<%= t('adva.passwords.notifications.reset_password.body', :name => @user.name, :link => @reset_link) %>
+engines/adva_user/app/views/password_mailer/updated_password_email.html.erb:<%= t('adva.passwords.notifications.password_updated.body', :name => @user.name) %>
+engines/adva_user/app/views/user_mailer/signup_verification_email.html.erb:<%= t('adva.signup.notifications.email_verification.body', :name => @user.name, :link => @verification_url) %>
+
+
+* add roles interface
+* remove observers and make behaviour more explicit by using events/listeners?
+  e.g. page caching
+* redesign/abstract adva_activity
+* redesign rbac to work with arbitrary group memberships
+
+
+- fix taborder (e.g. user profile)
+- categories list layout
+- background shadow bug
+- site settings: spam form layout
+
+
+- profile area ?
+- addings sections ?
+- after adding/editing article should it link to article overview ?
+
+
+- themes list
+- site user details layout and sidebar
+- sections settings not perfect
+
+
+
+# recent activity (site/show): displays all site-users and superusers
+
+# navigation + subnav
+  make buttons highlight active state
+  
+# generate breadcrumbs
+
+# fix /admin/users/1
+
+
+

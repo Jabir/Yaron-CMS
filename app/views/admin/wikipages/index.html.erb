@@ -1,0 +1,244 @@
+<script type="text/javascript" charset="utf-8">
+	//
+	// Voor artikelen specifieke combo-data
+	//
+	var author_store;
+
+	function load_custom_stores () {
+		var author_store_data = new Array();
+		<% User.find(:all).each do |user| %>
+			author_store_data[author_store_data.length] = [<%= user.id.to_s %>, "<%= h user.name.gsub(/\"/,"\\") %>"];
+		<% end %>
+
+		author_store = new Ext.data.ArrayStore({
+			fields: ['author_id', 'name'],
+			data: author_store_data
+		});
+	}
+
+  function modify_main_menu(menu) {
+    var new_menu = [];
+    $.each(
+      menu,
+      function (index,item) {
+        var add_tab = true;
+        add_tab = !(/right/.test(item.id));
+				if (add_tab) {
+          new_menu[new_menu.length] = item;
+        }
+      }
+    );
+		return new_menu;
+	}
+
+
+	//
+	// Init CRUD
+	//
+	function extjs_body_items() {
+		load_custom_stores();
+		return init_lico_adva_crud({
+			columns: [{
+				label: 'titel',
+				name: 'title',
+				type: 'string',
+				submit_value: 'wikipage[title]'
+			},{
+				label: 'Redacteur',
+				name: 'author',
+				type: 'combo',
+				submit_value: 'wikipage[author_id]',
+				combo: {
+					value: 'author_id',
+					label: 'name',
+					store: author_store
+				}
+			},{
+				label: 'Versie',
+				name: 'version', 
+				type: 'string',
+			},{
+				label: 'Updated',
+				name: 'updated_at',
+				type: 'string',
+			},{
+				label: 'Commentaren',
+				name: 'comment',
+				type: 'string',
+			}],
+			add_record_path: '<%= admin_wikipages_path(@site.id, @section) %>',
+			add_record_post: [{
+				key: "wikipage[body]",
+				value: "&nbsp;"
+			},{
+				key: "wikipage[updated_at]",
+				value: ""
+			}],
+			store: {
+				url: '<%= url_for admin_wikipages_path(@site.id, @section) %>.xml',
+				sort: {
+					by: 'title',
+					order: 'asc'
+				}
+			},
+      grid: {
+        //empty_details: t['board']['selection_empty']
+      },
+      show: {
+        url: '<%= edit_admin_wikipage_path(@site, @section, '!recordid!') %>',
+        custom_form: edit_wikipage_form,
+        custom_form_values: edit_wikipage_form_values
+      },
+      edit: {
+        url: '<%= admin_wikipage_path(@site, @section, '!recordid!') %>'
+      },
+      destroy: {
+        url: '<%= admin_wikipage_path(@site, @section, '!recordid!') %>',
+        //message: t['board']['delete_confirm']
+      }
+    });
+  }
+
+  var updated_at;
+	function edit_wikipage_form (record) {
+		var author_store_data = new Array();
+		<% User.find(:all).each do |user| %>
+			author_store_data[author_store_data.length] = [<%= user.id.to_s %>, "<%= h user.name.gsub(/\"/,"\\") %>"];
+		<% end %>
+
+		var title = xmlvalue(record,"title");
+		updated_at = xmlvalue(record,"updated_at");
+		var author = xmlvalue(record,"author");
+		var body = xmlvalue(record,"body");
+		selected_record_title = title;
+
+		var options = record.getElementsByTagName("options")[0];
+		var permalink = xmlvalue(options,"permalink");
+		var tag_list = xmlvalue(options,"tag_list");
+		var filter = xmlvalue(options,"filter");
+
+		return [{
+			layout: 'column',
+			border: false,
+			items: [{
+				columnWidth: .5,
+				layout: 'form',
+				border: false,
+				items: [{
+					xtype: 'textfield',
+					fieldLabel: 'titel',
+					id: 'record_title',
+					name: 'title',
+					value: title
+				}]
+			}]
+	  },{
+			xtype: 'tabpanel',
+			plain: true,
+			activeTab: 0,
+	    height: 195,
+			defaults: {
+				bodyStyle: 'padding:10px'
+			},
+			items: [{
+				title: 'Wiki',
+        layout: 'fit',
+        items: {
+            xtype: 'htmleditor',
+            id: 'record_body',
+            name: 'body',
+            value: body
+        }
+			},{
+				title: 'Opties',
+				layout: 'column',
+				border: false,
+				items: [{
+					columnWidth: .5,
+					layout: 'form',
+					border: false,
+					items: [{
+						xtype: 'textfield',
+						fieldLabel: 'Permalink',
+						name: 'permalink',
+						value: '',
+						id: 'record_permalink',
+						value: permalink
+					},{
+						xtype: 'textfield',
+						fieldLabel: 'Tag list',
+						name: 'tag_list',
+						id: 'record_tag_list',
+						value: tag_list
+					},{
+						xtype: 'combo',
+						fieldLabel: 'Filter',
+						name: 'filter',
+						hiddenName: 'record_filter',
+						hiddenId: 'record_filter',
+						value: xmlvalue(record, "filter"),
+						mode: 'local',
+						valueField: 'item_id',
+						displayField: 'text',
+						triggerAction: 'all',
+						store: new Ext.data.ArrayStore({
+						  fields: ['item_id','text'],
+						  data: <%= filter_options.collect{|a| [a[1],a[0]]}.to_json().to_s %>
+						})
+					}]
+				},{
+					columnWidth: .5,
+					layout: 'form',
+					border: false,
+					items: [{
+						xtype: 'combo',
+						fieldLabel: '<%= t(:'adva.labels.comment_filter') %>',
+						name: 'comment_age',
+						hiddenName: 'record_comment_age',
+						hiddenId: 'record_comment_age',
+						value: xmlvalue(record, "comment_age"),
+						mode: 'local',
+						valueField: 'item_id',
+						displayField: 'text',
+						triggerAction: 'all',
+						store: new Ext.data.ArrayStore({
+						  fields: ['item_id','text'],
+						  data: <%= comment_expiration_options.collect{|a| [a[1],a[0]]}.to_json().to_s %>
+						})
+					},{
+						xtype: 'combo',
+						fieldLabel: 'Gewijzigd door',
+						name: 'author_id',
+						value: author,
+						triggerAction: 'all',
+        		store: new Ext.data.ArrayStore({
+        			fields: ['author_id', 'name'],
+        			data: author_store_data
+        		}),
+						valueField: 'author_id',
+						displayField: 'name',
+						mode: 'local',
+						hiddenName: 'record_author_id',
+						hiddenId: 'record_author_id'
+					}]
+				}]
+			}]
+		}];
+	}
+
+	function edit_wikipage_form_values (parameters) {
+		parameters["wikipage[updated_at]"] = updated_at;
+		parameters["wikipage[title]"] = document.getElementById('record_title').value;
+		parameters["wikipage[body]"] = document.getElementById('record_body').value;
+		if (document.getElementById('record_author_id')) {
+			parameters["wikipage[author_id]"] = document.getElementById('record_author_id').value;
+			parameters["wikipage[permalink]"] = document.getElementById('record_permalink').value;
+			parameters["wikipage[tag_list]"] = document.getElementById('record_tag_list').value;
+			parameters["wikipage[comment_age]"] = document.getElementById('record_comment_age').value;
+			parameters["wikipage[filter]"] = document.getElementById('record_filter').value;
+		}
+		return parameters;
+	}
+</script>
+<% content_for :sidebar do -%>
+<% end -%>

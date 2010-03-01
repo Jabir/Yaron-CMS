@@ -1,0 +1,6 @@
+<% form_for Asset.new, :url => admin_assets_path, :html => { :id => 'asset_upload_form', :target => 'asset_upload_iframe', :multipart => true} do |f| %>
+  <%= f.file_field :data, :name => "assets[][data]", :id => '', :class => 'file_field', :label => :'adva.assets.labels.upload.files' %>
+  <%= f.text_field :title, :name => "assets[][title]", :id => '', :class => 'title_field', :label => :'adva.assets.labels.upload.title' %>
+  <%= f.text_field :tag_list, :name => "assets[][tag_list]", :id => '', :class => 'taglist_field', :label => :'adva.assets.labels.upload.tags' %>
+<% end %>
+<iframe src="" onload="asset_upload_complete(this)" name="asset_upload_iframe" id="asset_upload_iframe" style="height: 1px; visibility: hidden;"></iframe>

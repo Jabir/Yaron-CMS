@@ -1,0 +1,105 @@
+<script type="text/javascript" charset="utf-8">
+  function modify_main_menu(menu) {
+    return [];
+  }
+	
+	function extjs_body_items() {
+		return {
+      region: 'center',
+      layout: 'border',
+      title: 'Nieuwsbrief toevoegen',
+      bodyStyle: 'background-color: white',
+      border: true,
+      items: {
+  			region: 'center',
+  			xtype: 'form',
+  			errorReader: new Ext.data.CrudReader(),
+        bodyStyle: 'padding: 15px; padding-bottom: 0px; background-color: white',
+  			border: false,
+  			items: [{
+          // region: 'center',
+          // xtype: 'tabpanel',
+          // activeItem: 0,
+          // anchor: '100% 100%',
+          //           baseCls: 'tab-white',
+          // defaults: {
+          //  layout: 'form',
+          //  labelWidth: 120,
+          //  defaultType: 'textfield',
+          //             bodyStyle: 'padding:10px; border-top: 0px',
+          //             border: true
+          // },
+          //          items: [{
+          //            title: '<%= t(:'adva.newsletter.title.new') %>',
+          //            items: [{
+    					fieldLabel: '<%= t(:'adva.newsletter.label.title') %>',
+    					name: 'newsletter[title]',
+    					value: document.getElementById('newsletter_title').value,
+    					xtype: 'textfield',
+    					width: 200
+    				},{
+    					fieldLabel: '<%= t(:'adva.newsletter.label.desc') %>',
+    					name: 'newsletter[desc]',
+    					value: document.getElementById('newsletter_desc').value,
+    					xtype: 'textarea',
+    					width: 175
+    				},{
+    					xtype: 'hidden',
+    					name: 'newsletter[published]',
+    					value: '0'
+    				},{
+    					fieldLabel: '<%= t(:'adva.newsletter.label.published') %>',
+    					name: 'newsletter[published]',
+    					inputValue: '1',
+    					xtype: 'checkbox',
+    					checked: document.getElementById('newsletter_published').checked
+          //  }]
+          // }]
+  			}],
+  		buttons: [{
+  			text: 'Opslaan',
+  			iconCls: 'silk-accept',
+  			handler: function() {
+    			var mask = new Ext.LoadMask(Ext.getBody(), {
+    				msg: t['loader_text']
+    			});
+    			mask.show();
+
+          $.post('<%= admin_adva_newsletters_path %>',
+            $(document.getElementsByTagName("form")[0]).serialize(),
+            function(responseText) {
+              responseText = responseText.replace(/[\r\n]/g, "").replace(/.*?(<div class="errorExplanation".*?<\/div>).*/, "$1").replace(/^.*\}/,"");
+              if (/errorExplanation/.test(responseText)) {
+                 mask.hide();
+                 Ext.Msg.minWidth = 400;
+                 Ext.Msg.show({
+                     title: t['error_title'],
+                     msg: responseText,
+                     buttons: {
+                         ok: t['ok_text']
+                     },
+                     icon: Ext.MessageBox.WARNING
+                 });
+              } else {
+                window.location = '<%= admin_adva_newsletters_path %>';
+              }
+            }
+          );
+        }
+  		},{
+  			text: 'Annuleren',
+  			iconCls: 'silk-delete',
+  			handler: function() {
+          window.location = '<%= admin_adva_newsletters_path %>';
+  			}
+  		}]
+		}
+    };
+	}
+</script>
+<h2><%= t(:'adva.newsletter.title.new') %></h2>
+<%= error_messages_for :newsletter %>
+<% split_form_for :newsletter, @newsletter, :url => admin_adva_newsletters_path, :html => { :multipart => true } do |f| %>
+  <%= render :partial => 'form', :locals => {:f => f} %>  
+  <% save_or_cancel_links(f, :cancel_url => admin_adva_newsletters_path) %>
+<% end %>

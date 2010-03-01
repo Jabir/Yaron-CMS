@@ -1,0 +1,450 @@
+<script type="text/javascript" charset="utf-8">
+  //
+  // Voor artikelen specifieke combo-data
+  //
+  var category_store;
+  var author_store;
+
+  function load_custom_stores () {
+    var category_store_data = new Array();
+
+    <% @section.categories.roots.each do |category| %>
+      category_store_data[category_store_data.length] = [<%= category.id.to_s %>, "<%= h category.title.gsub(/\"/,"\\") %>"];
+    <% end %>
+
+    category_store = new Ext.data.ArrayStore({
+      fields: ['category_id', 'title'],
+      data: category_store_data
+    });
+
+    var author_store_data = new Array();
+    <% @section.site.users.find(:all).each do |user| %>
+      author_store_data[author_store_data.length] = [<%= user.id.to_s %>, "<%= h user.name.gsub(/\"/,"\\") %>"];
+    <% end %>
+
+    author_store = new Ext.data.ArrayStore({
+      fields: ['author_id', 'name'],
+      data: author_store_data
+    });
+  }
+  
+  //
+  // Init CRUD
+  //
+  function tab_content (tab_title) {
+    return {
+      title: tab_title,
+      items: body_items(),
+      layout:'border',
+      defaults: {
+          collapsible: false,
+          split: false
+      }
+    }
+  }
+  function body_items() {
+    load_custom_stores();
+
+    return init_lico_adva_crud({
+      columns: [{
+          label: 'Titel',
+          name: 'title',
+          type: 'string',
+          submit_value: 'article[title]'
+        }, {
+          label: 'Datum',
+          name: 'created_at', 
+          type: 'date',
+          submit_value: 'article[updated_at]'
+        }, {
+          label: 'Redacteur',
+          name: 'author',
+          type: 'combo',
+          submit_value: 'article[author_id]',
+          combo: {
+            value: 'author_id',
+            label: 'name',
+            store: author_store
+          }
+        }, {
+          label: 'Categorie',
+          name: 'category',
+          type: 'combo',
+          submit_value: 'article[category_id]',
+          combo: {
+            value: 'category_id',
+            label: 'title',
+            store: category_store
+          }
+        }, {
+          label: 'Concept',
+          name: 'draft',
+          type: 'boolean'
+      }],
+      add_record_path: '<%= admin_articles_path(@site, @section) %>',
+      store: {
+        url: '<%= url_for list_admin_articles_url(@section, @site) %>',
+        sort: {
+          by: 'created_at',
+          order: 'asc'
+        }
+      },
+      grid: {
+        empty_details: 'Selecteer een artikel voor details.'
+      },
+      show: {
+        url: '<%= edit_admin_article_path(@site, @section, '!recordid!') %>',
+        custom_form: edit_article_form,
+        custom_form_values: edit_article_form_values
+      },
+      edit: {
+        url: '<%= admin_article_path(@site, @section, '!recordid!') %>',
+        custom_actions: function(doc) {
+          var id = xmlvalue(doc,"id");
+          var draft = xmlvalue(doc,"draft");
+          if (draft=="1") {
+            return [{
+                text: 'Publiceren',
+                iconCls: 'silk-accept',
+                handler: function(btn, ev) {
+                    if (grid.getSelectionModel().hasSelection()) {
+                        var cell = grid.getSelectionModel().getSelected();
+
+                      	Ext.Msg.show({
+                      		id: 'publish-confirm',
+                      		title: t['article']['publish']['title'],
+                      		msg: t['article']['publish']['confirm'],
+                      		buttons: {
+                      			ok: t['article']['publish']['ok'],
+                      			cancel: cancel_text
+                      		},
+                      		icon: Ext.MessageBox.QUESTION,
+                      		fn: function(btn) {
+                      			if (btn == "ok") {
+                      				var mask = new Ext.LoadMask(Ext.getBody(), {
+                      					msg: loader_text
+                      				});
+                      				mask.show();
+
+                              d = new Date();
+                              
+                      				$.ajax({
+                      					url: crud_options.edit.url.replace(/!recordid!/, id),
+                      					cache: false,
+                      					data: {
+                      						authenticity_token: window._auth_token,
+                                  _method: 'put',
+                      						"article[published_at]": d.getDate()+"-"+(d.getMonth()+1)+"-"+d.getFullYear()
+                      					},
+                      					type: 'POST',
+                      					success: function(html) {
+                      						store.reload();
+                      						mask.hide();
+                      					}
+                      				});
+                      			}
+                      		}
+                      	});
+                    }
+                },
+                scope: this
+              }]
+          } else {
+            return [{
+                text: 'Publicatie intrekken',
+                iconCls: 'silk-delete',
+                handler: function(btn, ev) {
+                    if (grid.getSelectionModel().hasSelection()) {
+                        var cell = grid.getSelectionModel().getSelected();
+
+                      	Ext.Msg.show({
+                      		id: 'publish-confirm',
+                      		title: t['article']['publish_revoke']['title'],
+                      		msg: t['article']['publish_revoke']['confirm'],
+                      		buttons: {
+                      			ok: t['article']['publish_revoke']['ok'],
+                      			cancel: cancel_text
+                      		},
+                      		icon: Ext.MessageBox.QUESTION,
+                      		fn: function(btn) {
+                      			if (btn == "ok") {
+                      				var mask = new Ext.LoadMask(Ext.getBody(), {
+                      					msg: loader_text
+                      				});
+                      				mask.show();
+
+                              d = new Date();
+                              
+                      				$.ajax({
+                      					url: crud_options.edit.url.replace(/!recordid!/, id),
+                      					cache: false,
+                      					data: {
+                      						authenticity_token: window._auth_token,
+                                  _method: 'put',
+                      						"article[published_at]": ""
+                      					},
+                      					type: 'POST',
+                      					success: function(html) {
+                      						store.reload();
+                      						mask.hide();
+                      					}
+                      				});
+                      			}
+                      		}
+                      	});
+                    }
+                },
+                scope: this
+              }]
+          }
+        }
+      },
+      destroy: {
+        url: '<%= admin_article_path(@site, @section, '!recordid!') %>',
+        message: "Wil je het geselecteerde artikel echt verwijderen?<br /><br />Het verwijderen kan niet ongedaan gemaakt worden."
+      }
+    });
+  }
+  
+  function edit_article_form_values (parameters) {
+    parameters["article[title]"] = document.getElementById('record_title').value;
+    parameters["article[author_id]"] = document.getElementById('record_author_id').value;
+    parameters["article[updated_at]"] = document.getElementById('record_date').value;
+    parameters["article[category_id]"] = document.getElementById('record_category_id').value;
+    parameters["article[excerpt]"] = document.getElementById('record_excerpt').value;
+    if (document.getElementById('record_body')) {
+      parameters["article[body]"] = document.getElementById('record_body').value;
+    }
+    if (document.getElementById('record_permalink')) {
+      parameters["article[permalink]"] = document.getElementById('record_permalink').value;
+      parameters["article[tag_list]"] = document.getElementById('record_tag_list').value;
+    }
+    if (document.getElementById('record_meta_keywords')) {
+      parameters["article[meta_keywords]"] = document.getElementById('record_meta_keywords').value;
+      parameters["article[meta_description]"] = document.getElementById('meta_description').value;
+      parameters["article[meta_author]"] = document.getElementById('record_meta_author').value;
+      parameters["article[meta_copyright]"] = document.getElementById('record_meta_copyright').value;
+      parameters["article[meta_geourl]"] = document.getElementById('record_meta_geourl').value;
+    }
+  	return parameters;
+  }
+  
+  function edit_article_form (record) {
+      var title = xmlvalue(record,"title");
+      var date = xmlvalue(record,"date");
+      var author = xmlvalue(record,"author");
+      var category = xmlvalue(record,"category");
+      var excerpt = xmlvalue(record,"excerpt");
+      var body = xmlvalue(record,"body");
+      var draft = xmlvalue(record,"draft");
+
+      selected_record_title = title;
+
+      var meta = record.getElementsByTagName("meta")[0];
+      var meta_keywords = xmlvalue(meta,"keywords");
+      var meta_description = xmlvalue(meta,"description");
+      var meta_author = xmlvalue(meta,"author");
+      var meta_copyright = xmlvalue(meta,"copyright");
+      var meta_geourl = xmlvalue(meta,"geourl");
+
+      var options = record.getElementsByTagName("options")[0];
+      var permalink = xmlvalue(options,"permalink");
+      var tag_list = xmlvalue(options,"tag_list");
+      var filter = xmlvalue(options,"filter");
+
+  	return [
+  	{
+  	    layout: 'column',
+  	    border: false,
+  	    items: [
+  	    {
+  	        columnWidth: .5,
+  	        layout: 'form',
+  	        border: false,
+  	        items: [
+  	        {
+  	            xtype: 'textfield',
+  	            fieldLabel: 'Titel',
+  	            id: 'record_title',
+  	            name: 'title',
+  	            anchor: '95%',
+  	            value: title
+  	        },
+  	        {
+  	            xtype: 'datefield',
+  	            fieldLabel: 'Datum wijziging',
+  	            id: 'record_date',
+  	            name: 'date',
+  	            anchor: '95%',
+  	            format: 'd M Y',
+  	            value: date
+  	        }
+  	        ]
+  	    },
+  	    {
+  	        columnWidth: .5,
+  	        layout: 'form',
+  	        border: false,
+  	        items: [
+  	        {
+  	            xtype: 'combo',
+  	            fieldLabel: 'Gewijzigd door',
+  	            name: 'author_id',
+  	            anchor: '95%',
+  	            value: author,
+  	            store: author_store,
+  	            valueField: 'author_id',
+  	            displayField: 'name',
+  	            mode: 'local',
+  	            hiddenName: 'record_author_id',
+  	            hiddenId: 'record_author_id'
+  	        },
+  	        {
+  	            xtype: 'combo',
+  	            anchor: '95%',
+  	            fieldLabel: 'Categorie',
+  	            name: 'category_id',
+  	            valueField: 'category_id',
+  	            displayField: 'title',
+  	            store: category_store,
+  	            value: category,
+  	            mode: 'local',
+  	            hiddenName: 'record_category_id',
+  	            hiddenId: 'record_category_id'
+  	        }
+  	        ]
+  	    }
+  	    ]
+  	},
+  	{
+  	    xtype: 'tabpanel',
+  	    plain: true,
+  	    activeTab: 0,
+  	    height: 235,
+  	    defaults: {
+  	        bodyStyle: 'padding:10px'
+  	    },
+  	    items: [
+  	    {
+  	        cls: 'x-plain',
+  	        title: 'Inleiding',
+  	        layout: 'fit',
+  	        items: {
+  	            xtype: 'htmleditor',
+  	            id: 'record_excerpt',
+  	            name: 'excerpt',
+  	            value: excerpt
+  	        }
+  	    },
+  	    {
+  	        cls: 'x-plain',
+  	        title: 'Hele artikel',
+  	        layout: 'fit',
+  	        items: {
+  	            xtype: 'htmleditor',
+  	            id: 'record_body',
+  	            name: 'body',
+  	            value: 'test',
+  	            value: body
+  	        }
+  	    },
+  	    {
+  	        title: 'Assets',
+  	        layout: 'form',
+  	        defaults: {
+  	            width: 230
+  	        },
+  	        defaultType: 'textfield',
+  	        items: []
+  	    },
+  	    {
+  	        title: 'Opties',
+  	        layout: 'form',
+  	        defaults: {
+  	            width: 230
+  	        },
+  	        defaultType: 'textfield',
+  	        items: [
+  	        {
+  	            fieldLabel: 'Permalink',
+  	            name: 'permalink',
+  	            value: '',
+  	            id: 'record_permalink',
+  	            value: permalink
+  	        },
+  	        {
+  	            fieldLabel: 'Tag list',
+  	            name: 'tag_list',
+  	            id: 'record_tag_list',
+  	            value: tag_list
+  	        }
+  	        ]
+  	    },
+  	    {
+  	        title: 'Meta tags',
+  	        layout: 'column',
+  	        border: false,
+  	        items: [
+  	        {
+  	            columnWidth: .5,
+  	            layout: 'form',
+  	            border: false,
+  	            items: [
+  	            {
+  	                xtype: 'textfield',
+  	                fieldLabel: 'Keywords',
+  	                id: 'record_meta_keywords',
+  	                name: 'meta_keywords',
+  	                anchor: '95%',
+  	                value: meta_keywords
+  	            },
+  	            {
+  	                xtype: 'textarea',
+  	                fieldLabel: 'Description',
+  	                id: 'meta_description',
+  	                name: 'record_meta_description',
+  	                anchor: '95%',
+  	                value: meta_description
+  	            }
+  	            ]
+  	        },
+  	        {
+  	            columnWidth: .5,
+  	            layout: 'form',
+  	            border: false,
+  	            items: [
+  	            {
+  	                xtype: 'textfield',
+  	                fieldLabel: 'Author',
+  	                name: 'meta_author',
+  	                id: 'record_meta_author',
+  	                anchor: '95%',
+  	                value: meta_author
+  	            },
+  	            {
+  	                xtype: 'textfield',
+  	                fieldLabel: 'Copyright',
+  	                name: 'meta_copyright',
+  	                id: 'record_meta_copyright',
+  	                anchor: '95%',
+  	                value: meta_copyright
+  	            },
+  	            {
+  	                xtype: 'textfield',
+  	                fieldLabel: 'Geourl',
+  	                name: 'meta_geourl',
+  	                id: 'record_meta_geourl',
+  	                anchor: '95%',
+  	                value: meta_geourl
+  	            }
+  	            ]
+  	        }
+  	        ]
+
+  	    }
+  	    ]
+  	}
+  	];
+  }
+</script>
+<div id="crud_list"></div>

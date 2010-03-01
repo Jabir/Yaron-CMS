@@ -1,0 +1,153 @@
+<%
+  only_movies = false unless only_movies
+  use_dnd = false unless use_dnd
+%>
+<script type="text/javascript" charset="utf-8">
+  var import_window = false;
+
+  var sidebar_assets;
+  var assets_paging;
+  function sidebar_drag_view () {
+    var sidebar_items = sidebar_drag_assets();
+    var assets_paging = new Ext.PagingToolbar({
+        pageSize: 18,
+        store: assets_data
+    });
+    return {
+			border: true,
+			title: <%= only_movies ? "'Films'" : "t['assets']['title']" %>,
+			width: 344,
+			minSize: 344,
+			maxSize: 344,
+			id: 'sb',
+			layout: 'border',
+			items: [
+			  sidebar_items
+			],
+      tbar: [{
+        text: t['new_text'],
+        iconCls: 'silk-add',
+        handler: function(btn, ev) {
+          generic_loader.show();
+          in_submit = false;
+          $.ajax({
+            type: 'GET',
+            dataType: "script",
+            url: '<%= new_admin_asset_path(@site) %>.js',
+            success: function(data) {
+              generic_loader.hide();
+              var items = {
+                border: false,
+                bodyStyle: "background-color: rgb(223, 232, 246); padding: 10px",
+                html: data
+              };
+              
+              if (popup_body_items) {
+                items = popup_body_items;
+              }
+              
+              import_window = new Ext.Window({
+                layout: 'fit',
+                width: 400,
+                title: 'Asset toevoegen',
+                height: 167,
+                modal: true,
+                shadow: true,
+                plain: true,
+                border: false,
+                closeAction: 'close',
+                items: items,
+              });
+              import_window.show(this);
+            }
+          });
+        },
+        scope: this
+      }],
+      bbar: assets_paging
+		}
+  }
+  var assets_data;
+  var asset_edit_id;
+  function sidebar_drag_assets () {
+    if (!sidebar_assets) {
+      assets_data = new Ext.data.XmlStore({
+          proxy : new Ext.data.HttpProxy({
+              method: 'GET',
+              prettyUrls: false,
+              <% if only_movies %>
+                url: '<%= url_for admin_assets_url(@site) %>.xml?only=movie'
+              <% else %>
+                url: '<%= url_for admin_assets_url(site) %>.xml'
+              <% end %>
+          }),
+          autoLoad: {params:{start: 0, limit: 18}},
+          root: 'record',
+          record: 'record',
+          id:'title',
+          totalRecords: 'results',
+          fields: ['id', 'title', 'data_content_typ', 'data_file_name', 'thumb_url', 'css_class']
+      });
+      
+      sidebar_assets = new Ext.DataView({
+        itemSelector: 'div.thumb-wrap',
+        region: "center",
+        style: 'padding-top: 5px; overflow:auto',
+        multiSelect: true,
+        border: false,
+        <% if use_dnd %>
+        plugins: new Ext.DataView.DragSelector({dragSafe:true}),
+        <% end %>
+        store: assets_data,
+        tpl: new Ext.XTemplate(
+            '<tpl for=".">',
+            '<div class="thumb-wrap" id="asset_{id}" style="cursor: pointer">',
+            '<div class="thumb thumb_for_{css_class}"><span class="{css_class}"></span><img src="{thumb_url}" class="thumb-img"></div>',
+            '<span>{title}</span></div>',
+            '</tpl>'
+        ),
+        listeners: {
+        		dblclick: function(dataView,idx, node, e) {
+              generic_loader.show();
+              in_submit = false;
+              asset_edit_id = node.id.replace(/.*_/,"");
+              $.ajax({
+                type: 'GET',
+                dataType: "script",
+                url: '<%= edit_admin_asset_path(@site, "asset_id") %>'.replace(/asset_id/,asset_edit_id),
+                success: function(data) {
+                  generic_loader.hide();
+                  var items = {
+                    border: false,
+                    bodyStyle: "background-color: rgb(223, 232, 246); padding: 10px",
+                    html: data
+                  };
+
+                  if (popup_body_items) {
+                    items = popup_body_items;
+                  }
+
+                  import_window = new Ext.Window({
+                    layout: 'fit',
+                    width: 400,
+                    title: 'Asset bewerken',
+                    height: 167,
+                    modal: true,
+                    shadow: true,
+                    plain: true,
+                    border: false,
+                    closeAction: 'close',
+                    items: items,
+                  });
+                  import_window.show(this);
+                }
+              });
+        		}
+        	}
+      });
+    }
+  
+    return sidebar_assets;
+  }
+  
+</script>

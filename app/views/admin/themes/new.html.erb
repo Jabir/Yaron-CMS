@@ -1,0 +1,5 @@
+<% if @theme && @theme.errors && @theme.errors.size > 0 %>
+  <%= error_messages_for(:theme) %>
+<% else %>
+  CRUD_OK
+<% end %>

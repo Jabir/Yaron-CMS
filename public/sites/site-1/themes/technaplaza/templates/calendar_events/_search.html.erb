@@ -1,0 +1,20 @@
+<% form_tag calendar_events_path(@section), :method => 'get', :id => 'calendar_search' do -%>
+  
+  <%= text_field_tag 'query', params[:query], :id => 'query' %>
+
+  <select name="filter" id="filter_list">
+    <%= options_for_select [[ t(:'adva.calendar.options.filter.tags'), 'tags'],
+                            [ t(:'adva.calendar.options.filter.title'), 'title'],
+                            [ t(:'adva.calendar.options.filter.body'), 'body']],
+                            params[:filter] %>
+  </select>
+
+  <select name="scope" id="time_filter_list">
+    <%= options_for_select [[ t(:'adva.calendar.options.filter.upcoming'), 'upcoming'],
+                            [ t(:'adva.calendar.options.filter.elapsed'), 'elapsed'],
+                            [ t(:'adva.calendar.options.filter.recently_added'), 'recently_added']],
+                            params[:scope] %>
+  </select><br/><br/>
+
+  <input type="submit" id="calendar_events_search" value="<%= t(:'adva.calendar.buttons.search') %>" />
+<% end -%>

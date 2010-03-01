@@ -1,0 +1,12 @@
+<%
+  begin
+    day_used = false
+    @events.each do |e|
+      day_used = true if e.start_date <= (@t + 1.day) && e.end_date >= @t
+    end
+    -%>
+    <%= @t.strftime("%d") if day_used -%>
+    <%
+    @t = @t + 1.day
+  end while @t <= @t_end
+-%>

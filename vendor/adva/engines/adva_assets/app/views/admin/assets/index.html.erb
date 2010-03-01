@@ -1,0 +1,28 @@
+
+<% if @recent.any? %>
+
+	<div id="assets_list" class="recent_assets">
+	  <div class="assets_row">
+	    <%= render :partial => 'asset', :collection => @recent, :locals => {:size => :thumb} %>
+	  </div>
+  </div>
+
+  <% if @assets.any? %>
+		<div id="assets_list">
+	    <% @assets.in_groups_of(4) do |group| -%>
+	      <div class="assets_row">
+	        <%= render :partial => 'asset', :collection => group, :locals => {:size => :thumb} %>
+	      </div>
+	    <% end %>
+    </div>
+  <% end %>
+
+<% else %>
+  <p class="empty">
+    <%= t params[:filters] ? :'adva.assets.no_files_filtered' : :'adva.assets.no_files' %>
+  </p>
+<% end %>
+
+<%= will_paginate @assets, :id => 'pagination' %>
+
+<%# render :partial => 'sidebar' %>

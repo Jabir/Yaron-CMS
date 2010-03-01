@@ -1,0 +1,30 @@
+<%
+	table_for @wikipages do |t|
+		t.column :wikipage, :version, :updated, :author, :comments, :actions
+
+		# t.head.row do |r|
+		# 	r.cell t(:'adva.common.wikipage', :count => @wikipages.total_entries), :class => :total, :colspan => :all
+		# end
+		
+		t.row do |r, wikipage|
+  		r.cell content_status(wikipage) + link_to_edit(wikipage.title, wikipage, :class => 'wikipage')
+			r.cell wikipage.version
+			r.cell wikipage.updated_at.strftime('%d.%m.%Y %H:%M')
+			r.cell link_to(wikipage.author_link, admin_site_user_path(@site, wikipage.author))
+			r.cell wikipage.comments.present? ? link_to(wikipage.comments.size, admin_comments_path(:content_id => wikipage.id)) : 'none'
+			r.cell link_to_preview(wikipage) + "\n" +
+						 links_to_actions([:edit, :delete], wikipage)
+		end
+		
+		t.foot.row do |r|
+			r.cell will_paginate(@wikipages), :class => :pagination, :colspan => :all
+		end
+
+		t.empty :p, :class => 'empty' do
+	    params[:filter] ?
+	      t(:'adva.wikipage.view.index.no_matching_pages_notice') :
+	      t(:'adva.wikipage.view.index.no_wikipages_notice') + "\n" +
+	      link_to(t(:'adva.wikipage.view.index.link_to_create_one_now'), new_admin_wikipage_path(@site))
+		end
+	end
+%>

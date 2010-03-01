@@ -1,0 +1,144 @@
+<script type="text/javascript" charset="utf-8">
+  function extjs_body_items() {
+    return init_lico_adva_crud({
+      columns: [{
+          label: 'Naam',
+          name: 'name',
+          type: 'string',
+          submit_value: 'scheduled_session[name]'
+        }, {
+          label: 'Start',
+          name: 'start_datetime', 
+          type: 'datetime',
+          submit_value: 'scheduled_session[start_datetime]'
+        }, {
+          label: 'Eind',
+          name: 'end_datetime', 
+          type: 'datetime',
+          submit_value: 'scheduled_session[end_datetime]'
+      }],
+      add_record_path: '<%= admin_conferences_path %>',
+      store: {
+        url: '<%= url_for admin_conferences_url %>.xml',
+        sort: {
+          by: 'name',
+          order: 'asc'
+        }
+      },
+      grid: {
+        empty_details: 'Selecteer een conferentie voor details.'
+      },
+      show: {
+        url: '<%= admin_conference_path(:id => '!recordid!') %>',
+        custom_form: edit_conference_form,
+        custom_form_values: edit_conference_form_values
+      },
+      edit: {
+        url: '<%= admin_conference_path(:id => '!recordid!') %>'
+      },
+      destroy: {
+        url: '<%= admin_conference_path(:id => '!recordid!') %>',
+        message: "Wil je de geselecteerde conferentie echt verwijderen?<br /><br />Het verwijderen kan niet ongedaan gemaakt worden."
+      }
+    });
+  }
+  
+  function edit_conference_form (record) {
+    return [{
+      layout: 'column',
+      border: false,
+      items: {
+        columnWidth: .5,
+        layout: 'form',
+        border: false,
+        items: {
+          xtype: 'textfield',
+          fieldLabel: 'Naam',
+          id: 'record_name',
+          name: 'name',
+          anchor: '95%',
+          value: xmlvalue(record,"name")
+        }
+      }
+    },{
+      xtype: 'tabpanel',
+	    plain: true,
+	    activeTab: 0,
+	    height: 195,
+	    defaults: {
+	        bodyStyle: 'padding:10px'
+	    },
+	    items: [{
+        cls: 'x-plain',
+        title: 'Omschrijving',
+        layout: 'fit',
+        items: {
+            xtype: 'textfield',
+            id: 'record_description',
+            name: 'description',
+            value: xmlvalue(record,"description")
+        }
+	    },{
+        cls: 'x-plain',
+        title: 'Tijd en toegang',
+        layout: 'column',
+        border: false,
+        items: [{
+          columnWidth: .5,
+          layout: 'form',
+          border: false,
+          items: [{
+            xtype: 'textfield',
+            fieldLabel: 'Wachtwoord gebruikers',
+            id: 'record_attendee_password',
+            name: 'attendee_password',
+            anchor: '95%',
+            value: xmlvalue(record,"attendee_password")
+          },{
+            xtype: 'textfield',
+            fieldLabel: 'Wachtwoord beheerder',
+            id: 'record_moderator_password',
+            name: 'moderator_password',
+            anchor: '95%',
+            value: xmlvalue(record,"moderator_password")
+          }]
+        },{
+          columnWidth: .5,
+          layout: 'form',
+          border: false,
+          items: [{
+            xtype: 'xdatetime',
+            fieldLabel: 'Start',
+            id: 'record_start_datetime',
+            name: 'start_datetime',
+            anchor: '95%',
+            dateFormat: "d-m-Y",
+            timeFormat: "h:i",
+            value: xmlvalue(record,"start_datetime").replace(/(\d*)\:(\d*) (\d*)\-(\d*)\-(\d*)/,"$5-$4-$3 $1:$2:00")
+          },{
+            xtype: 'xdatetime',
+            fieldLabel: 'Eind',
+            id: 'record_end_datetime',
+            name: 'end_datetime',
+            anchor: '95%',
+            dateFormat: "d-m-Y",
+            timeFormat: "h:i",
+            value: xmlvalue(record,"end_datetime").replace(/(\d*)\:(\d*) (\d*)\-(\d*)\-(\d*)/,"$5-$4-$3 $1:$2:00")
+          }]
+        }]
+      }]
+    }];
+  }
+  
+  function edit_conference_form_values (parameters) {
+    parameters["scheduled_session[name]"] = document.getElementById('record_name').value;
+    parameters["scheduled_session[description]"] = document.getElementById('record_description').value;
+    if (document.getElementById('record_attendee_password')) {
+      parameters["scheduled_session[attendee_password]"] = document.getElementById('record_attendee_password').value;
+      parameters["scheduled_session[moderator_password]"] = document.getElementById('record_moderator_password').value;
+      parameters["scheduled_session[start_datetime]"] = document.getElementById('record_start_datetime').value;
+      parameters["scheduled_session[end_datetime]"] = document.getElementById('record_end_datetime').value;
+    }
+    return parameters;
+  }
+</script>

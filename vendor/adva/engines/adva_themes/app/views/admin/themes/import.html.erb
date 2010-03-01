@@ -1,0 +1,9 @@
+<h2><%= t(:'adva.themes.titles.import') %></h2>
+
+<% form_for :theme, @theme, :url => import_admin_themes_path(@site), :html => {:multipart => true} do |f| %>
+  <% f.field_set do %>
+    <%= f.file_field :file, :label => :'adva.themes.lables.zip_file' %>
+  <% end %>
+  
+  <% save_or_cancel_links(f, :cancel_url => admin_themes_path, :save_text => t(:'adva.common.import')) %>
+<% end %>

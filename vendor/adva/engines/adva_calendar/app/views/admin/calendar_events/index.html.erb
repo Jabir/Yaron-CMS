@@ -1,0 +1,46 @@
+<% content_for :filter do -%>
+<% form_tag admin_calendar_events_path, :method => 'get', :id => 'calendar_search' do %>
+  <label for="search" class="inline">
+    <%= t(:'adva.calendar.titles.show_events') %>
+  </label>
+  <select name="filter" id="filter_list">
+    <%= options_for_select [[ t(:'adva.calendar.options.filter.category'),  'category'],
+                            [ t(:'adva.calendar.options.filter.tags'),      'tags'],
+                            [ t(:'adva.calendar.options.filter.title'),     'title'],
+                            [ t(:'adva.calendar.options.filter.body'),      'body']], params[:filter] %>
+  </select>
+  <select name="category" id="categories">
+    <option value="0"><%= t(:'adva.calendar.options.all_categories') %></option>
+    <%= options_from_collection_for_select @section.categories, :id, :title, params[:category].to_i %>      
+  </select>
+  <%= text_field_tag 'query', params[:query], :id => 'query', :style => 'display: none' %>
+  <input type="submit" id="button" value="<%= t(:'adva.calendar.buttons.go') %>" style="display: none" />
+<% end %>
+<% end -%>
+
+<%
+	table_for @events do |t|
+		t.column :title, :starting_at, :ending_at, :created_by, :actions
+
+		# t.head.row do |r|
+		# 	r.cell t(:'adva.calendar.total_events_with_count', :count => @events.total_entries), :class => :total, :colspan => :all
+		# end
+
+		t.row do |r, event|
+			r.cell content_status(event) + link_to_edit(event.title, event) # :class => event.state
+			r.cell datetime_with_microformat(event.start_date, :format => :long, :type => (event.all_day? ? :date : :time))
+			r.cell event.end_date ? datetime_with_microformat(event.end_date, :format => :long, :type => (event.all_day? ? :date : :time)) : t(:'adva.calendar.open_end')
+			r.cell link_to(event.user.name, admin_site_user_path(@site, event.user))
+			r.cell link_to_show(event, :namespace => nil) + "\n" +
+						 links_to_actions([:edit, :delete], event)
+		end
+
+		t.foot.row do |r|
+			r.cell will_paginate(@events, :id => 'pagination')
+		end
+
+		t.empty :div, params[:filter].present? ?
+			t(:'adva.calendar.errors.no_events_found') :
+			t(:'adva.calendar.errors.no_events_in_calendar') + "\n" + link_to_new(:'adva.calendar.links.new', [@section, :calendar_event]), :class => 'empty'
+	end
+%>

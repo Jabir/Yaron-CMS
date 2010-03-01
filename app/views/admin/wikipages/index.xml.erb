@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<results><%= @wikipages.total_entries.to_s %></results>
+	<% @wikipages.each do |wikipage| %>
+		<record>
+			<id><%= wikipage.id.to_s %></id>
+			<title><%= h wikipage.title %></title>
+			<version><%= wikipage.version %></version>
+			<updated_at><%= wikipage.updated_at.strftime('%d-%m-%Y %H:%M') %></updated_at>
+			<author><%= h wikipage.author_name %></author>
+			<comment><%= wikipage.comments.size %></comment>
+		</record>
+	<% end %>
+</dataset>

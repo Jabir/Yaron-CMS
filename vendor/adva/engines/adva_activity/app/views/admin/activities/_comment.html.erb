@@ -1,0 +1,35 @@
+<li class="activity <%= activity_css_classes(activity) %> <%= cycle 'highlight', '', :name => "activities" %>">
+  <p class="meta">
+    <%= activity_datetime(activity, recent) %>
+    <%= link_to_activity_user(activity) %>
+    <%= link_to_content(activity.object.commentable) if activity.object %>
+  </p>
+
+  <p>
+		<%= t(:'adva.activity.comment', :actions => activity.all_actions.collect { |a| t(:"adva.activity.action_names.#{a.downcase}" }.to_sentence) %>
+	</p>
+  
+	<p>
+		<%= truncate strip_tags(activity.body), 100 %>
+	</p>
+
+  <% if activity.object -%>
+    <ul>
+    	<% unless activity.object.commentable_type == 'Topic' %>
+      	<% unless activity.object.approved? -%>
+        	<li>
+						<%= link_to t(:'adva.common.approve'), admin_comment_path(activity.object, "comment[approved]" => 1, :return => true), :method => :put  %>
+					</li>
+	      <% else -%>  
+	        <li>
+						<%= link_to t(:'adva.common.unapprove'), admin_comment_path(activity.object, "comment[approved]" => 0, :return => true), :method => :put  %>
+					</li>
+	      <% end -%>
+	    <% end -%>
+	    <li>
+				<%= link_to_edit(activity.object, :url => edit_admin_comment_path(activity.object, :return => true)) %>
+				<%= link_to_delete(activity.object, :url => admin_comment_path(activity.object, :return => true)) %>
+			</li>
+    </ul>
+  <% end -%>    
+</li>

@@ -1,0 +1,863 @@
+pt-BR:
+  activerecord:
+    errors:
+      messages:
+        only_integer: somente números inteiros.
+  adva:
+    common:
+      about: Sobre
+      details: Detalhes
+      by_author: por {{author}}
+      cancel: Cancelar
+      edit: Editar
+      delete: Apagar
+      hide: Esconder
+      save: Salvar
+      save_without_revision: Salvar sem Revisão
+      import: Importar
+      upload: Carregar
+      import: Importar
+      subscribe: Subscrever
+      approve: Aprovar
+      unapprove: Reprovar
+      language: Língua
+      none: nada
+      next: Pŕoximo
+      previous: Anterior
+      events: Eventos
+      you: Você
+      connector:
+        or: ou
+      "yes": "sim"
+      by_author: por {{author}}
+      content_categories: "em {{links}}<br />"
+      content_tags: "marcado: {{links}}<br />"
+      unknown: desconhecido
+      add: Adicionar
+      add_new: adicionar novo
+      hints:
+        tags: Entre com um ou mais marcadores separados por espaço. Você pode incluir espaços englobando um marcador com aspas. (Por exemplo, <em>Tutoriais "Desenv. Web"<em>).
+    titles: 
+      accounts: Contas
+      actions: Ações
+      archives: Arquivos
+      articles: Artigos
+      assets: Anexos
+      board: Equipe
+      boards: Equipes
+      cache: Cache
+      categories: Categorias
+      clear: Limpar
+      clear_all: Limpar tudo
+      comment: Comentário
+      comments: Comentários
+      dashboard: Painel de controle
+      general_settings: Configurações gerais
+      history: História
+      login: Login
+      logout: Logout
+      register: Registrar
+      manage: Gerenciar
+      newsletters: Newsletters
+      optional_settings: Configurações Opcionais
+      overview: Visão geral
+      permissions: Permissões
+      plugin: Plugin
+      plugins: Plugins
+      posts: Postagens
+      preview: Visualização
+      publish_in_categories: Publicar nestas categorias
+      recent_activity: Atividade recente
+      restore_defaults: Re-atribuir valores padronizados
+      sections: Sessões
+      settings: Configurações
+      site: Site
+      site_users: Usuários do site
+      spam_filters: Filtros de spam
+      spam_protection: Proteção de spam
+      success: Sucesso!
+      tags: Marcadores
+      templates: Modelos
+      theme: Tema
+      themes: Temas
+      topic: Tópico
+      tracking: Monitoramento
+      users: Usuários
+      roles: Papeis
+      website: Site
+      website_configuration: Configuração do site
+      website_home_section: Sessão principal do site
+      welcome: Bem-vindo!
+      wikipages: Páginas wiki
+    links: 
+      back: Voltar
+      delete: Apagar
+      edit: Editar
+      view: Ver
+      next: próximo
+      previous: anterior
+      login: Entrar
+      logout: Sair
+      profile: Perfil
+      sites_overview: Visão geral dos sites
+      skip_to_content: Pular para o Conteúdo
+      skip_to_navigation: Pular para Navegação
+      superusers_admins: Super-usuários + Administradores
+      entries_feed: Feed de entradas
+      comments_feed: Feed de comentários
+    labels:
+      author_name: Nome
+      author_email: E-Mail
+      filters: Filtros
+    hints:
+      meta_keywords: Enter a few words separated by commas to describe your content. Meta keywords make it easier for search engines to find your page.
+      meta_description: Enter a short description of this page so a search engine can tell users what they can find here.
+    messages: 
+      insufficient_permissions: 
+        title: Permissões insuficientes
+        body: Se você acha que você deve poder exercer esta ação, por favor entre em contato com o administrador deste site e peça a ele para reconfigurar as suas permissões de acesso.
+      not_editable: "Desculpe, mas isto não pode ser modificado!"
+    resources:
+      delete: Apagar
+      edit: Editar
+      reordering_done: Re-ordenação concluída
+      settings: configurações
+      view: Ver
+    state:
+      draft: Rascunho
+      published: Publicado
+      hold: Em espera
+      queued: Na fila
+      delivered: Despachado
+    sites:
+      email_notification_activated: "Activated"
+      email_notification_deactivated: "Deactivated"   
+      title:
+        create: Criar um novo site
+        home_section: Sessão principal
+      hints:
+        host_name: Inclua a porta se não for padrão. I.e. localhost:3000
+        admin_email: Mostrado em emails enviados do seu site
+        email_notification: "If e-mail notifications are activated, an e-mail is sent to the administrator every time a new content is created or updated. No e-mails are sent when the notifications are deactivated."
+      attributes:
+        name: Nome
+        host: Hospedeiro
+      install:
+        success_fully_created: Você teve sucesso na criação de seu site. Divirta-se!
+        welcome_to_installation: "Bemvindo ao processo de instalação em-menos-de-dois-minutos. Apenas preencha a informação abaixo e pronto. "
+        can_always_change_settings: Não se preocupe. Você sempre pode mudar estas configurações mais tarde.
+        section_default: Principal
+      no_sites: Atualmente você não tem nenhum site criado.
+      no_users: O site não tem nenhum usuário.
+      no_available_users: O site não tem nenhum usuário disponível.
+      links:
+        delete: Apagar este site
+        create_site_and_account: "Criar site & conta \xC2\xBB"
+        manage_new: Controlar o seu novo site &raquo;
+      flash:
+        destroy:
+          success: Este site foi apagado.
+          failure: Este site não pode ser apagado
+        install:
+          error_already_complete: A instalação já está completa. Por favor, entre na sua conta de administrador.
+          success: Parabéns! Você teve sucesso na configuração de seu site.
+          failure: "Os seguintes modelos não puderam ser criados: {{models}}."
+        create:
+          success: O site foi criado.
+          failure: O site não pode ser criado
+        update:
+          success: O site foi atualizado.
+          failure: O site não pode ser atualizado
+      label:
+        name: Nome do website
+        title: Título do website
+        timezone: Timezone do website
+        admin_email: Email do administrador
+        subtitle: Sub-título do website
+        host: Nome do hospedeiro
+        deactivate_email_notification: Deactivate email notification
+        activate_email_notification: Activate email notification
+      confirm_delete: Você tem certeza que deseja apagar este site?
+    sections:
+      hints:
+        content_filter: Quando artigos são postados, eles usam estas configurações como padrão.
+        sections: "Listed here are all the sections currently on your site. Whichever section is on top is the default homepage."
+        reorder: "You can use the reorder option to set your home root to different section and to reorder your sections. If you want to nest your sections you can drag the section to the right and its gets set as a child of the upper section.  Finish the reordering by clicking the reorder button. Please note that this option is only available when you have 2 or more sections."
+        parent_setting: Choosing a parent for your section will nest this section under the chosen parent. Leave empty if you want to create this section as a root section.
+        parent_setting_for_edit: "You can use the reorder button on the index page of sections to nest and reorder your sections, you can find further instructions for this on the index page help hints."
+        permalink: "You can use normal letters and special letters like scandinavian letters but avoid special characters like $%&!"
+        publish: "Uncheck this if you don't want this section published."
+      titles:
+        page_settings: Configurações específicas da página
+        blog_settings: Configurações específicas do blog
+        forum_settings: Configurações específicas do forum
+        create: Criar uma nova sessão
+        behaviour: Comportamento
+        publish: Publish option
+      links:
+        delete: Apagar esta sessão
+        add_section: Adicionar uma sessão
+        reorder: Reordenar sessões
+        create: Criar uma nova sessão
+      settings:
+        single_article_mode: Artigo único por página
+        multi_article_mode: Múltiplos artigos por página
+      confirm_delete: Você tem certeza que deseja apagar esta sessão?
+      flash:
+        destroy:
+          success: A sessão foi destruída.
+          failure: A sessão não pode ser destruída.
+        create:
+          success: A sessão foi criada.
+          failure: A sessão não pode ser criada.
+        update:
+          success: A sessão foi atualizada.
+          failure: A sessão não pode ser atualizada.
+    blog:
+      titles:
+        date: "de {{date}}"
+        about: "sobre {{category}}"
+        tags: "marcada {{tags}}"
+        articles: "Artigos {{articles}}"
+        show_articles: "Mostrar artigos:"
+        manage: Gerenciar
+        actions: Ações
+      links:
+        articles: Artigos
+        categories: Categorias
+        settings: Configurações
+        create_article: Criar um novo artigo
+        create_article_now: "Criar um agora &raquo;"
+        more: Leia o resto desta entrada
+      options:
+        filter:
+          category: na categoria
+          tags: marcado com
+          title: cujo título contém
+          body: cujo corpo contém
+          draft: não publicado
+      tabs:
+        article: Artigo
+        comments: Comentários
+        published: Publicado
+        author: Autor
+      feeds:
+        category: Categoria {{category}}
+        tags:
+          one: "Marcador: {{tags}}"
+          other: "Marcadoress: {{tags}}"
+      no_articles: "Não existem artigos em {{section}}."
+      no_filtered_articles: "Não existe nenhum artigo casando com o critério em {{section}}"
+      attribution: "por: {{author}}"
+    categories:
+      attributes:
+        name: nome
+      hints:
+        reorder: "You can use the reorder option to reorder your categories. If you want to nest your categories you can drag the category to the right and its gets set as a child of the upper category. Finish the reordering by clicking the reorder button. Please note that this option is only available when you have 2 or more categories."
+        parent_setting: "Choosing a parent for your category will nest this category under the chosen parent. Leave empty if you want to create this category as a root category."
+        parent_setting_for_edit: "You can use the reorder button on the index page of categories to nest and reorder your categories, you can find further instructions for this on the index page help hints."
+        permalink: "You can use normal letters and special letters like scandinavian letters but avoid special characters like $%&!"
+      titles:
+        edit: Editar categoria
+      no_categories_in_section: Não existem categorias em {{section}}.
+      total_with_count:
+        one: "Total: {{count}} categoria"
+        other: "Total: {{count}} categorias"
+      links:
+        delete: Apagar esta categoria
+        reorder: Re-ordenar categorias
+        create: Criar uma nova categoria
+      flash:
+        destroy:
+          success: A categoria foi apagada.
+          failure: A categoria não pode ser apagada.
+        create:
+          success: A categoria foi criada.
+          failure: A categoria não pode ser criada.
+        update:
+          success: A categoria foi atualizada.
+          failure: A categoria não pode ser atualizada.
+      confirm_delete: Você tem certeza que deseja apagar esta categoria?
+    contents:
+      not_published: não publicado
+    articles:      
+      optimistic_lock: 
+        exception: 
+          missing_timestamp: "Can not update article: timestamp missing. Please make sure that your form has a hidden field: updated_at."
+      locales:
+        translated: "Este artigo tem estas traduções: {{locales}}"
+      question_save_as_draft: Salvar como rascunho?
+      confirm_save_as_draft: Sim, salvar este artigo como um rascunho
+      hints:
+        permalink: Usar somente caracteres ASCII e usar traços no lugar de espaços.
+        tags: Entre com um ou mais marcadores separados por espaço. Você pode incluir espaços se englobar os textos dos marcadores com aspas. (Por exemplo, <em>Tutoriais "Web Dev"</em>).
+      titles:
+        edit: Editar artigo em <strong>{{content_locale}}</strong>
+        new: Novo artigo em <strong>{{content_locale}}</strong>
+      total_with_count:
+        one: "Total: {{count}} artigo"
+        other: "Total: {{count}} artigos"
+      links:
+        delete: Apagar este artigo
+        reorder: Re-ordenar artigos
+        create: Criar um novo artigo
+        create_now: Criar um agorar
+        preview: Visualizar este artigo
+      excerpt_add: Adicionar um trecho
+      no_articles_in_section: Não existem artigos em {{section}}.
+      publish_on_date: Publicar nesta data
+      flash:
+        optimistic_lock: 
+          failure: In the meantime this article has been updated by someone else. Please resolve any conflicts.
+        destroy:
+          success: O artigo foi apagado.
+          failure: O artigo não pode ser apagado.
+        rollback:
+          success: O artigo voltou à revisão {{version}}
+          failure: O artigo não pode voltar à revisão {{version}}
+        create:
+          success: O artigo foi criado.
+          failure: O artigo não pode ser criado.
+        update:
+          success: O artigo foi atualizado.
+          failure: O artigo não pode ser atualizado.
+      confirm_delete: Você tem certeza que deseja apagar este artigo?
+      attributes:
+        excerpt: trecho
+    cached_pages:
+      no_entries: Atualmente não há páginas no cache.
+      confirmation:
+        cleared: Esta página foi removida do cache.
+        cleared_short: Limpa
+      filter:
+        show_cached_pages: Mostrar as páginas no cache
+      total_with_count:
+        one: "Total: {{count}} página no cache"
+        other: "Total: {{count}} páginas no cache"
+      no_entries_matching_criteria: Atualmente não há páginas no cache que casam com este critério.
+      flash:
+        clear:
+          success: O cache foi limpo.
+    comments:
+      flash:
+        thank_you: Obrigado pelo comentário!
+        create:
+          success: O comentário foi criado.
+          failure: O comentário não pode ser criado.
+        update:
+          success: O comentário foi atualizado.
+          failure: O comentário não pode ser atualizado.
+        destroy:
+          success: O comentário foi apagado.
+          failure: O comentário não pode ser apagado.
+      links:
+        delete: Apagar
+        edit: Editar
+        approve: Aprovar
+        view: Ver
+        unapprove: Reprovar
+      titles:
+        comments_awaiting_approval: Comentários aguardando sua aprovação
+        save_comment: Salvar Comentário
+        comment_on_by: Comentário em '{{on}}' por {{by}}
+        add_reply: Deixe o seu comentário
+        comment_number: "Comentário #{{number}}"
+        edit: Editar comentário
+        comments_on: Comentários em {{location}}
+        submit_comment: Enviar Comentário
+        your_reply: Seu comentário
+        comment_with_count:
+          one: 1 Comentário
+          other: "{{count}} Comentários"
+      filter:
+        show_comments: Mostrar comentários
+        options:
+          all: Tudo
+          body: Cujo corpo contém
+          author_name: Cujo autor é
+          author_email: Email do autor é
+          author_url: Website do autor é
+          state: Cuja situação é
+        go: Ir
+      state:
+        options:
+          approved: Aprovado
+          unapproved: Reprovado
+      options:
+        expiration: 
+          not_allowed: Não é permitido
+          never_expire: Nunca expira
+          x_hours_after_publishing:
+            one: Expira 1 hora após a publicação
+            other: Expira {{count}} horas após a publicação
+          x_weeks_after_publishing:
+            one: Expira 1 semana após publicação
+            other: Expira {{count}} semanas após a publicação
+          x_months_after_publishing:
+            one: Expira 1 mês após a publicação
+            other: Expira {{count}} meses após a publicação
+      labels:
+        "on": "ligado"
+        comments: Comentários
+        approved: Aprovado
+      hints:
+        comments_filter: Quando comentários são postados, eles usam este código de marcação.
+      confirm_delete: Você tem certeza que deseja apagar este comentário?
+      info:
+        no_comments_for_query: Este {{location}} não tem comentários casando com a sua pesquisa.
+        under_review: Este comentário está atualmente em revisão.
+      messages:
+        not_allowed: "Não são permitidos comentários aqui."
+
+    activity:
+      titles:
+        today: Hoje {{date}}
+        yesterday: Amanhã {{date}}
+        past: Antes {{date}}
+      none: Nada aconteceu
+      notifier:
+        new: Novo {{activity}} postado
+      view:
+        new: "{{name}} <{{email}}> acabou de postar um novo {{activity}} no {{site}} na sessão {{section}}."
+      comment: Comentário {{actions}}
+      topic: Tópico {{actions}}
+      actions: "{{type}} {{actions}} em {{activity}}."
+    signup:
+      notifications:
+        email_verification:
+          subject: Verificação de Email
+          body: |
+            Caro(a) {{name}},
+
+            Você recentemente se registrou em nosso serviço. Todos os novos usuários
+            do nosso serviço devem fazer uma confirmação do endereço de email.
+            Por favor, clique no link abaixo para que o seu usuário seja validado
+            e você possa entrar.
+
+            {{link}}
+      flash:
+        destroy:
+          success: A conta de usuário {{name}} foi cancelada.
+        create:
+          failure: Seu registro não pode ser salvo.
+        verify:
+          success: Seu endereço de email foi confirmado com sucesso.
+          failure: Você já fez a verificação do seu endereço de email.
+    passwords:
+      info:
+        please_enter_email_to_reset_password: Por favor entre com o seu endereço de email. Uma mensagem será enviada para você incluindo um link para re-definir sua senha.
+        please_enter_new_password: Por favor entre sua nova senha.
+      titles:
+        new: Re-definir sua senha
+        edit: Mudar sua senha
+      notifications:
+        password_updated:
+          subject: Senha atualizada
+          body: |
+            Caro(a) {{name}},
+
+            sua senha foi atualizada com sucesso.
+        reset_password:
+          subject: Senha esquecida
+          body: |
+            Caro(a) {{name}},
+
+            Alguém (esperamos que seja você) indicou que você não pode se lembrar de sua senha.
+            Para permitir que você redefina a sua senha estamos fornecendo a você o link abaixo
+            que vai permitir que isto seja feito.
+
+            {{link}}
+
+            Sugerimos que você re-defina a sua senha assim que possível, já que este link
+            tem uma validade limitada (para proteger a sua conta).
+
+            Se você não requisitou esta redefinição de senha alguém deve ter
+            entrado em sua conta na página "senha esquecida" do nosso site. Sua conta ainda
+            está em perfeita segurança já que você é a única pessoa para a qual esta mensagem foi enviada.
+            Simplesmente apague esta mensagem e nenhuma mudança será feita em sua conta se
+            esta mensagem foi enviada por engano.
+      flash:
+        new:
+          email_sent: Nós acabamos de lhe enviar um aviso. Por favor, verifique o seu email.
+          no_such_user: Nós não pudemos encontrar um usuário com endereço de email fornecido.
+        update:
+          success: Sua senha foi alterada com sucesso.
+          failure: Sua senha não pode ser alterada.
+    session:
+      flash:
+        destroy:
+          success: Saída com sucesso.
+        create:
+          success: Entrada com sucesso.
+          failure: Não é possível fazer a entrada com este email e senha.
+      labels:
+        remember_me: Me lembre
+    users: 
+      attributes: 
+        password: Senha
+        email: E-Mail
+      links: 
+        new: Acrescentar um novo usuário
+        create_user: Criar um usuário
+        edit_user: Editar usuário
+      actions:
+        delete_user: Apagar este usuário
+        create_new: Criar um novo usuário
+      titles:
+        new: Novo usuário
+        edit: Editar usuário
+        register: Registrar uma conta de usuário
+        signup: Fazer a inscrição
+        your_profile: Seu perfil
+      flash:
+        destroy:
+          success: A conta de usuário foi apagada.
+          failure: A conta de usuário não pode ser apagada.
+        create:
+          success: A conta de usuário foi criada.
+          failure: A conta de usuário não pode ser criada.
+        update:
+          success: A conta de usuário foi alterada.
+          failure: A conta de usuário não pode ser alterada.
+      labels:
+        updated_at: Última entrada
+        url: Principal
+        created_at: Criado
+        email: Email
+      info: 
+        showed_up: "apareceu: {{time_ago}}"
+        logged_in_as: "Entrou como: {{name}}"
+      confirm_delete: Você tem certeza que deseja apagar esta conta de usuário?
+    roles:
+      labels:
+        admin_for: "Administrador para: {{context}}"
+        superuser: Super-usuário
+      errors: 
+        messages: 
+          not_an_admin: Você precisa ser um administrador para executar esta ação.
+          not_logged_in: Você tem que entrar para executar esta ação.
+          not_a_superuser: Você tem que ser um super-usuário para executar esta ação.
+          not_an_author: Você tem que ser o autor deste objeto para executar esta ação.
+          not_a_moderator: Você tem que ser um moderador para executar esta ação.
+    assets:
+      flash:
+        upload:
+          failure: O carregamento do apetrecho falhou.
+        update:
+          success: O apetrecho foi atualizado.
+          failure: A atualização do apetrecho falhou.
+        delete:
+          success: "{{filename}} apagado"
+          failure: A atualização do apetrecho falhou.
+        destroy:
+          success: "{{asset}} des-anexado deste {{content}}."
+        create:
+          first_success: "'{{asset}}' foi carregado."
+          success: 
+            one: "Um apetrecho foi carregado."
+            other: "{{count}} apetrechos foram carregados."
+        add:
+          success: "{{asset}} adicionado à cesta."
+        clear:
+          success: Apetrecho da cesta foi limpo.
+      validation:
+        duplicate: Não pode haver uma atribuição duplicada para este conteúdo e apetrecho
+      tab:
+        attached:
+          title: Apetrechos anexados
+          name: Anexado
+        latest:
+          title: Últimos apetrechos carregados
+          name: Último
+        bucket:
+          title: Sua cesta de apetrechos
+          name: Cesta
+        search:
+          title: Procurar por apetrechos
+          name: Procurar
+        upload:
+          title: Carregar novos apetrechos
+          name: Carregar
+        audio: Audio
+        movies: Filmes
+        pictures: Figuras
+        others: Outros
+        tags: Marcadores
+        title: Título
+      new: Novo apetrecho
+      add_to_bucket: Adicionar à cesta
+      no_files: Você não possui arquivos deste tipo ou ainda tem que carregar arquivos.
+      upload: 'Carregar um agora &raquo;'
+      enter_tags: 'Entre com um ou mais marcadores separados por vírgula ou espaço (por exemplo, <em>Tutoriais "Web Dev"</em> ou <em>Tutoriais, Web Dev</em>).'
+      save: Salvar Apetrecho
+      your_bucket: Sua cesta
+      add_files: Adicionar arquivos à sua cesta temporariamente para carregá-los com você quando estiver criando ou revisando artigos.
+      upload_summary:
+        one: Você carregou <strong>one asset</strong>, usando <strong>{{size}}</strong>.
+        other: Você carregou um total de <strong>{{count}} apetrechos</strong>, usando <strong>{{size}}</strong>.
+      stats: Algumas estatísticas
+      labels:
+        upload:
+          files: Arquivos selecionados para carregamento
+          title: Título
+          tags: Marcadores (separados por espaços)
+      delete: remover este campo de arquivo
+      tag_all: Aplicar marcadores a todos
+      add_file: Adicionar outro arquivo
+    themes:
+      no_themes_available: Atualmente você não tem nenhum tema criado.
+      lables:
+        zip_file: Arquivo zip
+      titles:
+        new: Criar um novo tema
+        edit: Editar tema
+        valid_file_types: Tipos de arquivo válidos
+        import: Importar um tema
+        edit_file: Editar um arquivo de tema
+        theme_id: ID do tema
+      links:
+        add_another_file: Adicionar outro arquivo
+        new_theme: Novo tema
+        edit: Editar
+        create_one_now: Criar um agora. &raquo;
+        delete_file: Apagar arquivo de tema
+        uninstall: Des-instalar
+        download_theme: Baixar tema
+        upload_file: Carregar um novo arquivo
+        import_theme: Importar tema
+        create_file: Criar um novo arquivo
+        edit_theme: Editar tema
+        delete_theme: Apagar tema
+        select_theme: Selecionar tema
+        unselect_theme: De-selecionar tema
+        select: Selecionar
+        unselect: De-selecionar
+        delete: Apagar
+      upload_template_or_asset: Carregar um modelo ou um apetrecho.
+      labels:
+        asssets: Apetrechos
+        templates: Modelos
+        filename: Nome do arquivo
+      confirm_select: Você tem certeza que deseja ativar este tema?
+      confirm_unselect: Você tem certeza que deseja des-ativar este tema?
+      confirm_uninstall: Você tem certeza que deseja des-instalar este tema? (Você não poderá restaurá-lo.)
+      flash:
+        destroy:
+          success: O tema foi apagado.
+          failure: O tema não pode ser apagado.
+        create:
+          success: O tema voi criado.
+          failure: "O tema não pode ser criado: {{errors}}."
+        update:
+          success: O tema foi atualizado.
+          failure: "O tema não pode ser atualizado: {{errors}}."
+        import:
+          success: O tema foi importado.
+          error_filename_blank: O arquivo de tema não pode ser branco.
+          failure: O arquivo não pode ser importado como um tema.
+    theme_files:
+      types:
+        templates: Modelos
+        images: Imagens
+        javascripts: Javascripts
+        stylesheets: Folhas de estilo
+        others: Outros
+      flash:
+        destroy:
+          success: O arquivo foi apagado.
+          failure: O arquivo não pode ser apagado.
+        create:
+          success: O arquivo foi criado.
+          failure: O arquivo não pode ser criado.
+        update:
+          success: O arquivo foi atualizado.
+          failure: O arquivo não pode ser atualizado.
+    plugins:
+      no_plugins_installed: Atualmente não existem plugins instalados.
+      attributes:
+        name: Nome
+        configurable: Configurável
+        author: Autor
+        version: Versão
+        homepage: Principal
+      flash:
+        destroy:
+          success: As configurações padrão foram re-estabelecidas.
+          failure: A sessão não pode ser apagada.
+        update:
+          success: As configurações do plugin foram atualizadas.
+          failure: A sessão não pode ser criada.
+      no_config_options_available: Este plugin não tem nenhuma opção de configuração disponível.
+    settings:
+      filter_options:
+        plain_html: HTML puro
+    boards:
+      topics_count:
+        one: "{{count}} tópico"
+        other: "{{count}} tópicos"
+      comments_count:
+        one: "{{count}} comentário"
+        other: "{{count}} comentários"
+      info:
+        no_boards_in_forum: Você não tem nenhum grupo criado em {{forum}}.
+      titles:
+        new: Novo Grupo
+        edit: Editar Grupo
+      posts_count:
+        one: "{{count}} postagem"
+        other: "{{count}} postagens"
+      links:
+        new: Novo Grupo
+        reorder: Re-ordenar grupos
+        create_now: Criar um agora
+      flash:
+        no_next_board: Não existe próximo grupo. Mostrando o último.
+        destroy:
+          success: O grupo foi apagado.
+          failure: O grupo não pode ser apagado.
+        create:
+          success: O grupo foi criado.
+          failure: O grupo não pode ser criado.
+        update:
+          success: O grupo foi atualizado.
+          failure: O grupo não pode ser atualizado.
+        no_previous_board: Não existe nenhum grupo anterior. Mostrando o primeiro.
+      confirm_delete: Todos os tópicos deste grupo são também apagados com o grupo. Você tem certeza que deseja apagar este grupo?
+      confirm_delete_on_last: Você tem certeza que deseja apagar este grupo? Seus tópicos não serão removidos.
+    topics:
+      info:
+        no_topics_in_forum: Não existem tópicos neste forum.
+        no_topics_in_board: Não existem tópicos neste grupo.
+      titles:
+        new: Novo tópico
+        edit: Editar tópico
+        post_topic: Postar Tópico
+        latest_post: Última postagem
+        post_count:
+          one: "{{count}} Postagem"
+          other: "{{count}} Postagens"
+      states:
+        sticky: Colado
+        locked: Trancado
+      links:
+        post_new: Postar um novo
+        post_now: Postar um agora
+        new_topic: Novo tópico
+      flash:
+        destroy:
+          success: O tópico foi apagado.
+          failure: O tópico não pode ser apagado.
+        create:
+          success: O tópico foi criado.
+          failure: O tópico não pode ser criado.
+        update:
+          success: O tópico foi atualizado.
+          failure: O tópico não pode ser atualizado.
+        no_next_topic: Não existe próximo tópico. Mostrando o último.
+        no_previous_topic: Não existe tópico anterior. Mostrando o primeiro.
+      confirm_destroy: Você tem certeza que deseja apagar esta postagem?
+      confirm_delete: Você tem certeza que deseja apagar este tópico?
+    posts:
+      titles:
+        reply: Deixe o seu comentário
+        edit: Editar sua postagem
+        save_post: Salvar postagem
+        submit_post: Enviar postagem
+      flash:
+        destroy:
+          success: A postagem foi apagada.
+        create:
+          success: A postagem foi salva.
+          failure: A postagem não pode ser salva.
+        update:
+          success: A postagem foi atualizada.
+          failure: A postagem não pode ser atualizada.
+    tracking:
+      enable_tracking: Habilitar monitoramento com o Google Analytics
+      tracking_campaign: Campanha
+      tracking_source: Fonte
+      hints:
+        tracking_code: Usar o seu código de monitoramento do Google Analytics (UA-xxxxxxx-x) para permitir o apoio do Google Analytics. Deixando em branco des-ativa o apoio do Google Analytics.
+        no_tracking_code: Para usar o Google Analytics para monitorar suas cartas, você precisa definir o seu código de monitoramente primeiro. Você pode fazer isto no {{settings}}.
+        glossary: Não está certo do que usar aqui? Verifique {{link}} para informações adicionais.
+        glossary_name: a ajuda do Google Analytics
+    spam:
+      hints:
+        filters: Quando comentários são postados, os seguintes filtros são utilizados para verificar seu estado de spam.
+      options:
+        default_ham_none: Não aprove nenhum comentário automaticamente.
+        default_ham_all: Aprovar todos os comentários automaticamente.
+        default_ham_authenticated: Aprovar comentários postados por usuários autenticados.
+      labels:
+        api_key: Chave API
+        site_url: URL do site
+    info:
+      greeting_logged_in: Olá <span>user</span>, você entrou no sistema.
+    footer:
+      powered_by: Site incrementado por adva cms. Tema inspirado por depo.
+    flash:
+      authentication_required_role: Você precisa ter o perfil {{role}} para ver esta página.
+    sidebar:
+      titles:
+        tags: Marcadores
+        topics: Tópicos
+    subscription:
+      no_subscriptions: Não existem assinantes.
+      confirm_delete: Você tem certeza que deseja se des-cadastrar?
+      flash:
+        destroy_success: Des-cadastramento com sucesso.
+      link:
+        index: Assinantes
+        new: Adicionar um novo assinante
+        destroy: Des-cadastrar
+      label:
+        user: Usuários
+        subscriber: Assinante
+        email: Email
+        time: Tempo de assinatura
+        subscriptions: Assinantes
+    locations:
+      attributes:
+        title: Nome do local
+        country: País
+        postcode: Código postal
+        town: Cidade
+        address: Rua / Número
+        description: Descrição
+    
+    # have cells translations here for the moment
+    cells:
+      album:
+        name: Foto-álbum
+        states:
+          single:
+            name: Foto-álbum simples
+            description: Mostrar um foto-álgum simples
+            form:
+              section: Sessão
+      sections:
+        name: Sessões
+        states:
+          recent_articles:
+            name: Artigos recentes
+            description: Mostrar alguns artigos de uma sessão
+            form:
+              section: Sessão
+              count: Número de artigos
+      blog:
+        name: Blog
+        states:
+          recent_articles:
+            name: Artigos recentes
+            description: Mostrar alguns artigos de um blog
+            form:
+              section: Sessão
+              count: Número de artigos
+      user:
+        name: Usuários
+        states:
+          recent:
+            name: Usuários recentes
+            description: Mostrar uma lista com alguns usuários
+            form:
+              count: Número de usuários

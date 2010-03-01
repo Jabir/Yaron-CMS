@@ -1,0 +1,147 @@
+<script type="text/javascript" charset="utf-8">
+  function modify_main_menu(menu) {
+    return [];
+  }
+
+	function extjs_body_items() {
+    return {
+      region: 'center',
+      layout: 'border',
+      title: 'Sectie toevoegen',
+      bodyStyle: 'background-color: white',
+      border: true,
+      items: {
+        region: 'center',
+        xtype: 'form',
+        bodyStyle: 'padding: 15px; padding-bottom: 0px; background-color: white',
+        border: false,
+        items: [{
+          region: 'center',
+          xtype: 'tabpanel',
+          activeItem: 0,
+          anchor: '100% 100%',
+          baseCls: 'tab-white',
+          defaults: {
+            layout: 'form',
+            labelWidth: 120,
+            defaultType: 'textfield',
+            bodyStyle: 'padding:10px; border-top: 0px',
+            border: true
+          },
+          items: [{
+            title: '<%= t(:'adva.titles.general_settings') %>',
+            items: [{
+              fieldLabel: '<%= t(:'adva.sites.label.title') %>',
+              name: 'section[title]',
+              value: document.getElementById('section_title').value,
+              type: 'textfield',
+              width: 200
+            },{
+              fieldLabel: 'Type',
+              name: 'section[type]',
+              xtype: 'combo',
+              triggerAction: 'all',
+              forceSelection: true,
+              transform:     'section_type',
+              lazyRender:     true,
+  						width: 200
+            },{
+              fieldLabel: 'Parent',
+              name: 'section[parent_id]',
+              xtype: 'combo',
+              triggerAction: 'all',
+              forceSelection: true,
+              transform:     'section_parent_id',
+              lazyRender:     true,
+  						width: 200
+            },{
+              fieldLabel: '<%= t(:'adva.labels.comment_filter') %>',
+              name: 'section[comment_age]',
+              xtype: 'combo',
+              triggerAction: 'all',
+              forceSelection: true,
+              transform:     'section_comment_age',
+              lazyRender:     true,
+  						width: 200
+            },{
+              fieldLabel: '<%= t(:'adva.theme_files.types.template') %>',
+              name: 'section[template]',
+              value: document.getElementById('section_template').value,
+              xtype: 'textfield',
+              width: 200
+            },{
+              fieldLabel: 'Layout',
+              name: 'section[layout]',
+              value: document.getElementById('section_layout').value,
+              xtype: 'textfield',
+              width: 200
+            }]
+          }]
+        }],
+        buttons: [{
+          text: 'Opslaan',
+          iconCls: 'silk-accept',
+          handler: function() {
+            var mask = new Ext.LoadMask(Ext.getBody(), { msg: t['loader_text'] });
+            mask.show();
+            $.post('<%= admin_sections_path %>',
+              $(document.getElementsByTagName("form")[0]).serialize(),
+              function(responseText) {
+                responseText = strip_error_from_response(responseText)
+                if (/errorExplanation/.test(responseText)) {
+                  mask.hide();
+                  Ext.Msg.minWidth = 400;
+                  Ext.Msg.show({
+                    title: t['error_title'],
+                    msg: responseText,
+                    buttons: {
+                      ok: t['ok_text']
+                    },
+                    icon: Ext.MessageBox.WARNING
+                  });
+                } else {
+                  window.location = '<%= admin_sections_path %>';
+                }
+              }
+            );
+          }
+        },{
+          text: 'Annuleren',
+          iconCls: 'silk-delete',
+          handler: function() {
+            generic_loader.show();
+            window.location = '<%= admin_sections_path %>';
+          }
+        }]
+      }
+    };
+  }
+</script>
+<h2><%= t(:'adva.sections.titles.create') %></h2>
+<%= error_messages_for :section %>
+<% form_for :section, @section, :url => admin_sections_path do |f| %>
+	<% f.field_set do %>
+		<% column do %>
+    	<%= f.text_field :title, :label => true %>
+		<% end %>
+		<% column do %>
+     	<%= f.collection_select :type, Section.types, :to_s, :to_s, {}, :label => true %>
+		<% end %>
+  <% end %>
+
+	<% unless @site.sections.size < 2 %>
+		<% f.field_set do %>
+			<h3><%= t(:'adva.titles.parent_settings')%></h3>
+	
+	    <%= f.select :parent_id, @site.sections.collect {|s| s == @section ? nil : [ s.title, s.id ]}.compact, { :include_blank => true, :label => true } %>
+			<span class="hint" for="section_parent_id"><%= t :'adva.sections.hints.parent_setting' %></span>
+		<% end %>
+	<% end %>
+
+  <% f.buttons do %>
+    <%= submit_tag t(:'adva.common.save'), :id => 'commit' %>
+    <%= submit_tag t(:'adva.sections.links.save_and_create_new'), :id => 'save_and_create_new' %>
+    <%= t(:'adva.common.connector.or') %>
+    <%= link_to(t(:'adva.common.cancel'), admin_sections_path) %>
+  <% end %>
+<% end %>

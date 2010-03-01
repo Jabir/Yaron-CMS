@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<results><%#= @boards.total_entries.to_s %></results>
+	<% @boards.each do |board| %>
+		<record>
+			<id><%= board.id.to_s %></id>
+			<title><%= h board.title %></title>
+			<description><%= h board.description %></description>
+			<topic_count><%= board.topics_count %></topic_count>
+			<posts_count><%= board.posts_count %></posts_count>
+		</record>
+	<% end %>
+</dataset>

@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>adva-cms: Admin <%= controller.controller_name %></title>
+    <%= stylesheet_link_tag 'extjs/ext-all.css', 'extjs/silk.css', 'extjs/row-editor.css' %>
+    <%= yield :before_javascript_include %>
+    <%= javascript_include_tag 'adva_cms/jquery/jquery.js','extjs/ext-jquery-adapter.js', 'extjs/ext-all.js', 'extjs/base-event.js', 'extjs/ext-layout.js', 'extjs/row-editor.js', 'lico_adva/crud.js', 'lico_adva/i18n_nl.js' %>
+  	<%= javascript_tag "window._auth_token = #{form_authenticity_token.inspect}" %>
+  	<%= yield :head %>
+  	<%
+  	  tabs = {
+  	    0 => {:controllers => [Admin::ArticlesController], :name => 'articles', :target => url_for(admin_articles_path(@section || Section.find(:first), @site || Site.find(:first)))},
+  	    1 => {:controllers => [Admin::CategoriesController], :name => 'categories', :target => url_for(admin_categories_path(@site || Site.find(:first), @section || Section.find(:first)))},
+	    }
+	    
+      if has_permission?('list', 'user')
+        tabs[tabs.length] = {:controllers => [Admin::UsersController], :name => 'users', :target => url_for(admin_users_path(@site || Site.find(:first)))}
+      end
+
+      if has_permission?('create', 'site')
+        tabs[tabs.length] = {:controllers => [Admin::SitesController], :name => 'sites', :target => url_for(admin_sites_path())}
+      end
+  	
+  	  active_tab = 0
+  	  tabs.each do |key, tab|
+  	    active_tab = key if tab[:controllers].include?(controller.class)
+	    end
+  	%>
+  	<style type="text/css" media="screen">
+      #header {
+        background: #7F99BE url(/images/extjs/hd-bg.gif) repeat-x center;
+      }
+      #header h1 {
+        font-size: 16px;
+        color: #fff;
+        font-weight: normal;
+        padding: 5px 10px;
+      }
+      .x-panel-body {
+        background-color: #DFE8F6;
+      }
+  	</style>
+  	<script type="text/javascript" charset="utf-8">
+      Ext.onReady(function(){
+        new Ext.Viewport({
+          layout: 'border',
+          title: t['page']['title'],
+          items: [
+            {
+              xtype: 'box',
+              region: 'north',
+              applyTo: 'header',
+              height: 30
+            }, {
+              layout: 'vbox',
+              region: 'center',
+              layoutConfig: {
+                align : 'stretch',
+                pack  : 'start',
+              },
+              items: [
+                new Ext.TabPanel({
+                  flex: 1,
+                  renderTo: 'tabs',
+                  activeTab: <%= active_tab %>,
+                  frame: true,
+                  items: [
+                    <% tabs.each do |key, tab| %>
+                      ext_tab_content(t['tab']['<%=tab[:name]%>'], <%= tab[:controllers].include?(controller.class) ? "true" : "false" %>)
+                      <%= key == tabs.length ? "" : "," %>
+                    <% end %>
+                  ],
+                  listeners: {
+                    beforetabchange: function(tp, newTab, currentTab){
+                      if (currentTab) {
+                        switch (newTab.title) {
+                          <% tabs.each do |key, tab| %>
+                          case t['tab']['<%= tab[:name] %>']:
+                          	var mask = new Ext.LoadMask(Ext.getBody(), { msg: t['loader_text'] });
+                          	mask.show();
+                            window.location = '<%= tab[:target] %>';
+                            return false;
+                            break;
+                          <% end %>
+                        }
+                      }
+                    }
+                  }
+                })
+              ]
+            }, {
+              id: 'sidebar',
+              region:'east',
+              border: false,
+              margins: '2 0 5 5',
+              width: 275,
+              minSize: 275,
+              maxSize: 275,
+              html: 'sidebar...'
+            }
+          ],
+          renderTo: Ext.getBody()
+        });
+      });
+      
+      function ext_tab_content (tab_title, active) {
+        if (active) {
+          if (typeof(tab_content) != "undefined") {
+            return tab_content(tab_title);
+          } else if (typeof(body_items) != "undefined") {
+              return { title: tab_title, items: body_items() };
+          } else {
+            return { title: tab_title, html: document.getElementById('content-data').innerHTML };
+          }
+        } else {
+          return { title: tab_title };
+        }
+      }
+  	</script>
+  </head>
+  <body class="ext-webkit ext-safari ext-safari4 ext-mac x-border-layout-ct">
+    <div id="header"><h1>CMS</h1></div>
+    <div id="tabs"></div>
+    <div id="content-data">
+      <%= yield :form if @content_for_form %>
+      <%= render :partial => 'shared/flash' %>
+      <%= yield %>
+      <%= '</form>' if @content_for_form %>
+    </div>
+   	<%#= yield :sidebar %>
+  </body>
+</html>

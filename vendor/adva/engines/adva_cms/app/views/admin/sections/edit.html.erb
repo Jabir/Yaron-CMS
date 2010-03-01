@@ -1,0 +1,144 @@
+<script type="text/javascript" charset="utf-8">
+  var registered_tabs = [];
+  function register_tab (params) {
+    registered_tabs[registered_tabs.length] = params;
+  }
+
+  function extjs_body_items () {
+    var tab_items = [{
+      xtype: 'hidden',
+      name: '_method',
+      value: 'put'
+    },{
+      fieldLabel: '<%= t(:'adva.sites.label.title') %>',
+      name: 'section[title]',
+      value: document.getElementById('section_title').value,
+      type: 'textfield',
+      width: 200
+    },{
+      fieldLabel: '<%= t(:'adva.titles.permalink') %>',
+      name: 'section[permalink]',
+      value: document.getElementById('section_permalink').value,
+      xtype: 'textfield',
+      width: 200
+    },{
+      xtype: 'hidden',
+      name: 'section[published]',
+      value: '0'
+    },{
+      fieldLabel: '<%= t(:'adva.sections.titles.publish') %>',
+      name: 'section[published]',
+      inputValue: '1',
+      xtype: 'checkbox',
+      checked: document.getElementById('section_published').checked
+    }];
+    if (document.getElementById('section_comment_age')) {
+      tab_items[tab_items.length] = {
+        fieldLabel: '<%= t(:'adva.labels.comment_filter') %>',
+        name: 'section[comment_age]',
+        xtype: 'combo',
+        triggerAction: 'all',
+        forceSelection: true,
+        transform:     'section_comment_age',
+        lazyRender:     true,
+				width: 200
+      };
+    }
+    
+    if (document.getElementById('section_template')) {
+      tab_items[tab_items.length] = {
+        fieldLabel: '<%= t(:'adva.theme_files.types.template') %>',
+        name: 'section[template]',
+        value: document.getElementById('section_template').value,
+        xtype: 'textfield',
+        width: 200
+      };
+    }
+    if (document.getElementById('section_layout')) {
+      tab_items[tab_items.length] = {
+        fieldLabel: 'Layout',
+        name: 'section[layout]',
+        value: document.getElementById('section_layout').value,
+        xtype: 'textfield',
+        width: 200
+      };
+    }
+    
+    var tabs = [{
+      title: '<%= t(:'adva.titles.general_settings') %>',
+      items: tab_items
+    }];
+    
+    for (var c=0; c<registered_tabs.length; c++) {
+      tabs[tabs.length] = eval(registered_tabs[c]+"_tab()");
+    }
+    
+    return {
+      region: 'center',
+      layout: 'border',
+      bodyStyle: 'padding: 15px; background-color: white',
+      border: true,
+      items: {
+        region: 'center',
+        xtype: 'form',
+        border: false,
+        bodyStyle: 'padding: 15px; padding-bottom: 0px;',
+        items: [{
+          region: 'center',
+          xtype: 'tabpanel',
+          baseCls: 'tab-white',
+          activeItem: 0,
+          border: false,
+          anchor: '100% 100%',
+          defaults: {
+            layout: 'form',
+            labelWidth: 120,
+            border: true,
+            defaultType: 'textfield',
+            bodyStyle: 'padding:10px; border-top: 0px'
+          },
+          items: tabs,
+        }],
+        buttons: [{
+          text: 'Opslaan',
+          iconCls: 'silk-accept',
+          handler: function() {
+            var mask = new Ext.LoadMask(Ext.getBody(), { msg: t['loader_text'] });
+            mask.show();
+            $.post('<%= admin_section_path(@site, @section) %>',
+              $(document.getElementsByTagName("form")[0]).serialize(),
+              function(responseText) {
+                responseText = strip_error_from_response(responseText)
+                if (/errorExplanation/.test(responseText)) {
+                  mask.hide();
+                  Ext.Msg.minWidth = 400;
+                  Ext.Msg.show({
+                    title: t['error_title'],
+                    msg: responseText,
+                    buttons: {
+                      ok: t['ok_text']
+                    },
+                    icon: Ext.MessageBox.WARNING
+                  });
+                } else {
+                  window.location = '<%= admin_section_contents_path(@section) %>';
+                }
+              }
+            );
+          }
+        },{
+          text: 'Annuleren',
+          iconCls: 'silk-delete',
+          handler: function() {
+            window.location = '<%= admin_section_contents_path(@section) %>';
+          }
+        }]
+      }
+    };
+  }
+</script>
+<%= error_messages_for :section %>
+<% form_for :section, @section, :url => admin_section_path(@site, @section), :html => {:method => :put} do |f| %>
+  <%= render :partial => 'form', :locals => {:f => f} %>
+  <% save_or_cancel_links(f) %>
+<% end %>

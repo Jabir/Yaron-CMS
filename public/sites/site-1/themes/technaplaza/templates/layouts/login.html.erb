@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+ 		<meta name="generator" content="Technaplaza" /> 
+    <title><%= @site.title %> - <%= controller.controller_name %></title>
+	<%= theme_stylesheet_link_tag 'technaplaza', 'mbContainer.css' %>
+	<%= theme_stylesheet_link_tag 'technaplaza', 'style.css' %>
+	<%= theme_stylesheet_link_tag 'technaplaza', 'jquery-ui.css' %>
+	<%= theme_stylesheet_link_tag 'technaplaza', 'playlist.css' %>
+	<%= theme_stylesheet_link_tag 'technaplaza', 'playerskin.css' %>
+	<%= theme_stylesheet_link_tag 'technaplaza', 'hulu.css' %>
+	<%= theme_stylesheet_link_tag 'technaplaza', 'sifr.css' %>
+	<%= theme_stylesheet_link_tag 'technaplaza', 'form.css' %>
+	<%= theme_stylesheet_link_tag 'technaplaza', 'buttons.css' %> 
+	<%= theme_stylesheet_link_tag 'technaplaza', 'sifr.css' %>
+	<%= theme_stylesheet_link_tag 'technaplaza', 'comments.css' %>
+ 	<%= theme_javascript_include_tag 'technaplaza', 'jquery.tools.min.js' %>
+	<%= theme_javascript_include_tag 'technaplaza', 'ui.core.min.js' %>
+	<%= theme_javascript_include_tag 'technaplaza', 'ui.draggable.min.js' %>
+	<%= theme_javascript_include_tag 'technaplaza', 'ui.datepicker.js' %>
+	<%= theme_javascript_include_tag 'technaplaza', 'jquery.easing.1.3.js' %>
+	<%= theme_javascript_include_tag 'technaplaza', 'jquery.lavalamp.1.3.2-min.js' %>
+	<%= theme_javascript_include_tag 'technaplaza', 'ui.resizable.min.js' %>
+	<%= theme_javascript_include_tag 'technaplaza', 'mbContainer.js' %>
+	<%= theme_javascript_include_tag 'technaplaza', 'jquery.jqtransform.js' %>
+	<%= theme_javascript_include_tag 'technaplaza', 'jquery.metadata.js' %>
+	<%= theme_javascript_include_tag 'technaplaza', 'flowplayer.js' %>
+	<%= theme_javascript_include_tag 'technaplaza', 'flowplayer.playlist.js' %>
+	<%= theme_javascript_include_tag 'technaplaza', 'flowplayer.controls.js' %>
+	<%= theme_javascript_include_tag 'technaplaza', 'jquery-css-transform.js' %>
+    <script type="text/javascript" src="../../javascripts/adva_cms/cookie.js"></script>
+    <script type="text/javascript" src="../../javascripts/adva_cms/jquery.roles.js"></script>
+    <script type="text/javascript" src="../../javascripts/adva_cms/parseuri.js"></script>
+    <script type="text/javascript" src="../../javascripts/adva_cms/application.js"></script>
+
+  <%= theme_javascript_include_tag 'technaplaza', 'sifr.js' %>
+  <%= theme_javascript_include_tag 'technaplaza', 'sifr_debug.js' %>
+  <%= theme_javascript_include_tag 'technaplaza', 'sifr-config.js' %>
+
+    <%#= javascript_include_tag :common, :login, :cache => 'cache/admin/login' %>
+	<%= javascript_include_tag :login %>
+  <script type="text/javascript" charset="utf-8">
+  	    $(function(){
+      $(".containerPlus").buildContainers({
+        containment:"parent",
+        elementsPath:"/sites/site-2/themes/technaplaza/elements/"
+      });
+    });
+    $(function(){
+      $('form.jqtransform').jqTransform({imgPath:'/sites/site-2/themes/technaplaza/images/'});
+    });
+  </script>
+
+    <%= yield :head %>
+  </head>
+  <body>   
+
+    
+    <div id="main">
+      <div id="flashes"><%= render :partial => 'shared/flash' %></div>
+      <div id="content">
+        <%= yield %>      
+      </div>
+    </div>
+
+  </body>
+</html>

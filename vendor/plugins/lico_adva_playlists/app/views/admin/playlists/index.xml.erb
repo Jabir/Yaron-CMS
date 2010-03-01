@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+  <results><%= @playlists.size.to_s %></results>
+  <% @playlists.each do |playlist| %>
+    <record>
+      <id><%= playlist.id.to_s %></id>
+      <title><%= h playlist.title %></title>
+    </record>
+  <% end %>
+</dataset>

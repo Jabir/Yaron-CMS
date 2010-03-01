@@ -1,0 +1,100 @@
+#filters {
+  min-width: 320px;
+  position: relative;
+  padding-top: 15px;
+}
+#filters .set {
+  position: relative;
+	white-space: nowrap;
+	padding: 0;
+	margin-bottom: 2px;
+	background-color: #e8e8e8;
+}
+#filters .set fieldset {
+  display: none;
+  vertical-align: middle;
+  padding: 0;
+}
+#filters .selected_filter, 
+#filters .set .selected {
+  display: inline-block;
+}
+#filters .set select {
+  vertical-align: middle;
+}
+#filters .set input[type=text] {
+  width: 50px;
+  padding: 1px 5px 2px 5px;
+  font-size: 0.9em;
+  vertical-align: middle;
+}
+#filters .set input[type=checkbox] {
+  vertical-align: middle;
+}
+#filters .set label {
+  display: inline;
+  margin: -2px 0 2px 0;
+  font-weight: normal;
+  font-size: 0.85em;
+  vertical-align: baseline;
+}
+#filters .set .controls {
+  display: inline-block;
+  position: absolute;
+  right: 4px;
+  top: 3px;
+  width: 36px;
+  height: 18px;
+}
+#filters .set .controls a {
+  display: inline-block;
+  float: right;
+  overflow: hidden;
+  width: 18px;
+  height: 18px;
+  outline: 0px;
+  text-indent: 18px;
+}
+#filters .set .controls a.filter_add {
+  background: url(/images/has_filter/filter_add.png) left top;
+}
+#filters .set .controls a.filter_remove {
+  background: url(/images/has_filter/filter_remove.png) left top;
+}
+#filters .set:first-child .controls a.filter_remove {
+  display: none;
+  text-indent: 20px;
+}
+#filters .set .controls a.filter_add {
+/*  margin-right: 4px;*/
+}
+#filters .set .controls a.filter_remove {
+/*  margin-left: -4px;*/
+}
+#filters div.submit {
+  height: 18px;
+	padding: 0;
+  padding-left: 16px;
+	margin-right: 2px;
+  background: url(/images/has_filter/filter_button_left.png) repeat-x left top;
+  vertical-align: top;
+}
+
+#filters div.submit button {
+	display: block;
+	float: right;
+  padding: 0px 16px 0px 0px;
+	margin-right: -2px;
+	border: 0;
+  background: url(/images/has_filter/filter_button_right.png) repeat-x right top;
+  font-size: 11px;
+	height: 20px;
+  color: #555;
+  outline: none;
+	text-decoration: none;
+}
+
+#filters div.submit button:hover {
+  color: #333;
+  cursor: pointer;
+}

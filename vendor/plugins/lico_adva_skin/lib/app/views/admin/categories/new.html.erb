@@ -1,0 +1,5 @@
+<% if @category && @category.errors && @category.errors.size > 0 %>
+  <%= error_messages_for(:category) %>
+<% else %>
+  CRUD_OK
+<% end %>

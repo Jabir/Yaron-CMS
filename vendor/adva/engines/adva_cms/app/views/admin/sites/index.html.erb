@@ -1,0 +1,21 @@
+<%
+	table_for @sites do |t|
+		t.column :name, :host, :actions
+
+		t.row do |r, site|
+  		r.cell link_to_show(site.name, site, :class => 'site')
+			r.cell site.host
+			r.cell link_to_show(site, :url => "http://#{site.host}") + "\n" +
+						 links_to_actions([:edit, :delete], site)
+		end
+
+		t.foot.row do |r|
+			r.cell will_paginate(@sites), :class => :pagination, :colspan => :all
+		end
+
+		t.empty :p, :class => 'empty' do
+			t(:'adva.articles.no_sites') + "\n" +
+			link_to("Create one now &raquo;", new_admin_site_path)
+		end
+	end
+%>

@@ -1,0 +1,19 @@
+<% f.field_set do %>
+	<p>
+	  <%= f.text_field :base_path, :label => :'adva.themes.labels.filename' %>
+	</p>
+
+	<% if @file.respond_to?(:text) %>
+		<%= f.label :data, t(:'activerecord.attributes.theme_file.data', :default => 'Data') %>
+		<% if @file.is_a?(Theme::Template) %>
+			<span class="hint" for="file_data"><%=t :'adva.themes.hints.asset_caching' %></span>
+		<% end %>
+		<%= text_area_tag 'file[data]', @file.text, :id => 'file_data', :class => 'big' %>
+	<% elsif @file.respond_to?(:base_url) and @file.base_url %>
+	  <p><%= theme_image_tag @theme.theme_id, @file.base_url %></p>
+	<% end %>
+
+  <% save_or_cancel_links(f, :cancel_url => admin_theme_files_path(@site, @theme.id)) %>
+<% end %>
+
+<% render :partial => 'files' %>

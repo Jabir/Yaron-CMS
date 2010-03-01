@@ -1,0 +1,9 @@
+<%= render :partial => "/admin/assets/sidebar", :locals => { :site => @site } %>
+<script type="text/javascript" charset="utf-8">
+  function extjs_sidebar_items () {
+    return sidebar_drag_view();
+  }
+</script>
+<h2><%= t(:'adva.titles.history') %>: <%= @site.title %></h2>
+
+<%= render :partial => 'admin/activities/activities', :object => @activities %>

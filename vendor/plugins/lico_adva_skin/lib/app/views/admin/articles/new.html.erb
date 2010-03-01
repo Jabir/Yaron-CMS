@@ -1,0 +1,17 @@
+<% if @section.try(:single_article_mode) %>
+  <%
+    @s = Section.find(@section.id)
+    @s.single_article_mode = false
+    @s.save
+  %>
+  <script type="text/javascript" charset="utf-8">
+    Ext.onReady(function(){
+      window.location = '<%= admin_articles_path(@site, @section) %>';
+    });
+  </script>
+<% end %>
+<% if @article && @article.errors && @article.errors.size > 0 %>
+  <%= error_messages_for(:article) %>
+<% else %>
+  CRUD_OK
+<% end %>

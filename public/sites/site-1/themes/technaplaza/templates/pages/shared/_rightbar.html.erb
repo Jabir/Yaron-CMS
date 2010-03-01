@@ -1,0 +1,114 @@
+      <div id="rightcolumn">
+      			 <div class="containerPlus  {skin:'studybuddy', icon:'studybuddy.png', collapsed:'true'}">
+          <div class="no">
+            <div class="ne">
+              <div class="n applynow">Studybuddy</div>
+            </div>
+            <div class="o">
+              <div class="e">
+                <div class="c">
+                  <div class="mbcontainercontent">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="so">
+                <div class="se">
+                  <div class="s"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><br/>
+		   <div class="containerPlus  {skin:'default', collapsed:'true'}">
+          <div class="no">
+            <div class="ne">
+              <div class="n applynow">Career</div>
+            </div>
+            <div class="o">
+              <div class="e">
+                <div class="c">
+                  <div class="mbcontainercontent">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="so">
+                <div class="se">
+                  <div class="s"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><br/>
+			
+
+      
+<br clear="all"/>
+
+
+        <a href="video.flv" style="display:block;width:310px;height:200px;" id="huluPlayer"></a>
+
+        <div id="hulu" class="hulu"></div>	
+      </div>
+
+      <div id="extreme_rightcolumn">
+      	<div id="notepad">
+            <div id="datepicker"></div>
+          </div><br clear="all"/><br/>
+			   <div class="containerPlus  {skin:'default', buttons:'m', icon:'accomodation.png', collapsed:'true'}">
+          <div class="no">
+            <div class="ne">
+              <div class="n applynow">Accomodation</div>
+            </div>
+            <div class="o">
+              <div class="e">
+                <div class="c">
+                  <div class="mbcontainercontent">
+                  	<% Section.find_by_title("Accomodation").articles.each do |article| %>
+                      <%= link_to_content(article) %><br />
+                    <% end %> 
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="so">
+                <div class="se">
+                  <div class="s"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><br/>
+		<div class="containerPlus  {skin:'default', icon:'degree.png', collapsed:'true'}">
+          <div class="no">
+            <div class="ne">
+              <div class="n applynow">Degree</div>
+            </div>
+            <div class="o">
+              <div class="e">
+                <div class="c">
+                  <div class="mbcontainercontent">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="so">
+                <div class="se">
+                  <div class="s"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><br/>
+                <div id="studybuddy"></div>
+        <div class="tooltip">
+          <h3>Study Buddy</h3>
+          <p>A senior student will make you feel at ease right away</p>
+          <a href="http://adva.avansopen.nl/parents/articles/study-buddy"><h2>Read More...</h2></a>
+        </div>
+      </div>

@@ -1,0 +1,14 @@
+<h2><%= t(:'adva.sections.titles.page_settings') %></h2>
+
+<% f.field_set :section_settings do %>
+  <% column do %>
+		<%= f.label t(:"adva.sections.titles.behaviour") %>
+		<p><%= f.radio_button :single_article_mode, true, :label => :"adva.sections.settings.single_article_mode" %></p>
+		<p><%= f.radio_button :single_article_mode, false, :label => :"adva.sections.settings.multi_article_mode" %></p>
+    <%#= f.text_field :contents_per_page, :label => true, :class => 'small' %>
+  <% end %>
+
+  <% column do %>
+    <%= f.select :content_filter, filter_options, {}, :label => true, :hint => :'adva.sections.hints.content_filter' %>
+  <% end %>
+<% end %>

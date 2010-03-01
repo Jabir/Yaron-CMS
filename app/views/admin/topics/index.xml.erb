@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+  <results><%#= @boards.total_entries.to_s %></results>
+  <% @topics.each do |topic| %>
+    <record>
+      <id><%= topic.id.to_s %></id>
+      <board_id><%= h topic.board_id %></board_id>
+	  <title><%= h topic.title %></title>
+      <last_author_name><%= topic.last_author_name %></last_author_name>
+      <posts_count><%= topic.posts_count %></posts_count>
+    </record>
+  <% end %>
+</dataset>

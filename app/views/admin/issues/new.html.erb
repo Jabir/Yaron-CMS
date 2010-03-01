@@ -1,0 +1,5 @@
+<% if @issue && @issue.errors && @issue.errors.size > 0 %>
+  <%= error_messages_for(:issue) %>
+<% else %>
+  CRUD_OK
+<% end %>

@@ -1,0 +1,21 @@
+<% content_for :sidebar do %>
+	<p class="hint text_only large padded">
+		<%= t :'adva.categories.hints.parent_setting_for_edit' %>
+	</p>
+<% end %>
+
+<h2><%= t(:'adva.categories.titles.edit') %></h2>
+
+<% form_for :category, @category, :url => admin_category_path, :html => {:method => :put} do |f| %>
+	<% f.field_set do %>
+    <% column do %>
+      <%= f.text_field :title, :label => true, :hint => :'adva.hints.categories' %>
+    <% end %>
+
+    <% column do %>
+      <%= f.text_field :permalink, :label => true, :hint => :'adva.categories.hints.permalink' %>
+    <% end %>
+  <% end %>
+
+  <% save_or_cancel_links(f, :cancel_url => admin_categories_path) %>
+<% end %>

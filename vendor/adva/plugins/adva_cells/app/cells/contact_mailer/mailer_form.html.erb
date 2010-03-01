@@ -1,0 +1,11 @@
+<% form_tag contact_mails_path(:return_to => request.request_uri), { :id => 'contact_mail_form', :method => :post, :class => 'jqtransform' }  do -%>
+	<%#<p>%>
+    <%= hidden_field_tag :'contact_mail[recipients]', @recipients %>
+	<%#</p>%>
+
+	<%= render_fields(@fields) if @fields.present? %>
+	<p>
+		<%#= submit_tag t(:'adva.common.labels.submit') %>
+		<%= submit_tag "Verzend" %>
+	</p>
+<% end %>

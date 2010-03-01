@@ -1,0 +1,8 @@
+<li>
+  <%= link_to object.title, admin_section_contents_path(object) %>
+  <% if object.children.present? %>
+  <ul>
+    <%= render :partial => 'admin/shared/section', :collection => object.children %>
+  </ul>
+  <% end %>
+</li>

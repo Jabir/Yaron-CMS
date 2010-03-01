@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<results><%#= @adva_issue.categories.count.to_s %></results>
+	<% @issues.each do |issue| %>
+		<record>
+			<id><%= issue.id.to_s %></id>
+			<title><%= h issue.title %></title>
+			<draft><%= issue.draft? ? "1" : "0" %></draft>
+		</record>
+	<% end %>
+</dataset>

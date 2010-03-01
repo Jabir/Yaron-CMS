@@ -1,0 +1,5 @@
+<% if @set && @set.errors && @set.errors.size > 0 %>
+  <%= error_messages_for(:set) %>
+<% else %>
+  CRUD_OK
+<% end %>

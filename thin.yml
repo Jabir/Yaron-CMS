@@ -1,0 +1,14 @@
+--- 
+pid: tmp/pids/thin.pid
+log: log/thin.log
+max_conns: 512
+timeout: 30
+port: 4001
+chdir: /var/www/YP-CMS
+environment: production
+max_persistent_conns: 128
+servers: 1
+daemonize: true
+address: 0.0.0.0
+require: []
+

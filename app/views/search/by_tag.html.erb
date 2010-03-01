@@ -1,0 +1,20 @@
+<h2>Aantal resultaten: <%= @results.length.to_s %></h2>
+<hr />
+<% @results.each do |result| %>
+  <% if result.is_a?(Article) %>
+		<h4><%= link_to_content(result) %></h4>
+		<% if result.excerpt.present? %>
+			<p><%= result.excerpt %></p>
+		<% end %>
+		<hr />
+  <% elsif result.is_a?(CalendarEvent) %>
+    <%= link_to result.title, calendar_event_url(result.section_id, result.permalink) %><br />
+    <%= datetime_with_microformat(event_dates_from_to(result)[0], :format => (result.all_day? ? :mdy : :long)) %><br />
+    <%= datetime_with_microformat(event_dates_from_to(result)[1], :format => (result.all_day? ? :mdy : :long)) if event_dates_from_to(result)[1] %>
+      <%= t(:'adva.calendar.attributes.all_day') if result.all_day? %><br />
+    <hr />
+  <% elsif result.is_a?(Asset) %>
+    <%= image_tag(result.base_url(:tiny)) %>
+    <hr />
+  <% end %>
+<% end %>

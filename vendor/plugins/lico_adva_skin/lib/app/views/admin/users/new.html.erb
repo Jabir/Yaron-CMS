@@ -1,0 +1,5 @@
+<% if @user && @user.errors && @user.errors.size > 0 %>
+  <%= error_messages_for(:user) %>
+<% else %>
+  CRUD_OK
+<% end %>

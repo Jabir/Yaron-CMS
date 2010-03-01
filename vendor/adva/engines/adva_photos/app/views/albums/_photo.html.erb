@@ -1,0 +1,29 @@
+<% if photo %>
+  <div id="<%= dom_id photo %>" class="entry clearing">
+
+  	<div class="content">
+    	<h2>
+    	  <%= link_to_content photo %>
+    	</h2>
+			<% if mode == :single -%>
+        <%= link_to(image_tag(photo.base_url(:large)), photo.base_url, :target => '_blank') %>
+			<% else -%>
+				<%= link_to(image_tag(photo.base_url(:thumb)), photo_path(@section, photo)) %>
+			<% end %>
+    </div>
+  	<div class="meta">
+  	  <p>
+  	    <%= datetime_with_microformat(photo.published_at, :format => :long) %><br />
+  	    <%= t(:'adva.photos.albums.uploaded_by', :author_name => photo.author_name) %>
+    	  <%= link_to_content_comments photo unless mode == :single %>
+    	  <% authorized_tag :span, :update, photo do -%>
+      		<%= link_to t(:'adva.photos.albums.edit'), edit_admin_photo_path(@site, @section, photo) %>
+		    <% end -%>
+  	  </p>
+  	  <p>
+      	<%= links_to_photo_sets photo, t(:'adva.photos.common.sets') %>
+      	<%= links_to_content_tags photo, :'adva.common.content_tags' %>
+      </p>
+  	</div>      
+  </div>
+<% end %>

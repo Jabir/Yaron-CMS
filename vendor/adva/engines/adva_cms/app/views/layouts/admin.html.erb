@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ 	<meta name="generator" content="YP-CMS - Yaron Producties Open source content management platform" />
+  <title>YP-CMS: Admin <%= controller.controller_name %></title>
+  <%= stylesheet_link_tag :admin, 			 		 :media => "all",        :cache => 'cache/admin/common' %>
+  <%= stylesheet_link_tag :admin_projection, :media => "projection", :cache => 'cache/admin/projection' %>
+
+  <%= yield :before_javascript_include %>
+  <%= javascript_include_tag :common, :admin, :cache => true %>
+	<%= javascript_tag "window._auth_token = #{form_authenticity_token.inspect}" %>
+	<%= yield :head %>
+</head>
+<body>
+	<%= @menu.build(self).root.render(:id => 'top') %>
+	<%= render :partial => 'admin/shared/header' %>
+	<div id="page">
+		<%= yield :form if @content_for_form %>
+		<div class="main">
+			<%= @menu.root.find(:main).try(:render, :id => 'main_menu') %>
+      <%= render :partial => 'shared/flash' %>
+			<div id="content">
+        <%= yield %>
+			</div>
+		</div>
+   	<div id="sidebar" class="right">
+     	<%= yield :sidebar %>
+   	</div>
+    <%= '</form>' if @content_for_form %>
+		<div id="left" class="collapsed">
+		</div>
+  </div>
+</body>
+</html>

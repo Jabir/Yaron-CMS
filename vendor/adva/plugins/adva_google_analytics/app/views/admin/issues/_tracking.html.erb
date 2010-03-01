@@ -1,0 +1,36 @@
+<% if @site.tracking_enabled? %>
+  <% f.tab :tracking do %>
+    <% fields_for :issue do |f| %>
+      <p>
+        <%= f.check_box :track %>
+        <%= f.label :track, t(:'adva.tracking.enable_tracking'), :class => 'inline light' %>
+      </p>
+      <div id="tracking_options">
+        <%= f.text_field :tracking_campaign, 
+          :label => :'adva.tracking.tracking_campaign', 
+          :value => @issue.tracking_campaign,
+          :disabled => !@issue.tracking_enabled?
+        %>
+
+        <%= f.text_field :tracking_source, 
+          :label => :'adva.tracking.tracking_source', 
+          :value => @issue.tracking_source,
+          :disabled => !@issue.tracking_enabled?
+        %>
+
+        <span class="hint">
+          <%= t(:'adva.tracking.hints.glossary', 
+                :link => link_to(t(:'adva.tracking.hints.glossary_name'), 
+                "http://www.google.com/support/googleanalytics/bin/topic.py?topic=11096&hl=#{I18n.locale}")) %>
+        </span>
+      </div>
+    <% end %>
+  <% end %>
+<% else %>
+  <% f.tab :tracking do %>
+    <p class="hint text_only">
+      <%= t(:'adva.tracking.hints.no_tracking_code', 
+            :settings => link_to(t(:'adva.resources.settings'))) %>
+    </p>
+  <% end %>
+<% end %>

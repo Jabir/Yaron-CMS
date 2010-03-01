@@ -1,0 +1,81 @@
+.activities h3 {
+  font-size: 12pt;
+}
+.activities h4,
+.activities p,
+.activities blockquote {
+	margin: 0px 0px 3px 0px;
+	font-weight: normal;
+}
+.activities ul {
+  margin-top: 10px;
+  list-style-type: none;
+}
+.activities blockquote {
+	font-style: italic;
+}
+.activities .meta {
+  clear: right;
+	float: right;
+	margin: 0;
+	padding-bottom: 0;
+	text-align: right;
+}
+.activities .meta,
+.activities .meta a {
+	font-size: 12px;
+	color: #888;
+	line-height: 20px;
+}
+.activities li.empty {	
+	margin-top: 10px;
+}
+
+.activities .activity {	
+	padding: 10px 10px 10px 35px;
+}
+.activities .activity.highlight {
+  background-color: #f6f6f6;
+}
+
+.activity.comment_created {
+	background: url(/images/adva_cms/icons/comment_add.png) no-repeat 10px 11px;
+}
+.activity.comment_edited {
+	background: url(/images/adva_cms/icons/comment_edit.png) no-repeat 10px 11px;
+}
+.activity.comment_deleted {
+	background: url(/images/adva_cms/icons/comment_delete.png) no-repeat 10px 11px;
+}
+.activity.comment_approved {
+	background: url(/images/adva_cms/icons/comment.png) no-repeat 10px 11px;
+} 
+.activity.comment_unapproved {
+	background: url(/images/adva_cms/icons/comment.png) no-repeat 10px 11px;
+}
+
+.activity.article_created {
+	background: url(/images/adva_cms/icons/page_add.png) no-repeat 10px 11px;
+}
+.activity.article_revised {
+	background: url(/images/adva_cms/icons/page_edit.png) no-repeat 10px 11px;
+} 
+.activity.article_published {
+	background: url(/images/adva_cms/icons/page_go.png) no-repeat 10px 11px;
+} 
+.activity.article_unpublished {
+	background: url(/images/adva_cms/icons/page_red.png) no-repeat 10px 11px;
+} 
+.activity.article_deleted {
+	background: url(/images/adva_cms/icons/page_delete.png) no-repeat 10px 11px;
+}
+
+.activity.wikipage_created {
+	background: url(/images/adva_cms/icons/page_white_add.png) no-repeat 10px 11px;
+}
+.activity.wikipage_revised {
+	background: url(/images/adva_cms/icons/page_white_edit.png) no-repeat 10px 11px;
+}
+.activity.wikipage_deleted {
+	background: url(/images/adva_cms/icons/page_white_delete.png) no-repeat 10px 11px;
+}

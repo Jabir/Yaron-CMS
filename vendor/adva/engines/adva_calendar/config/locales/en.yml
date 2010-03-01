@@ -1,0 +1,104 @@
+en:
+  adva:
+    calendar_events:
+      links:
+        index: Events
+        new: New
+        delete: Delete
+      columns:
+        title: Title
+        starting_at: Starting at
+        ending_at: Ending at
+        created_by: Created by
+    calendar:
+      events_count:
+        one: "{{count}} event"
+        other: "{{count}} events"
+      events_published_count:
+        one: "{{count}} published"
+        other: "{{count}} published"
+      events_draft_count:
+        one: "{{count}} draft"
+        other: "{{count}} drafts"
+      open_end: Open end
+      confirm_delete: Are you sure you want to delete this event?
+      publish_on_date: Publish on this date
+      starting_at: Starting at {{start_date}}
+      question_save_as_draft: Save as draft?
+      confirm_save_as_draft: Yes, save this event as a draft
+      from_to: '{{start_date}} - {{end_date}}'
+      total_events_with_count:
+        one: "Total: {{count}} event."
+        other: "Total: {{count}} events."
+      errors:
+        no_events: No events in {{title}} for this period of time.
+        no_events_in_calendar: There are no events yet in this calendar.
+        no_events_found: No events matching your filter.
+      input_defaults:
+        search: Search
+      titles:
+        show_events: Show events
+        search_events: Search events
+        edit_event: Edit event
+        manage: Manage
+        title: Title
+        location: Location
+        starting_at: Starting at
+        ending_at: Ending at
+        created_by: Created by
+        publish_in_categories: Publish in these categories
+        actions: Actions
+        formats:
+          year_month_day: 'on %e %B %Y'
+          year_month: 'in %B %Y'
+          year: 'in %Y'
+        in_category: in {{title}}
+        tagged: tagged {{tags}}
+        events: Events
+        all_day: All day
+      flash:
+        create:
+          success: The event has been created.
+          failure: The event could not be created.
+        update:
+          success: The event has been updated.
+          failure: The event could not be updated.
+        destroy:
+          success: The event has been deleted.
+          failure: The event could not be deleted.
+      buttons:
+        go: Go
+        search: Search
+      options:
+        all_categories: All categories
+        filter:
+          category: Category
+          tags: Tags
+          title: Title
+          body: Body
+          location: Location
+          upcoming: Upcoming
+          elapsed: Elapsed
+          recently_added: Recently added
+      links:
+        show: View
+        new: Create a new event
+        events: Events
+        all_events: All events
+        categories: Categories
+        settings: Settings
+        preview: Preview
+        view: View
+        delete: Delete
+      attributes:
+        title: Title
+        start_date: Starting at
+        end_date: Ending at
+        body: Write your description
+        tags: Tags
+        host: Organizer
+        location: Location
+        all_day: All day
+      calendar:
+        year_month_format: '%B %Y'
+        this_month: This month

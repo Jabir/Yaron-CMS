@@ -1,0 +1,94 @@
+	<style>
+#mask {
+background:#678 url(/sites/site-2/themes/technaplaza/images/mask_gradient_1000.png) no-repeat;
+/*background-position:-60px -79px;*/
+background-position:center;
+}
+	</style>
+		<script type="text/javascript">
+		$(function() {
+			// expose the form when it's clicked or cursor is focused
+			$("form#register-form.expose").bind("click keydown", function() {
+
+				$(this).expose({
+
+					// custom mask settings with CSS
+					maskId: 'mask',
+
+					// when exposing is done, change form's background color
+					onLoad: function() {
+					this.getExposed().css({backgroundColor: '#FFFFFF'});
+					},
+
+					// when "unexposed", return to original background color
+					onClose: function() {
+					this.getExposed().css({backgroundColor: null});
+					},
+
+					api: true
+					
+				}).load();
+			});
+		});
+	</script>
+	<div id="center-box">
+			<h2 class="technaplaza-logo" align="center" >Technaplaza.nl</h2>
+<div class="containerPlus  {skin:'white', icon:'join.png'}">
+	<div class="no">
+		<div class="ne">
+			<div class="n">		
+
+			</div>
+		</div>
+	<div class="o">
+		<div class="e">
+			<div class="c">
+				<div class="mbcontainercontent">
+
+<% form_for @user, :url => user_path, :html => {:id => 'register-form', :class => 'expose jqtransform' } do |f| %>
+
+  <% f.field_set :signup_fields do %>
+	<div class="rowElem">
+	<%= f.label :first_name, 'Voornaam' %>
+    <%= f.text_field :first_name %>
+	</div>
+	<div class="rowElem">
+	<%= f.label :last_name , 'Achternaam' %>
+    <%= f.text_field :last_name %>
+	</div>
+	<div class="rowElem">
+	<%= f.label :homepage , 'Website' %>
+    <%= f.text_field :homepage %>
+	</div>
+	<div class="rowElem">
+	<%= f.label :email , 'E-mail' %>
+    <%= f.text_field :email %>
+	</div>
+	<div class="rowElem">
+	<%= f.label :password , 'Wachtwoord' %>
+    <%= f.password_field :password %>
+	</div>
+  <% end %>
+
+  <% f.buttons do %>
+  <div class="rowElem" align="center">
+  	<%= submit_tag t(:'adva.titles.register'), :id => "register" %>
+	of
+  	<%= link_to t(:'adva.titles.login'), login_url, :id => 'login' %>
+  </div>
+  <% end %>
+<% end %>
+
+				</div>
+			</div>
+		</div>
+	</div>
+		<div class="so">
+			<div class="se">
+				<div class="s">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>

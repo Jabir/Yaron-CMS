@@ -1,0 +1,5 @@
+<h2><%= t(:'adva.users.titles.new') %></h2>
+
+<% form_for :user, @user, :url => admin_users_path(@site) do |f| -%>
+  <%= render :partial => 'form', :locals => {:f => f} %>  
+<% end -%>

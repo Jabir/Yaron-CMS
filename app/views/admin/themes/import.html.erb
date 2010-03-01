@@ -1,0 +1,4 @@
+<% form_for :theme, @theme, :url => import_admin_themes_path(@site), :html => { :id => 'theme_upload_form', :target => 'theme_upload_iframe', :multipart => true} do |f| %>
+  <%= f.file_field :file, :label => :'adva.themes.lables.zip_file' %>
+<% end %>
+<iframe src="" onload="theme_upload_complete(this)" name="theme_upload_iframe" id="theme_upload_iframe" style="height: 1px; visibility: hidden;"></iframe>

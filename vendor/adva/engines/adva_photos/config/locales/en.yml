@@ -1,0 +1,112 @@
+en:
+  activerecord:
+    attributes:
+      album:
+        title: Title
+        permalink: Permalink
+        published: Published
+        photos_per_page: Photos per Page
+        content_filter: Filter
+      photo:
+        published_at: "Publish on date:"
+
+  adva:
+    titles:
+      photos: Photos
+    sets:
+      hints:
+        reorder: "You can use the reorder option to reorder your sets. If you want to nest your sets you can drag the set to the right and its gets set as a child of the upper set. Finish the reordering by clicking the reorder button. Please note that this option is only available when you have 2 or more sets."
+        parent_setting: "Choosing a parent for your set will nest this set under the chosen parent. Leave empty if you want to create this set as a root set."
+        parent_setting_for_edit: "You can use the reorder button on the index page of sets to nest and reorder your sets, you can find further instructions for this on the index page help hints."
+        permalink: "You can use normal letters and special letters like scandinavian letters but avoid special characters like $%&!"
+      links:
+        index: Sets
+        new: New
+        edit: Edit
+        delete: Delete
+    albums:
+      photos_count:
+        one: "{{count}} photo"
+        other: "{{count}} photos"
+      photos_published_count: "{{count}} published"
+      photos_draft_count:
+        one: "{{count}} draft"
+        other: "{{count}} drafts"
+    photos:
+      columns:
+        title: Title
+        name: Name
+        comments: Comments
+        published: Published on
+        author: Author
+        photo: Photo
+      name: Photo
+      confirm_delete: "Are you sure you want to delete this photo?"
+      common:
+        save_as_draft: Save as draft
+        save_as_draft_label: Save this photo / these photos as a draft
+        photos: Photos
+        sets: Sets
+        settings: Settings
+        manage: Manage
+        actions: Actions
+        title: Title
+        comments: Comments
+        published: Published
+        author: Author
+        album_settings: Album settings
+        edit_set: Edit set
+      links:
+        index: Photos
+        new: New
+        edit: Edit
+        delete: Delete
+      admin:
+        photos:
+          choose_photo: Choose a photo
+          replace_photo: Replace the photo
+          upload_photo: Upload a photo
+          delete_photo: Delete this photo
+          delete_photo_confirmation: Are you sure you want to delete this photo?
+          publish_in_set: Publish photo in sets
+          total: "Total amount of photos: {{total_entries}}"
+          no_photo_in_album: You have no photos in your album.
+          upload_now: Upload one now
+        sets:
+          delete_confirmation: Are you sure you want to delete this set?
+          create: Create a new set
+          delete: Delete this set
+          reorder: Reorder sets
+          total: "Total amount of sets: {{total_entries}}"
+          no_set: There are currently no sets.
+          create_now: Create one now
+      albums:
+        uploaded_by: "Uploaded by: {{author_name}}"
+        edit: Edit this photo
+      flash:
+        photo:
+          set_photo:
+            failure: The photo you requested could not be found.
+          set_set:
+            failure: The set you requested could not be found.
+          set_tags:
+            failure: The tag you requested could not be found.
+          create:
+            success: The photo was uploaded successfully.
+            failure: The photo could not be uploaded.
+          update:
+            success: The photo was uploaded successfully.
+            failure: The photo could not be uploaded.
+          destroy:
+            success: The photo was removed successfully.
+        set:
+          create:
+            success: The set was saved successfully.
+            failure: The set could not be saved.
+          update:
+            success: The set was updated successfully.
+            failure: The set could not be updated.
+          destroy:
+            success: The set was removed successfully.
+      params:
+        author: Author and current_user not set.

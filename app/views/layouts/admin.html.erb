@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ 	<meta name="generator" content="YP-CMS - Open source content management platform" />
+  <title>YP-CMS: Admin <%= controller.controller_name %></title>
+  <%#= stylesheet_link_tag 'adva_cms/admin/reset.css' %>
+  <%#= stylesheet_link_tag 'adva_cms/admin/layout.css' %>
+  <%= stylesheet_link_tag 'adva_cms/admin/common.css' %>
+  <%= stylesheet_link_tag 'adva_cms/admin/header.css' %>
+  <%= stylesheet_link_tag 'adva_cms/admin/top.css' %>
+  <%= stylesheet_link_tag 'adva_cms/admin/sidebar.css' %>
+  <%= stylesheet_link_tag 'adva_cms/admin/forms.css' %>
+  <%= stylesheet_link_tag 'adva_cms/admin/lists.css' %>
+  <%= stylesheet_link_tag 'adva_cms/admin/content.css' %>
+  <%= stylesheet_link_tag 'adva_cms/admin/themes.css' %>
+  <%= stylesheet_link_tag 'adva_cms/admin/helptip.css' %>
+  <%= stylesheet_link_tag 'adva_cms/admin/users.css' %>
+  <%= stylesheet_link_tag 'adva_cms/jquery/jquery-ui.css' %>
+  <%= stylesheet_link_tag 'adva_cms/jquery/jquery.tooltip.css' %>
+  <%= stylesheet_link_tag 'adva_activity/admin/activities.css' %>
+  <%= stylesheet_link_tag 'adva_comments/admin/comments.css' %>
+  <%= stylesheet_link_tag 'has_filter/filter.css' %>
+  <%= stylesheet_link_tag 'extjs/ext-all.css', 'extjs/silk.css', 'extjs/row-editor.css', 'lico_adva/main.css' %>
+  <%= stylesheet_link_tag 'adva_assets/admin/assets.css' %>
+
+  <%= yield :before_javascript_include %>
+  <%= javascript_include_tag :common, :admin, :cache => true %>
+  <%= javascript_include_tag 'extjs/ext-jquery-adapter.js', 'extjs/ext-all.js', 'extjs/ext-layout.js', 'extjs/row-editor.js', 'lico_adva/crud.js', 'lico_adva/i18n_nl.js', 'extjs/Ext.ux.HtmlEditor.Plugins-0.2-all' %>
+	<%= javascript_tag "window._auth_token = #{form_authenticity_token.inspect}" %>
+	<%= yield :head %>
+</head>
+<body>
+  <div id="top"><%= image_tag "yp-cms.png" %></div>
+  <div style="display: none">
+  	<%= @menu.build(self).root.render(:id => 'top') %>
+  	<%= render :partial => 'admin/shared/header' %>
+  	<div id="page">
+  		<%= yield :form if @content_for_form %>
+  		<div class="main">
+  			<%= @menu.root.find(:main).try(:render, :id => 'main_menu') %>
+        <%= render :partial => 'shared/flash' %>
+  			<div id="content">
+          <%= yield %>
+  			</div>
+  		</div>
+     	<div id="sidebar" class="right">
+       	<%= yield :sidebar %>
+     	</div>
+      <%= '</form>' if @content_for_form %>
+  		<div id="left" class="collapsed">
+  		</div>
+    </div>
+    <% [:notice, :error].each do |name| %>
+      <p id="flash_<%= name %>" class="flash <%= name %>" style="display: none;"></p>
+    <% end %>
+  </div>
+</body>
+</html>

@@ -1,0 +1,69 @@
+					<div id="footer"><!-- Begin #footer -->
+						Ontwerp door Yaron Producties
+					</div><!-- Einde #footer -->
+  <div id="klantenContainer" class="containerPlus draggable resizable {buttons:'m,c', skin:'yplight', width:'400', height:'200', closed:'true'}" style="top:100px; left:auto;" >
+    <div class="no"><div class="ne"><div class="n"></div></div>
+      <div class="o"><div class="e"><div class="c">
+        <div class="mbcontainercontent">
+        <h2>Login voor Klanten</h2>
+		<form action="http://projects.yaronproducties.net/access/login" method="post" class="jqtransform">
+			<input name="authenticity_token" type="hidden"/>
+			<div class="rowElem">
+				<table>
+					<tr>
+						<td class="label">Gebruikersnaam</td>
+						<td><input name="login[user]" title="Voer hier je gebruikersnaam in"/></td>
+					</tr>
+					<tr>
+						<td class="label">Wachtwoord</td>
+						<td><input name ="login[password]" type="password" maxlength="12" name="password" title="Voer hier je wachtwoord in"/></td>
+					</tr>
+				</table>
+			</div>
+			<div class="rowElem">
+			<button class="fg-button ui-state-default ui-corner-all" type="submit" accesskey="s">Login</button>
+			</div>
+	   </form>
+       </div>
+      </div></div></div>
+      <div >
+        <div class="so"><div class="se"><div class="s"> </div></div></div>
+      </div>
+    </div>
+  </div>
+  
+    <div id="developerContainer" class="containerPlus draggable resizable {buttons:'m,c', skin:'yplight', width:'400', height:'200',closed:'true'}" style="top:100px; left:auto;" >
+    <div class="no"><div class="ne"><div class="n"></div></div>
+      <div class="o"><div class="e"><div class="c">
+        <div class="mbcontainercontent">
+        <h2>Login voor Developers</h2>
+		<form action="http://warehouse.yaronproducties.net/login" method="post" class="jqtransform">
+			<div class="rowElem">
+				<table>
+					<tr>
+						<td class="label">Gebruikersnaam</td>
+						<td><input name="login[user]" title="Voer hier je gebruikersnaam in"/></td>
+					</tr>
+					<tr>
+						<td class="label">Wachtwoord</td>
+						<td><input name ="login[password]" type="password" maxlength="12" name="password" title="Voer hier je wachtwoord in"/></td>
+					</tr>
+				</table>
+			</div>
+			<div class="rowElem">
+			<button class="fg-button ui-state-default ui-corner-all" type="submit" accesskey="s">Login</button>
+			</div>
+	   </form>
+       </div>
+      </div></div></div>
+      <div >
+        <div class="so"><div class="se"><div class="s"> </div></div></div>
+      </div>
+    </div>
+  </div>
+					  <ul id="feeds">
+	<li><%#= link_to t( :'adva.links.entries_feed' ),  blog_feed_url(@section, :format => :atom) %></li>
+	<li><%#= link_to t( :'adva.links.comments_feed' ), blog_comments_url(@section, :format => :atom) %></li>
+  </ul>
+  <%#= render :partial => "shared/comments" %>
+<%= yield :foot %>

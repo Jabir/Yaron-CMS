@@ -1,0 +1,5 @@
+<% if @board && @board.errors && @board.errors.size > 0 %>
+  <%= error_messages_for(:board) %>
+<% else %>
+  CRUD_OK
+<% end %>

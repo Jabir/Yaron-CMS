@@ -1,0 +1,10 @@
+<% if sections.present? %>
+  <ul>
+  <% sections.each do |section| %>
+    <li>
+      <%= link_to section.title, admin_section_contents_path(section) %>
+      <%= render :partial => 'sections', :locals => {:sections => section.children} %>
+    </li>
+  <% end %>
+  </ul>
+<% end %>

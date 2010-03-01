@@ -1,0 +1,1066 @@
+en:
+  activerecord:
+    errors:
+      messages:
+        only_integer: can only be whole number.
+  adva:
+    common:
+      locale: Locale
+      content_locale: Content locale
+      about: About
+      details: Details
+      by_author: by {{author}}
+      cancel: Cancel
+      edit: Edit
+      delete: Delete
+      hide: Hide
+      save: Save
+      save_without_revision: Save without Revision
+      import: Import
+      upload: Upload
+      import: Import
+      subscribe: Subscribe
+      approve: Approve
+      unapprove: Unapprove
+      language: Language
+      none: none
+      next: Next
+      previous: Previous
+      events: Events
+      you: You
+      connector:
+        or: or
+      "yes": "yes"
+      by_author: by {{author}}
+      content_categories: "in {{links}}<br />"
+      content_tags: "tagged: {{links}}<br />"
+      unknown: unknown
+      add: Add
+      add_new: add new
+    titles: 
+      accounts: Accounts
+      actions: Actions
+      activate: Activate
+      archives: Archives
+      articles: Articles
+      assets: Assets
+      author: Author
+      board: Board
+      boards: Boards
+      cache: Cache
+      calendar_events: Events
+      categories: Categories
+      clear: Clear
+      clear_all: Clear all
+      comment: Comment
+      comments: Comments
+      contact_mails: Contact mails
+      dashboard: Dashboard
+      deactivate: Deactivate
+      download: Download
+      email_notifications: Email notifications
+      events: Events
+      files: Files
+      filter: Filter
+      filters: Filters
+      general_settings: General settings
+      history: History
+      import: Import
+      install: adva-cms installation
+      issues: Issues
+      login: Login
+      logout: Logout
+      register: Register
+      manage: Manage
+      meta_tags: Meta tags
+      new: New
+      edit: Edit
+      delete: Delete
+      home_section: Home section
+      newsletters: Newsletters
+      options: Options
+      overview: Overview
+      parent_settings: Parent setting
+      pending: Pending
+      permalink: Permalink
+      permissions: Permissions
+      photos: Photos
+      plugin: Plugin
+      plugins: Plugins
+      posts: Posts
+      preview: Preview
+      publish_in_categories: Publish in these categories
+      published: Published
+      recently_logged_in: Recently logged in
+      restore_defaults: Restore Defaults
+      roles: Roles
+      sections: Sections
+      sets: Sets
+      settings: Settings
+      show: Show
+      site: Site
+      sites: Sites
+      spam_filters: Spam filters
+      spam_protection: Spam protection
+      subscriptions: Subscriptions
+      success: Success!
+      tags: Tags
+      templates: Templates
+      theme: Theme
+      themes: Themes
+      topic: Topic
+      topics: Topics
+      tracking: Tracking
+      upload: Upload
+      users: Users
+      view: View
+      website: Website
+      website_configuration: Website configuration
+      wikipages: Pages
+      admin_account: Admin account
+    links: 
+      back: Back
+      create_one_now: Create one now. &raquo;
+      delete: Delete
+      edit: Edit
+      view: View
+      next: next
+      previous: previous
+      login: Log In
+      logout: Logout
+      profile: Profile
+      reorder: Reorder
+      sites_overview: Sites overview
+      skip_to_content: Skip to Content
+      skip_to_navigation: Skip to Navigation
+      superusers_admins: Superusers + Admins
+      entries_feed: Entries feed
+      comments_feed: Comments feed      
+    labels:
+      author_name: Name
+      author_email: E-Mail
+      body: Body
+      filters: Filters
+      email: E-mail
+      subject: Subject
+      submit: Submit
+    hints:
+      tags: Enter one or more tags separated by a space. You may include spaces by enclosing a tag with quotes. (For example, <em>"Web Dev" Tutorials</em>).
+      content_translations: Click to change the translation to edit. To add another translation, use the locales option in the menu on the right.
+      locale: Choose what region or language your article should be formatted for.
+      filter: How is your content written? If you used the graphical text editor, use the default Plain HTML option. Otherwise, choose your markup languange.
+      meta_keywords: Enter a few words separated by commas to describe your content. Meta keywords make it easier for search engines to find your page.
+      meta_description: Enter a short description of this page so a search engine can tell users what they can find here.
+      template: Enter the location (like “Templates/*”) of the template that articles in this section should use. If you're unsure, leave this field blank.
+      layout: Enter the location (like “Layouts/*”) of the layout that articles in this section should use. If you're unsure, leave this field blank.
+      akismet: Askimet is a third-party service to filter spam. If you've signed up for the service, enter your API Key and URL and check the box to enable this service.
+      defensio: Defensio is a third-party service to filter spam. If you've signed up for the service, enter your API Key and URL and check the box to enable this service. 
+      roles: Choose which areas this user can access on the site.
+      categories: "Avoid names countaining only 4 or 2 digits!"
+      sets: "Avoid names countaining only 4 or 2 digits!"
+    messages: 
+      insufficient_permissions: 
+        title: Insufficient permissions
+        body: If you think you should be allowed to perform this action please contact the admin of this site and ask him to reconfigure the permissions for your role.
+      not_editable: "Sorry, but it's not editable!"
+    resources:
+      links:
+        view: View
+        show: Show
+        new: New
+        edit: Edit
+        delete: Delete
+        reorder: Reorder
+        reordering_done: Done reordering
+      confirm_delete: "Are you sure you want to delete this item?"
+    state:
+      draft: Draft
+      published: Published
+      hold: On hold
+      queued: Queued
+      delivered: Delivered
+    sites:
+      email_notification_activated: "Activate Email notifcations"
+      title:
+        create: Create a new site
+      hints:
+        host_name: Include the port if it's a non-standard one. E.g. localhost:3000
+        admin_email: Shown in emails sent from your site
+        email_notification: "If email notifications are activated, an email is sent to administrators every time content is created or updated. No emails are sent if notifications are deactivated."
+      attributes:
+        name: Name
+        host: Host
+      install:
+        success_fully_created: You have successfully created your site. Enjoy!
+        welcome_to_installation: "Welcome to adva-cms' less-than-one-minute installation process. Just fill in the information below and you're done."
+        can_always_change_settings: Don't worry. You can always change these settings later.
+        section_default: Home
+      no_sites: You currently do not have any sites created.
+      no_users: Site does not have any users.
+      links:
+        index: Sites
+        new: New
+        edit: Settings
+        show: Show
+        delete: Delete
+        create_site_and_account: "Create site & account \xC2\xBB"
+        manage_new: Manage your new site &raquo;
+      flash:
+        destroy:
+          success: The site has been deleted.
+          failure: The site could not be deleted
+        install:
+          error_already_complete: Installation is already complete. Please log in with your admin account.
+          success: Congratulations! You have successfully set up your site.
+          failure: "The following models could not be created: {{models}}."
+        create:
+          success: The site has been created.
+          failure: The site could not be created
+        update:
+          success: The site has been updated.
+          failure: The site could not be updated
+      label:
+        name: Website name
+        title: Website title
+        timezone: Website Timezone
+        admin_email: Administrator email
+        subtitle: Website subtitle
+        host: Host name
+      confirm_delete: Are you sure you want to delete this site?
+    sections:
+      hints:
+        content_filter: How should your articles be read? The default option is Plain HTML.
+        sections: "Listed here are all the sections currently on your site. Whichever section is on top is the default homepage."
+        reorder: "You can use the reorder option to set your home root to different section and to reorder your sections. If you want to nest your sections you can drag the section to the right and its gets set as a child of the upper section.  Finish the reordering by clicking the reorder button. Please note that this option is only available when you have 2 or more sections."
+        parent_setting: Choosing a parent for your section will nest this section under the chosen parent. Leave empty if you want to create this section as a root section.
+        parent_setting_for_edit: "You can use the reorder button on the index page of sections to nest and reorder your sections, you can find further instructions for this on the index page help hints."
+        permalink: "You can use normal letters and special letters like scandinavian letters but avoid special characters like $%&!"
+        publish: "Uncheck this if you don't want this section published."
+      titles:
+        page_settings: Page specific settings
+        blog_settings: Blog specific settings
+        forum_settings: Forum specific settings
+        create: Create a new section
+        behaviour: Behaviour
+        publish: Publish option
+      links:
+        save_and_create_new: Save and create another section
+        index: Sections
+        new: Create a new section
+        show: Show
+        edit: Settings
+        delete: Delete
+        add_section: Add a section
+        reorder: Reorder sections
+        create: Create a new section
+      settings:
+        single_article_mode: Single article per page
+        multi_article_mode: Multiple articles per page
+      confirm_delete: Are you sure you want to delete this section?
+      flash:
+        destroy:
+          success: The section has been destroyed.
+          failure: The section could not be destroyed.
+        create:
+          success: The section has been created.
+          failure: The section could not be created.
+        update:
+          success: The section has been updated.
+          failure: The section could not be updated.
+      total_with_count:
+        one: "Total: {{count}} section"
+        other: "Total: {{count}} sections"
+    blog:
+      titles:
+        date: "from {{date}}"
+        about: "about {{category}}"
+        tags: "tagged {{tags}}"
+        articles: "Articles {{articles}}"
+        show_articles: "Show articles:"
+        manage: Manage
+        actions: Actions
+      links:
+        articles: Articles
+        categories: Categories
+        settings: Settings
+        create_article: Create a new article
+        create_article_now: "Create one now &raquo;"
+        more: Read the rest of this entry
+      options:
+        filter:
+          category: in category
+          tags: tagged with
+          title: whose title contains
+          body: whose body contains
+          draft: not published
+      tabs:
+        article: Article
+        comments: Comments
+        published: Published
+        author: Author
+      feeds:
+        category: Category {{category}}
+        tags:
+          one: "Tag: {{tags}}"
+          other: "Tags: {{tags}}"
+      no_articles: "There are no articles in {{section}}."
+      no_filtered_articles: "There are no articles matching that criteria."
+      attribution: "by: {{author}}"
+    categories:
+      columns:
+        title: Title
+        category: Category
+      attributes:
+        name: name
+      hints:
+        reorder: "You can use the reorder option to reorder your categories. If you want to nest your categories you can drag the category to the right and its gets set as a child of the upper category. Finish the reordering by clicking the reorder button. Please note that this option is only available when you have 2 or more categories."
+        parent_setting: "Choosing a parent for your category will nest this category under the chosen parent. Leave empty if you want to create this category as a root category."
+        parent_setting_for_edit: "You can use the reorder button on the index page of categories to nest and reorder your categories, you can find further instructions for this on the index page help hints."
+        permalink: "You can use normal letters and special letters like scandinavian letters but avoid special characters like $%&!"
+      titles:
+        edit: Edit category
+        new: Create a new category
+      no_categories_in_section: There are no categories in {{section}}.
+      total_with_count:
+        one: "Total: {{count}} category"
+        other: "Total: {{count}} categories"
+      links:
+        index: Categories
+        new: New
+        edit: Edit
+        delete: Delete
+        reorder: Reorder categories
+        create_now: "Create one now &raquo;"
+      flash:
+        destroy:
+          success: The category has been deleted.
+          failure: The category could not be deleted.
+        create:
+          success: The category has been created.
+          failure: The category could not be created.
+        update:
+          success: The category has been updated.
+          failure: The category could not be updated.
+      confirm_delete: Are you sure you want to delete this category?
+      all: "&mdash; All categories &mdash;"
+    contents:
+      not_published: not published
+    articles:      
+      optimistic_lock: 
+        exception: 
+          missing_timestamp: "Can not update article: timestamp missing. Please make sure that your form has a hidden field: updated_at."
+      count:
+        one: "{{count}} article"
+        other: "{{count}} articles"
+      published_count: "{{count}} published"
+      draft_count:
+        one: "{{count}} draft"
+        other: "{{count}} drafts"
+      columns:
+        article: Article
+        comments: Comments
+        published: Published
+        author: Author
+      translation_links: "available translations: {{locales}}"
+      locale_for_record: "Locale for this article: "
+      write_article: Write your article
+      question_save_as_draft: Save as Draft?
+      confirm_save_as_draft: Yes, save this article as a draft
+      titles:
+        edit: Edit article
+        new: New article
+      total_with_count:
+        one: "Total: {{count}} article"
+        other: "Total: {{count}} articles"
+      links:
+        index: Articles
+        new: New
+        edit: Edit
+        show: Show
+        delete: Delete
+        preview: Preview
+        create_now: Create one now
+      excerpt_add: Add an excerpt
+      no_articles: "There are no articles in {{section}}."
+      no_filtered_articles: "There are no articles matching that criteria."
+      publish_on_date: Publish on this date
+      flash:
+        optimistic_lock: 
+          failure: In the meantime this article has been updated by someone else. Please resolve any conflicts.
+        destroy:
+          success: The article has been deleted.
+          failure: The article could not be deleted.
+        rollback:
+          success: The article has been rolled back to revision {{version}}
+          failure: The article could not be rolled back to revision {{version}}
+        create:
+          success: The article has been created.
+          failure: The article could not be created.
+        update:
+          success: The article has been updated.
+          failure: The article could not be updated.
+      confirm_delete: Are you sure you want to delete this article?
+      attributes:
+        excerpt: Excerpt
+    cached_pages:
+      links:
+        index: Cache
+        clear_all: Clear all
+      columns:
+        url: URL
+        cached_at: Cached
+      no_entries: There currently aren't any pages being cached.
+      confirmation:
+        cleared: This page has been removed from the cache.
+        cleared_short: Cleared
+      filter:
+        show_cached_pages: Show cached pages
+      total_with_count:
+        one: "Total: {{count}} cached page"
+        other: "Total: {{count}} cached pages"
+      no_entries_matching_criteria: There currently aren't any pages being cached that match this criteria.
+      flash:
+        clear:
+          success: The cache has been cleared.
+    comments:
+      said_time_ago: said {{time}} ago
+      flash:
+        thank_you: Thank you for the comment!
+        create:
+          success: The comment has been created.
+          failure: The comment could not be created.
+        update:
+          success: The comment has been updated.
+          failure: The comment could not be updated.
+        destroy:
+          success: The comment has been deleted.
+          failure: The comment could not be deleted.
+      links:
+        delete: Delete
+        edit: Edit
+        approve: Approve
+        view: View
+        unapprove: Unapprove
+      titles:
+        comments_awaiting_approval: Comments awaiting your approval
+        save_comment: Save Comment
+        comment_on_by: "Comment on '{{on}}' by {{by}}"
+        add_reply: Leave your reply
+        comment_number: "Comment #{{number}}"
+        edit: Edit comment
+        comments_on: Comments on {{location}}
+        submit_comment: Submit Comment
+        your_reply: Your reply
+        comment_with_count:
+          one: 1 Comment
+          other: "{{count}} Comments"
+      filter:
+        show_comments: Show comments
+        options:
+          all: All
+          body: Whose body contains
+          author_name: Whose author is
+          author_email: Author's email is
+          author_url: Author's website is
+          state: Whose state is
+        go: Go
+      state:
+        options:
+          approved: Approved
+          unapproved: Unapproved
+      options:
+        expiration: 
+          not_allowed: Are not allowed
+          never_expire: Never expire
+          x_hours_after_publishing:
+            one: Expire 1 hour after publishing
+            other: Expire {{count}} hours after publishing
+          x_weeks_after_publishing:
+            one: Expire 1 week after publishing
+            other: Expire {{count}} weeks after publishing
+          x_months_after_publishing:
+            one: Expire 1 month after publishing
+            other: Expire {{count}} months after publishing
+      labels:
+        "on": "on"
+        comments: Comments
+        approved: Approved
+      hints:
+        comments_filter: Which markup should be used to read comments? The default is Plain HTML.
+      confirm_delete: Are you sure you want to delete this comment?
+      info:
+        under_review: This comment is currently under review.
+      messages:
+        not_allowed: "Comments are not allowed here."
+      no_comments: There are no comments.
+      no_filtered_comments: There are no comments matching your query.
+    activity:
+      from_to: "{{from}} - {{to}}"
+      types:
+        article: Article
+      action_names:
+        created: created
+        published: published
+        revised: revised
+      titles:
+        today: Today {{date}}
+        yesterday: Yesterday {{date}}
+        past: Before {{date}}
+      none: Nothing happened
+      notifier:
+        new: New {{activity}} posted
+      view:
+        new: "{{name}} <{{email}}> just posted a new {{activity}} on {{site}} in section {{section}}."
+      comment: Comment {{actions}}
+      topic: Topic {{actions}}  
+      actions: "{{type}} {{actions}} in {{activity}}."
+    signup:
+      notifications:
+        email_verification:
+          subject: Email Verification
+          body: |
+            Dear {{name}},
+
+            You recently registered for our service. Our service requires
+            all new users to verify their email address. Simply click the link below and
+            your username will be verified allowing you to login.
+
+            {{link}}
+      flash:
+        destroy:
+          success: The user account {{name}} has been deleted.
+        create:
+          failure: Your registration could not be saved.
+        verify:
+          success: You successfully confirmed your email address.
+          failure: You have already verified your email address.
+    passwords:
+      attributes:
+        token: Confirmation code
+      links:
+        reset: Reset password
+      info:
+        please_enter_email_to_reset_password: Please enter your email address. An email will be sent to you which will include a link to reset your password.
+        please_enter_new_password: Please enter your new password.
+        please_enter_new_password_and_token: Please enter the confirmation code you received via email and your new password.
+      titles:
+        new: Reset your password
+        edit: Change your password
+      notifications:
+        password_updated:
+          subject: Password Updated
+          body: |
+            Dear {{name}},
+
+            you have successfully updated your password.
+        reset_password:
+          subject: Forgotton Password
+          body: |
+            Dear {{name}},
+
+            Someone (hopefully you) has indicated that you cannot remember your password.
+            To let you reset your password we have provided a link below that will allow
+            you to reset your password.
+
+            {{link}}
+
+            Alternatively, if your browser window is still open, you can use the following 
+            confirmation code together with your new password:
+            
+            {{token}}
+            
+            It is suggested you reset your password as soon as possible since this is a
+            time-limited link (to protect your account).
+
+            If you did not request that your password be changed someone must have
+            entered your account in the "Forgot password" page on our site. Your account is
+            still perfectly safe since you were the only person this message was sent to.
+            Simply delete this message and no changes will be made to your account if this
+            message was sent in error.
+      flash:
+        new:
+          email_sent: We just sent you a notice. Please check your email.
+          no_such_user: We could not find a user with the email address you entered.
+        create:
+          notification: "If the given email address exists in our system, we have just sent you an email with information on how to reset your password."
+        update:
+          success: Your password was changed successfully.
+          failure: Your password could not be changed.
+    session:
+      flash:
+        destroy:
+          success: Logged out successfully.
+        create:
+          success: Logged in successfully.
+          failure: Could not login with this email and password.
+      labels:
+        remember_me: Remember me
+    users: 
+      attributes: 
+        new_password: New password
+        password: Password
+        email: E-Mail
+      links: 
+        new: Add a new user
+        create_user: Create user
+        edit: Edit
+        delete: Delete
+      actions:
+        delete_user: Delete this user
+        create_new: Create a new user
+      titles:
+        new: New user
+        edit: Edit user
+        register: Register a user account
+        signup: Sign up
+        your_profile: Your Profile
+      flash:
+        not_member_of_this_site: The user you requested is not a member of this site.
+        destroy:
+          success: The user account has been deleted.
+          failure: The user account could not be deleted.
+        create:
+          success: The user account has been created.
+          failure: The user account could not be created.
+        update:
+          success: The user account has been updated.
+          failure: The user account could not be updated.
+      labels:
+        updated_at: Last login
+        url: Homepage
+        created_at: Created
+        email: Email
+      info: 
+        showed_up: "showed up: {{time_ago}} ago"
+        logged_in_as: "Logged in as: {{name}}"
+      confirm_delete: Are you sure you want to delete this user account?
+    roles:
+      labels:
+        admin_for: "Admin for: {{context}}"
+        superuser: Superuser
+      errors: 
+        messages: 
+          not_an_admin: You need to be an admin to perform this action.
+          not_logged_in: You need to be logged in to perform this action.
+          not_a_superuser: You need to be a superuser to perform this action.
+          not_an_author: You need to be the author of this object to perform this action.
+          not_a_moderator: You need to be a moderator to perform this action.
+    assets:
+      links:
+        new: New asset
+      flash:
+        upload:
+          failure: The asset upload failed.
+        update:
+          success: The asset has been updated.
+          failure: The asset update failed.
+        delete:
+          success: "Deleted {{filename}}"
+          failure: The asset update failed.
+        destroy:
+          success: "{{asset}} detached from this {{content}}."
+        create:
+          first_success: "'{{asset}}' was uploaded."
+          success: 
+            one: "One asset was uploaded."
+            other: "{{count}} assets were uploaded."
+        add:
+          success: "{{asset}} added to bucket."
+        clear:
+          success: Asset bucket has been cleared.
+      validation:
+        duplicate: Cannot have a duplicate assignment for this content and asset
+      tab:
+        attached:
+          title: Attached assets
+          name: Attached
+        latest:
+          title: Latest assets uploaded
+          name: Latest
+        bucket:
+          title: Your asset bucket
+          name: Bucket
+        search:
+          title: Search for assets
+          name: Search
+        upload:
+          title: Upload new assets
+          name: Upload
+        audio: Audio
+        movies: Movies
+        pictures: Pictures
+        others: Others
+        tags: Tags
+        title: Title
+      new: New asset
+      add_to_bucket: Add to bucket
+      no_files: You do not have any files yet.
+      no_files_filtered: You do not have any files matching these criteria.
+      upload: 'Upload one now &raquo;'
+      enter_tags: 'Enter one or more tags separated by a comma or a space (for example, <em>"Web Dev" Tutorials</em> or <em>Web Dev, Tutorials</em>).'
+      save: Save Asset
+      your_bucket: Your bucket
+      add_files: Add files to your bucket temporarily in order to carry them with you when creating or revising articles.
+      upload_summary:
+        one: You have a uploaded <strong>one asset</strong>, using <strong>{{size}}</strong>.
+        other: You have a uploaded a total of <strong>{{count}} assets</strong>, using <strong>{{size}}</strong>.
+      stats: Some stats
+      labels:
+        upload:
+          files: Select files to upload
+          title: Title
+          tags: Tags
+      delete: remove this file field
+      tag_all: Apply tags to all
+      add_file: Add another file
+      select_file: Select a file
+      edit_asset: Edit this asset
+      delete_asset: Delete this asset
+      clear_bucket: Clear
+      upload: Upload an asset
+      confirm_delete: Are you sure you want to delete this asset?
+      search_by_tag_or_title: Search by tag or title
+      empty_bucket: Your bucket is empty.
+    themes:
+      no_themes_available: You currently do not have any themes created.
+      hints:
+        asset_caching: "When caching your stylesheets/javascripts use either /cache/ folder or filename starting with cache_ word. All the files are recursively destroyed from cache/ folder and all files starting with cache_ are removed, everything else stays unaffected."
+      lables:
+        zip_file: Zip file
+      titles:
+        new: Create a new theme
+        edit: "Edit theme: {{theme}}"
+        valid_file_types: Valid file types
+        import: Import a theme
+        edit_file: Edit theme file
+        theme_id: Theme ID
+      links:
+        index: Themes
+        add_another_file: Add another file
+        new: New
+        edit: Edit
+        activate: Activate
+        deactivate: Deactivate
+        delete: Delete
+        create_one_now: Create one now. &raquo;
+        delete_file: Delete theme file
+        uninstall: Uninstall
+        download: Download
+        upload_file: Upload a new file
+        import: Import
+        create_file: Create a new file
+      upload_template_or_asset: Upload a template or an asset.
+      labels:
+        asssets: Assets
+        templates: Templates
+        filename: Filename
+      confirm_activate: Are you sure you want to activate this theme?
+      confirm_deactivate: Are you sure you want to deactivate this theme?
+      confirm_delete: Are you sure you want to delete this theme?
+      confirm_uninstall: Are you sure you want to uninstall this theme? (You won't be able to recover it.)
+      flash:
+        destroy:
+          success: The theme has been deleted.
+          failure: The theme could not be deleted.
+        create:
+          success: The theme has been created.
+          failure: "The theme could not be created: {{errors}}."
+        update:
+          success: The theme has been updated.
+          failure: "The theme could not be updated: {{errors}}."
+        import:
+          success: The theme has been imported.
+          error_filename_blank: The theme file cannot be blank.
+          failure: The file does not have a valid theme file structure.
+
+    # yuk!
+    theme_templates:
+      columns:
+        path: Path
+    theme_stylesheets:
+      columns:
+        path: Path
+    theme_javascripts:
+      columns:
+        path: Path
+    theme_images:
+      columns:
+        path: Path
+    theme_others:
+      columns:
+        path: Path
+
+    theme_files:
+      no_files: You currently do not have any files available.
+      remove_file: Remove file
+      add_file: Add file
+      columns:
+        path: Path
+        type: Type
+      links:
+        create_one_now: Create one now. &raquo;
+        new_file: New File
+        new: New
+        edit: Edit
+        delete: Delete
+        upload: Upload
+      confirm_delete: Are you sure you want to delete this file?
+      types:
+        template: Template
+        templates: Templates
+        image: Image
+        images: Images
+        javascript: Javascript
+        javascripts: Javascripts
+        stylesheet: Stylesheet
+        stylesheets: Stylesheets
+        preview: Preview
+        others: Others
+      flash:
+        destroy:
+          success: The file has been deleted.
+          failure: The file could not be deleted.
+        create:
+          success: The file has been created.
+          failure: The file could not be created.
+        update:
+          success: The file has been updated.
+          failure: The file could not be updated.
+      titles:
+        upload: Upload a theme file
+        create: Create theme file
+    plugins:
+      no_plugins_installed: There currently aren't any plugins installed.
+      attributes:
+        name: Name
+        configurable: Configurable
+        author: Author
+        version: Version
+        homepage: Homepage
+      flash:
+        destroy:
+          success: The default settings have been restored.
+          failure: The section could not be deleted.
+        update:
+          success: The plugin settings have been updated.
+          failure: The section could not be created.
+      no_config_options_available: This plugin does not have any config options available.
+    settings:
+      filter_options:
+        plain_html: Plain HTML
+    forums:
+      info:
+        total_contents: This forum has total of {{boards}} boards, {{topics}} topics and {{posts}} posts.
+      settings:
+        post_content_filter: 'When forum posts are posted, they use this as a default setting.'
+    boards:
+      columns:
+        title: Title
+        description: Description
+        topics_count: Topics count
+        posts_count: Posts count
+      boards_count:
+        one: "{{count}} board"
+        other: "{{count}} boards"
+      topics_count:
+        one: "{{count}} topic"
+        other: "{{count}} topics"
+      posts_count:
+        one: "{{count}} post"
+        other: "{{count}} posts"
+      comments_count:
+        one: "{{count}} comment"
+        other: "{{count}} comments"
+      info:
+        no_boards_in_forum: You don't have any boards created in {{forum}}.
+        move_topics_to_board: Existing forum topics will be moved to your first board when you create one.
+      titles:
+        new: New Board
+        edit: Edit Board
+      labels:
+        board: Board
+        move_to_board: Move to board
+      links:
+        index: Boards
+        new: New Board
+        boards: Boards
+        forum: Forum
+        settings: Settings
+        reorder: Reorder boards
+        create_now: Create one now
+        create: Create a new Board
+      flash:
+        no_next_board: There is no next board. Showing the last one.
+        destroy:
+          success: The board has been deleted.
+          failure: The board could not be deleted.
+        create:
+          success: The board has been created.
+          failure: The board could not be created.
+        update:
+          success: The board has been updated.
+          failure: The board could not be updated.
+        no_previous_board: There is no previous board. Showing the first one.
+      confirm_delete: Are you sure you want to delete this board? All the topics of this board are also deleted with the board.
+      confirm_delete_on_last: Are you sure you want to delete this board? Your topics will not be removed.
+    topics:
+      columns:
+        board: Board
+        title: Title
+        author: Author
+        last_updated: Last updated
+        posts: Posts
+      info:
+        no_topics_in_forum: There are no topics in this forum.
+        no_topics_in_board: There are no topics in this board.
+      titles:
+        new: New topic
+        edit: Edit topic
+        post_topic: Post Topic
+        latest_post: Latest post
+        post_count:
+          one: "{{count}} Post"
+          other: "{{count}} Posts"
+      states:
+        sticky: Sticky
+        locked: Locked
+      links:
+        post_new: Post one now
+        post_now: Post one now
+        new_topic: New topic
+        new: Create a new Topic
+      flash:
+        destroy:
+          success: The topic has been deleted.
+          failure: The topic could not be deleted.
+        create:
+          success: The topic has been created.
+          failure: The topic could not be created.
+        update:
+          success: The topic has been updated.
+          failure: The topic could not be updated.
+        no_next_topic: There is no next topic. Showing the last one.
+        no_previous_topic: There is no previous topic. Showing the first one.
+      confirm_delete: Are you sure you want to delete this topic?
+    posts:
+      titles:
+        reply: Leave your reply
+        edit: Edit your post
+        save_post: Save post
+        submit_post: Submit post
+      flash:
+        destroy:
+          success: The post has been deleted.
+        create:
+          success: The post has been saved.
+          failure: The post could not be saved.
+        update:
+          success: The post has been updated.
+          failure: The post could not be updated.
+      confirm_delete: Are you sure you want to delete this post?
+    tracking:
+      enable_tracking: Enable tracking with Google Analytics
+      tracking_campaign: Campaign
+      tracking_source: Source
+      hints:
+        tracking_code: Use your Google Analytics Tracking Code (UA-xxxxxxx-x) to enable Google Analytics support. Leaving this blank will deactivate Google Analytics support.
+        no_tracking_code: If you'd like to use Google Analytics to track your issue, enable Google Analytics by entering your tracking code on the main Settings page.
+        glossary: Not sure what to use here? Check {{link}} for further information.
+        glossary_name: the Google Analytics help
+    spam:
+      hints:
+        filters: When comments are posted, the following filters are used to check their spam status.
+      options:
+        default_ham_none: Do not automatically approve any comments.
+        default_ham_all: Approve all comments automatically.
+        default_ham_authenticated: Approve comments posted by authenticated users.
+      labels:
+        enable: "Enable {{name}} filter"
+        settings: Settings
+        api_key: API Key
+        site_url: Site URL
+    info:
+      greeting_logged_in: Hi <span>user</span>, you are logged in.
+    footer:
+      site_powered_by: "Site powered by {{link}}."
+      theme_inspired_by: Theme inspired by depo.
+    flash:
+      authentication_required_role: You need to have the role {{role}} to view this page.
+    sidebar:
+      titles:
+        tags: Tags
+        topics: Topics
+    subscription:
+      no_subscriptions: There are no subscriptions.
+      confirm_delete: Are you sure you want unsubscribe?
+      flash:
+        destroy_success: Successfully unsubsribed.
+      link:
+        index: Subscribers
+        new: Add a new subscriber
+        destroy: Unsubscribe
+      label:
+        user: Users
+        subscriber: Subscriber
+        email: Email
+        time: Subscription time
+        subscriptions: Subscribers
+    locations:
+      attributes:
+        title: Location name
+        country: Country
+        postcode: Postcode
+        town: Town
+        address: Street / Number
+        description: Description
+    contact_mails:
+      no_mails: You currently do not have any contact mails.
+      delivered: Your mail has been delivered!
+      columns:
+        subject: Subject
+        created_at: Created at
+      flash:
+        record_not_found: Contact mail you requested could not be found!
+        destroy:
+          success: The contact mail has been deleted.
+        create:
+          success: The contact mail was successfully created.
+          failure: The contact mail could not be saved.
+      confirm_delete: Are you sure you want to delete this contact mail?
+          
+    # have cells translations here for the moment
+    cells:
+      album:
+        name: Photoalbum
+        states:
+          single:
+            name: Single photoalbum
+            description: Display a single photoalbum
+            form:
+              section: Section
+      sections:
+        name: Sections
+        states:
+          recent_articles:
+            name: Recent articles
+            description: Display a given number of articles from a certain section
+            form:
+              section: Section
+              count: Number of articles
+      blog:
+        name: Blog
+        states:
+          recent_articles:
+            name: Recent articles
+            description: Display a given number of articles from a certain blog
+            form:
+              section: Section
+              count: Number of articles
+      user:
+        name: Users
+        states:
+          recent:
+            name: Recent users
+            description: Display a list with a given number of users
+            form:
+              count: Number of users

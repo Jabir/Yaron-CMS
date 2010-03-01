@@ -1,0 +1,335 @@
+<script type="text/javascript" charset="utf-8">
+	var author_store;
+
+	function load_custom_stores () {
+		var author_store_data = new Array();
+		<% User.find(:all).each do |user| %>
+			author_store_data[author_store_data.length] = ["<%= h user.name.gsub(/\"/,"\\") %>"];
+		<% end %>
+
+		author_store = new Ext.data.ArrayStore({
+			fields: ['author'],
+			data: author_store_data
+		});
+	}
+	
+	var import_window = false;
+	function extjs_toolbar_items () {
+    return [{
+        text: 'Importeren',
+        iconCls: 'silk-package-add',
+        handler: function(btn, ev) {
+          generic_loader.show();
+          in_submit = false;
+          $.ajax({
+            type: 'GET',
+            dataType: "script",
+            url: '<%= import_admin_themes_path(@site) %>.js',
+            success: function(data) {
+              generic_loader.hide();
+              
+              var items = {
+                border: false,
+                bodyStyle: "background-color: rgb(223, 232, 246); padding: 10px",
+                html: data
+              };
+              
+              if (popup_body_items) {
+                items = popup_body_items;
+              }
+              
+              import_window = new Ext.Window({
+                layout: 'fit',
+                width: 500,
+                title: 'Thema importeren',
+                height: 103,
+                modal: true,
+                shadow: true,
+                plain: true,
+                border: false,
+                closeAction: 'close',
+                items: items,
+              });
+              import_window.show(this);
+            }
+          });
+        },
+        scope: this
+    }];
+	}
+  
+	function modify_main_menu(menu) {
+		var new_menu = [];
+		$.each(
+			menu,
+			function (index,item) {
+				var add_tab = true;
+				
+				add_tab = !(/right/.test(item.id));
+				if (add_tab) {
+					new_menu[new_menu.length] = item;
+				}
+			}
+		);
+		return new_menu;
+	}
+        //          tbar: [{
+        //     text: t['new_text'],
+        //     iconCls: 'silk-add',
+        //     handler: function(btn, ev) {
+        //         generic_loader.show();
+        //         window.location = '<%= new_admin_section_path %>';
+        //     },
+        //     scope: this
+        // }]
+	
+	//
+	// Init CRUD
+	//
+	function extjs_body_items() {
+		load_custom_stores();
+		return init_lico_adva_crud({
+			columns: [{
+				label: 'Naam',
+				name: 'name',
+				type: 'string',
+				submit_value: 'theme[name]'
+			},{
+				label: 'Redacteur',
+				name: 'author',
+				type: 'combo',
+				submit_value: 'theme[author]',
+				combo: {
+					value: 'author',
+					label: 'author',
+					store: author_store
+				}
+			},{
+				label: 'Versie',
+				name: 'version',
+				type: 'string',
+			},{
+				label: 'Actief',
+				name: 'active',
+				type: 'boolean',
+			}],
+			add_record_path: '<%= admin_themes_path(@site.id) %>',
+			store: {
+				url: '<%= url_for admin_themes_path(@site.id) %>.xml',
+				sort: {
+				  by: 'name',
+					order: 'asc'
+				}
+			},
+			grid: {
+        empty_details: 'Selecteer een thema voor details.'
+			},
+			show: {
+				url: '<%= edit_admin_theme_path(@site.id, '!recordid!') %>',
+				custom_form: edit_theme_form,
+				custom_form_values: edit_theme_form_values
+			},
+			edit: {
+				url: '<%= admin_theme_path(@site, '!recordid!') %>',
+				custom_actions: function(doc) {
+					var active = xmlvalue(doc,"active");
+					buttons = [];
+					if (active=="1") {
+						buttons[buttons.length] = {
+							text: 'Deactiveren',
+							iconCls: 'silk-delete',
+							handler: function(btn, ev) {
+								if (grid.getSelectionModel().hasSelection()) {
+									var cell = grid.getSelectionModel().getSelected();
+
+									Ext.Msg.show({
+										id: 'publish-confirm',
+										title: t['article']['publish_revoke']['title'],
+										msg: t['article']['publish_revoke']['confirm'],
+										buttons: {
+											ok: t['article']['publish_revoke']['ok'],
+											cancel: t['cancel_text']
+										},
+										icon: Ext.MessageBox.QUESTION,
+										fn: function(btn) {
+											if (btn == "ok") {
+												var mask = new Ext.LoadMask(Ext.getBody(), {
+													msg: t['loader_text']
+												});
+												mask.show();
+                      				$.ajax({
+                      					url: xmlvalue(selected_record,"deactive_link"),
+                      					cache: false,
+                      					data: {
+                      						authenticity_token: window._auth_token,
+                                  _method: 'DELETE',
+																	"site_id" : <%= @site.id %>,
+																	"id" : xmlvalue(selected_record,"id"),
+                      					},
+                      					type: 'POST',
+                      					success: function(html) {
+                      						store.reload();
+                      						mask.hide();
+                      					}
+                      				});
+                      			}
+                      		}
+                      	});
+                    }
+                },
+                scope: this
+            }
+          } else {
+            buttons[buttons.length] = {
+                text: 'Activeren',
+                iconCls: 'silk-accept',
+                handler: function(btn, ev) {
+                    if (grid.getSelectionModel().hasSelection()) {
+                        var cell = grid.getSelectionModel().getSelected();
+
+                      	Ext.Msg.show({
+                      		id: 'publish-confirm',
+                      		title: t['article']['publish']['title'],
+                      		msg: t['article']['publish']['confirm'],
+                      		buttons: {
+                      			ok: t['article']['publish']['ok'],
+                      			cancel: t['cancel_text']
+                      		},
+                      		icon: Ext.MessageBox.QUESTION,
+                      		fn: function(btn) {
+                      			if (btn == "ok") {
+                      				var mask = new Ext.LoadMask(Ext.getBody(), {
+                      					msg: t['loader_text']
+                      				});
+															mask.show();
+															$.ajax({
+																url: xmlvalue(selected_record,"active_link"),
+																cache: false,
+																data: {
+																	authenticity_token: window._auth_token,
+																	//_method: 'put',
+																	"site_id" : <%= @site.id %>,
+																	"id" : xmlvalue(selected_record,"id"),
+																	
+																//	"theme[id]" : xmlvalue("id"),
+																//	"theme[activate]":1 
+																},
+																type: 'POST',
+																	success: function(html) {
+																	store.reload();
+																	mask.hide();
+																}
+															});
+														}
+													}
+												});
+                    }
+                },
+                scope: this
+              }
+          }
+          buttons[buttons.length] = {
+						text: 'Bestanden',
+						iconCls: 'silk-folder',
+						handler: function(btn, ev) {
+						  generic_loader.show();
+              window.location = xmlvalue(current_record,"files_link");
+					  }
+					}
+          return buttons;
+        }
+      },
+			destroy: {
+				url: '<%= admin_theme_path(@site, '!recordid!') %>',
+				//message: t['theme']['delete_confirm']
+			}
+		});
+	}
+	
+	function edit_theme_form_values (parameters) {
+		parameters["theme[name]"] = document.getElementById('name').value;
+		if (document.getElementById('author').value!="") {
+			parameters["theme[author]"] = document.getElementById('author').value;
+		}
+		parameters["theme[version"] = document.getElementById('version').value;
+		parameters["theme[homepage]"] = document.getElementById('homepage').value;
+		parameters["theme[summary]"] = document.getElementById('summary').value;
+
+		return parameters;
+	}
+  
+	var current_record = false;
+	function edit_theme_form (record) {
+	  current_record = record;
+		var name = xmlvalue(record,"name");
+		var author = xmlvalue(record,"author");
+		var version = xmlvalue(record,"version");
+		var homepage = xmlvalue(record,"homepage");
+		var summary = xmlvalue(record,"summary");
+		selected_record_title = name;
+
+  	return [{
+      xtype: 'tabpanel',
+      plain: true,
+      activeTab: 0,
+      defaults: {
+        bodyStyle: 'padding:10px'
+			},
+			items: [{
+				title: 'Thema',
+				layout: 'column',
+				border: false,
+				items: [{
+					columnWidth: .5,
+					layout: 'form',
+					border: false,
+					items: [{
+						xtype: 'textfield',
+						fieldLabel: 'Naam',
+						id: 'name',
+						name: 'name',
+						value: name
+					},{
+						xtype: 'combo',
+						fieldLabel: 'Gewijzigd door',
+						name: 'author',
+						value: author,
+						store: author_store,
+						valueField: 'author',
+						displayField: 'author',
+						mode: 'local',
+						hiddenName: 'author',
+						//hiddenId: 'author_id'
+					},{
+						xtype: 'textfield',
+						fieldLabel: 'Versie',
+						id: 'version',
+						name: 'version',
+						value: version
+					}]
+				},{
+					columnWidth: .5,
+					layout: 'form',
+					border: false,
+					items: [{
+						xtype: 'textfield',
+						fieldLabel: 'homepage',
+						width: '230',
+						id: 'homepage',
+						name: 'homepage',
+						value: homepage
+					},{
+						xtype: 'textarea',
+						fieldLabel: 'Summary',
+						width: '230',
+						id: 'summary',
+						name: 'summary',
+						value: summary
+					}]
+				}]
+			}]
+		}];
+	}
+</script>
+<% content_for :sidebar do -%>
+<% end -%>

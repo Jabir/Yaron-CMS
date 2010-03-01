@@ -1,0 +1,29 @@
+<h2><%= t(:'adva.assets.upload') %></h2>
+
+<% form_for Asset.new, :url => admin_assets_path, :html => { :multipart => true } do |f| %>
+	<% f.field_set :id => 'files' do %>
+    <p>
+      <label class="file"><%=t :'adva.assets.labels.upload.files' %></label>
+      <label class="title"><%=t :'adva.assets.labels.upload.title' %></label>
+      <label class="tags"><%=t :'adva.assets.labels.upload.tags' %></label>
+    </p>
+
+    <div>
+      <p>
+        <%= f.file_field :data, :name => "assets[][data]", :id => '', :class => 'file_field' %>
+        <%= f.text_field :title, :name => "assets[][title]", :id => '', :class => 'title_field' %>
+        <%= f.text_field :tag_list, :name => "assets[][tag_list]", :id => '', :class => 'taglist_field' %>
+        <a href="#" class="remove_file" title="<%=t :'adva.assets.delete' %>" style="display:none;">
+					<%= image_tag('adva_cms/icons/delete.png') %>
+				</a>
+        <a href="#" class="tagall_files" id="tagall_files" style="display:none">
+					<%=t :'adva.assets.tag_all' %>
+				</a>
+      </p>
+    </div>
+  <% end %>
+
+  <a href="#" id="asset_add_file" class="wide_button"><%=t :'adva.assets.add_file' %></a>  
+
+  <% save_or_cancel_links(f, :cancel_url => admin_assets_path, :save_text => t(:'adva.common.upload')) %>
+<% end -%>

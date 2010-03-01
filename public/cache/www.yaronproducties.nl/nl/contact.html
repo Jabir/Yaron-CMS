@@ -1,0 +1,364 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<title>Yaron Producties - </title>
+  
+<link href="/sites/site-1/themes/yaronproducties/stylesheets/style1.css" media="screen" rel="stylesheet" type="text/css" />
+
+<link href="/sites/site-1/themes/yaronproducties/stylesheets/jquery-ui-1_7_1_custom.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/sites/site-1/themes/yaronproducties/stylesheets/mbContainer.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/sites/site-1/themes/yaronproducties/stylesheets/form.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/sites/site-1/themes/yaronproducties/stylesheets/jquery.lightbox-0.5.css" media="screen" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" href="/sites/site-1/themes/yaronproducties/images/favicon.ico" />
+<!--Internet Explorer Trancparency fix-->
+<!--[if lt IE 8]>
+<script src="http://ie7-js.googlecode.com/svn/version/2.0(beta3)/IE8.js" type="text/javascript"></script>
+<![endif]-->
+	
+	<script src="/sites/site-1/themes/yaronproducties/javascripts/jquery.tools.min.js" type="text/javascript"></script>
+	<script src="/sites/site-1/themes/yaronproducties/javascripts/jquery_fancybox-1_2_1.js" type="text/javascript"></script>
+	
+	<script src="/sites/site-1/themes/yaronproducties/javascripts/custom.js" type="text/javascript"></script>
+	<script src="/sites/site-1/themes/yaronproducties/javascripts/swfobject.js" type="text/javascript"></script>
+	
+	
+	<script src="/sites/site-1/themes/yaronproducties/javascripts/jquery.metadata.js" type="text/javascript"></script>
+	<script src="/sites/site-1/themes/yaronproducties/javascripts/ui.core.min.js" type="text/javascript"></script>
+	<script src="/sites/site-1/themes/yaronproducties/javascripts/ui.draggable.min.js" type="text/javascript"></script>
+	<script src="/sites/site-1/themes/yaronproducties/javascripts/ui.resizable.min.js" type="text/javascript"></script>
+	<script src="/sites/site-1/themes/yaronproducties/javascripts/mbContainer.js" type="text/javascript"></script>	
+	<script src="/sites/site-1/themes/yaronproducties/javascripts/jquery.jqtransform.js" type="text/javascript"></script>
+	<script src="/sites/site-1/themes/yaronproducties/javascripts/jquery.lightbox-0.5.min.js" type="text/javascript"></script>
+	
+		
+  <script type="text/javascript" charset="utf-8">
+    applyOrRemoveFCKeditors = function() {
+      $('textarea.wysiwyg').each(function() {
+        id = $(this).attr('id');
+        height = $(this).height();
+        if(height == 0) height = 200; // default height = 200px
+
+        FCKeditor.BasePath = '/javascripts/adva_fckeditor/fckeditor/';
+        
+        var oFCKeditor = new FCKeditor(id, '100%', height, 'frontpage');
+        oFCKeditor.Config['CustomConfigurationsPath'] = '/javascripts/adva_fckeditor/config.js';
+        if(typeof FCKGlobalConfig != 'undefined') {
+          for(var key in FCKGlobalConfig) {
+            oFCKeditor.Config[key] = FCKGlobalConfig[key];
+          }
+        }
+        oFCKeditor.ReplaceTextarea();
+      });
+    }
+
+    $(document).ready(function() {
+      applyOrRemoveFCKeditors();
+      $('select.columnsFilter').change(function() {
+        applyOrRemoveFCKeditors();
+      });
+    });
+  </script>
+<script type="text/javascript" charset="utf-8">
+$(function(){
+	$(".containerPlus").buildContainers({
+		maintainOnWindow:"false",
+		containment:"parent",
+		elementsPath:"/sites/site-1/themes/yaronproducties/elements/"
+	});
+      if (!$("#klantenContainer").mb_getState("closed")){
+        $('#close').fadeIn();$('#actions').fadeIn(); $("#open").hide(); $('#open_change').hide();
+      }
+
+      $('form.jqtransform').jqTransform({imgPath:'/sites/site-1/themes/yaronproducties/images/'});
+	  
+		$('#img a').lightBox();
+	  //$("a img[rel]").overlay();
+    });
+	
+</script>
+    <script type="text/javascript">
+//<![CDATA[
+      var uid = Cookie.get('uid');
+      if(uid) {
+        $.ajax({
+          url: '/users/' + uid + '/roles.js',
+          type: 'get',
+          async: false,
+          dataType: 'script'
+        });
+      }
+      var aid = Cookie.get('aid');
+      if(aid) {
+        $(document).ready(function() { authorize_elements(['anonymous-' + aid]); });
+      }
+
+//]]>
+</script>
+    
+<body>
+<script type="text/javascript"
+src="http://api.maps.yahoo.com/ajaxymap?v=3.8&appid=iRcg61bV34FzVO9PsxS6qyOA.BLxQFFHJs0se8zU08gCnIszCmDHRRCzhZ.OU_">
+</script>
+</b>
+<style type="text/css">
+#map{
+  /*height: 75%;
+  width: 100%;*/
+ width: 395px;
+ height: 395px;
+}
+</style>
+<body>
+
+<div id="bgwrapper" class="page_contact">
+		<div id="top"><!-- centreert de pagina -->
+	<!--<h2>Login</h2>-->
+   <!-- <br/> -->
+<!--<p>-->
+  <!--<button id="open" onclick="$('#demoContainer').mb_open(); $('#close').fadeIn();$('#actions').fadeIn(); $(this).hide();" >open container </button>-->
+  <button class="button" id="open" onclick="$('#klantenContainer').mb_open() .mb_centerOnWindow(true);">Klanten Login</button>
+  <button class="button" id="open" onclick="$('#developerContainer').mb_open() .mb_centerOnWindow(true);">Developer Login</button>
+
+
+
+		  <div style="float: right;">
+          <form action="/nl/search/1/5" class="jqtransform" method="get">
+            
+              <input class="rowElem" type="text" name="q" style='color: #888' value="Vinden..." onfocus="this.style.color='black'; if (this.value=='Vinden...') { this.value=''; }" onblur="if (this.value=='') { this.value='Vinden...'; this.style.color='#888'; }" />
+            
+						
+            <a class="searchglass" href="#" onclick="this.blur(); this.parentNode.submit(); return false;"><img src="/sites/site-1/themes/technaplaza/images/24-zoom.png" align="top" alt="" border="0" /></a>
+          </form>
+		  </div>
+
+	<div id="head"><!-- Begin header -->
+		<h1 id="logo">
+			<a href="/"></a>
+		</h1>
+      <div id ="menu"><!-- Begin menu -->
+         <ul class="lavaLamp">
+			<li><a href="/nl/home">Home</a></li>		           
+            <li><a href="/nl/projecten">Projecten</a></li>
+            <li><a href="/nl/blog">Blog</a></li>
+            <li><a href="/nl/contact">Contact</a></li>
+       
+         </ul>
+    </div><!--<br/>--><!-- Einde menu -->
+
+			<div id="featured-content"> 
+				<div class="featured-item current-item jqtransform">
+    				<div class="featured-text">
+    					<!-- <p>Velden met een * zijn verplicht</p> -->
+						<div class="foatleft">
+						<div class="contactform">
+						<form action="/nl/contact_mails?return_to=%2Fnl%2Fcontact" class="jqtransform" id="contact_mail_form" method="post"><div style="margin:0;padding:0;display:inline"><input name="authenticity_token" type="hidden" value="HsG0XKxBHZNo7S1j4ta90Mg3q5noq4sFAiIprqa3YYM=" /></div>	
+    <input id="contact_mail_recipients" name="contact_mail[recipients]" type="hidden" value="%FE6*A%9F%B9%CA%A2%E6%BF%B0N%87%92R%F0%84%FC%0F%B6%02=:%A4%A7%A9%19A,Z%DD%E39%83%E6Wo%D9hq%F9%02%8Cf(%E3M%81%E2%8AC%1A%BF2*e%B1%A2%FD%820%C0U%B8" />
+	
+
+	
+<h2>Neem nu Contact op</h2>
+<p>
+	<label for='contact_mail_uw_naam'>Uw naam</label>
+	<input id="contact_mail_naam" name="contact_mail[naam]" type="text" value="" />
+</p>
+<p>
+	<label for='contact_mail_e_mail'>E-mail</label>
+	<input id="contact_mail_email" name="contact_mail[email]" type="text" value="" />
+</p>
+<p>
+	<label for='contact_mail_telefoon'>Telefoon</label>
+	<input id="contact_mail_telefoon" name="contact_mail[telefoon]" type="text" value="" />
+</p>
+<p>
+	<label for='contact_mail_onderwerp'>Onderwerp</label>
+	<input id="contact_mail_subject" name="contact_mail[subject]" type="text" value="" />
+</p>
+<p>
+	<label for='contact_mail_vraag'>Vraag</label>
+	<textarea id="contact_mail_Vraag" name="contact_mail[vraag]"></textarea>
+</p>
+
+	<p>
+		
+		<input name="commit" type="submit" value="Verzend" />
+	</p>
+</form>
+
+						</div>
+						</div>
+
+					</div><!-- end featured text -->
+					<div class="contact-placeholder">
+
+	<img src="/sites/site-1/assets/contact.jpg" alt="contact" />
+
+					</div><!-- end featured-image -->
+				</div><!-- end first featured item-->    
+ 			<div id="reflect">
+ 			</div>
+		</div><!-- Featured Content End-->
+	</div><!--end header-->
+	<div id="main">
+                <div class="contentbox_medium">
+               <div class="containerPlus  {skin:'yplight', icon:''}">
+	<div class="no">
+		<div class="ne">
+			<div class="n">	
+			
+			</div>
+		</div>
+	<div class="o">
+		<div class="e">
+			<div class="c">
+				<div class="mbcontainercontent">
+					<h2>Contact </h2>
+                       <ul>
+                       	   <li><a href="#"><strong>Yaron Producties</strong></a></li>
+                           <li><a href="mailto:info@yaronproducties.nl?subject=Vraagje?"><strong>Email: info@yaronproducties.nl</strong> <span>(?)</span></a></li>
+                           <li><a href="#"><strong>Telefoon: 010 415 2381 </strong> <span>(?)</span></a></li>
+                           <li><a href="#"><strong>Lorentzlaan 53a - Schiedam - Nederland </strong><span>(Europe)</span></a></li>
+                           <li><a href="http://maps.google.nl/maps?f=q&source=s_q&hl=nl&geocode=&q=lorentzlaan+53a+3112+kh+schiedam&sll=52.469397,5.509644&sspn=3.10568,9.195557&ie=UTF8&ll=51.918812,4.413398&spn=0.001535,0.00449&t=h&z=18&iwloc=r0"><strong>Route planning met Google Maps</strong></a></li>
+
+                       </ul>
+
+				</div>
+			</div>
+		</div>
+	</div>
+		<div class="so">
+			<div class="se">
+				<div class="s">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+                 </div>
+             
+                
+                <div class="contentbox_medium">
+               <div class="containerPlus  {skin:'yplight', icon:''}">
+	<div class="no">
+		<div class="ne">
+			<div class="n">	
+			
+			</div>
+		</div>
+	<div class="o">
+		<div class="e">
+			<div class="c">
+				<div class="mbcontainercontent">
+               <h2>Kaart</h2>
+                           <div id="map"></div> 
+		<script type="text/javascript">
+	// Create a map object
+	var map = new YMap(document.getElementById('map'));
+
+	// Add map type control
+	map.addTypeControl();
+
+	// Set map type to either of: YAHOO_MAP_SAT, YAHOO_MAP_HYB, YAHOO_MAP_REG
+	map.setMapType(YAHOO_MAP_REG);
+
+	// Display the map centered on a geocoded location
+	map.drawZoomAndCenter("Lorentzlaan 53 Schiedam", 2);
+	map.addZoomLong();
+	
+</script>
+				</div>
+			</div>
+		</div>
+	</div>
+		<div class="so">
+			<div class="se">
+				<div class="s">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+                </div>
+		</div><!-- Einde #content -->
+      </div><!-- Einde #main -->
+	</div>
+						<div id="footer"><!-- Begin #footer -->
+						Ontwerp door Yaron Producties
+					</div><!-- Einde #footer -->
+  <div id="klantenContainer" class="containerPlus draggable resizable {buttons:'m,c', skin:'yplight', width:'400', height:'200',closed:'true'}" >
+    <div class="no"><div class="ne"><div class="n"></div></div>
+      <div class="o"><div class="e"><div class="c">
+        <div class="mbcontainercontent">
+        <h2>Login voor Klanten</h2>
+		<form action="http://projects.yaronproducties.net/access/login" method="post" class="jqtransform">
+			<input name="authenticity_token" type="hidden"/>
+			<div class="rowElem">
+				<table>
+					<tr>
+						<td class="label">Gebruikersnaam</td>
+						<td><input name="login[user]" title="Voer hier je gebruikersnaam in"/></td>
+					</tr>
+					<tr>
+						<td class="label">Wachtwoord</td>
+						<td><input name ="login[password]" type="password" maxlength="12" name="password" title="Voer hier je wachtwoord in"/></td>
+					</tr>
+				</table>
+			</div>
+			<div class="rowElem">
+			<button class="fg-button ui-state-default ui-corner-all" type="submit" accesskey="s">Login</button>
+			</div>
+	   </form>
+       </div>
+      </div></div></div>
+      <div >
+        <div class="so"><div class="se"><div class="s"> </div></div></div>
+      </div>
+    </div>
+  </div>
+  
+    <div id="developerContainer" class="containerPlus draggable resizable {buttons:'m,c', skin:'yplight', width:'400', height:'200',closed:'true'}" >
+    <div class="no"><div class="ne"><div class="n"></div></div>
+      <div class="o"><div class="e"><div class="c">
+        <div class="mbcontainercontent">
+        <h2>Login voor Developers</h2>
+		<form action="http://warehouse.yaronproducties.net/login" method="post" class="jqtransform">
+			<div class="rowElem">
+				<table>
+					<tr>
+						<td class="label">Gebruikersnaam</td>
+						<td><input name="login[user]" title="Voer hier je gebruikersnaam in"/></td>
+					</tr>
+					<tr>
+						<td class="label">Wachtwoord</td>
+						<td><input name ="login[password]" type="password" maxlength="12" name="password" title="Voer hier je wachtwoord in"/></td>
+					</tr>
+				</table>
+			</div>
+			<div class="rowElem">
+			<button class="fg-button ui-state-default ui-corner-all" type="submit" accesskey="s">Login</button>
+			</div>
+	   </form>
+       </div>
+      </div></div></div>
+      <div >
+        <div class="so"><div class="se"><div class="s"> </div></div></div>
+      </div>
+    </div>
+  </div>
+					  <ul id="feeds">
+	<li></li>
+	<li></li>
+  </ul>
+  
+          <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            var pageTracker = _gat._getTracker("UA-5501358-1");
+            pageTracker._trackPageview();
+          </script>
+	  
+   </div><!-- Einde #top -->
+</div><!-- Einde #bgwrapper -->
+</body>
+</html>
+

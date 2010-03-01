@@ -1,0 +1,11 @@
+<% if @wikipage && @wikipage.errors && @wikipage.errors.size > 0 %>
+	<%= error_messages_for(:wikipage) %>
+<% elsif !request.xhr? %>
+	<script type="text/javascript" charset="utf-8">
+		Ext.onReady(function(){
+			window.location = '<%= admin_wikipages_path(@site, @section) %>';
+		});
+	</script>
+<% else %>
+	CRUD_OK
+<% end %>

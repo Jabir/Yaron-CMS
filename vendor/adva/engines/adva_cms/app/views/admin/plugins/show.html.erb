@@ -1,0 +1,43 @@
+<% content_for :sidebar do %>
+	<% if @plugin.about.detect { |key, value| value.present? } %>
+		<div class="tabs">
+			<ul>
+				<li class="active"><a href="#about" onclick="return false;"><%= t(:'adva.common.about') %></a></li>
+			</ul>
+			<div class="tab active">
+			  <% if @plugin.about['summary'] %>
+			    <p><%= @plugin.about['summary'] %></p>
+			  <% end %>
+			  <% if @plugin.about['version'] %>
+			    <p><%= t(:'adva.plugins.attributes.version') %>: <%= @plugin.about['version'] %></p>
+			  <% end %>
+			  <% if @plugin.about['author'] %>
+			    <p><%= t(:'adva.plugins.attributes.author') %>: <%= @plugin.about['author'] %></p>
+			  <% end %>
+			  <% if @plugin.about['homepage'] %>
+			    <p><%= t(:'adva.plugins.attributes.homepage') %>: <%= @plugin.about['homepage'] %></p>
+			  <% end %>
+			</div>
+		</div>
+	<% end %>
+<% end %>
+
+<% if @plugin.about['description'] %>
+  <h3><%= t(:'adva.titles.plugin') %>: <%= @plugin.name %></h3>
+  <p><%= @plugin.about['description'] %></p>
+<% end %>  
+
+<h3><%= t(:'adva.titles.settings') %></h3>
+
+<% if @plugin.option_definitions.present? %>
+  <% form_for :plugin, @plugin, :url => admin_plugin_path(@site), :html => { :method => :put } do |f| -%>
+    <%= render :partial => 'form', :locals => {:f => f} %>
+    <% f.buttons do %>
+      <%= f.submit :Save %>
+    <% end %>
+  <% end -%>
+<% else %>
+  <p class="empty">
+		<%= t(:'adva.plugins.no_config_options_available') %>
+	</p>
+<% end %>

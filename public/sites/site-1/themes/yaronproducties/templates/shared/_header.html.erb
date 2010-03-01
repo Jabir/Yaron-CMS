@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<title><%= @site.title %> - </title>
+  <%= yield :head %>
+<%= theme_stylesheet_link_tag 'yaronproducties', 'style1.css' %>
+<%#= theme_stylesheet_link_tag 'yaronproducties', 'fancy.css' %>
+<%= theme_stylesheet_link_tag 'yaronproducties', 'jquery-ui-1_7_1_custom.css' %>
+<%= theme_stylesheet_link_tag 'yaronproducties', 'mbContainer.css' %>
+<%= theme_stylesheet_link_tag 'yaronproducties', 'form.css' %>
+<%= theme_stylesheet_link_tag 'yaronproducties', 'jquery.lightbox-0.5.css' %>
+<link rel="shortcut icon" href="/sites/site-1/themes/yaronproducties/images/favicon.ico" />
+<!--Internet Explorer Trancparency fix-->
+<!--[if lt IE 8]>
+<script src="http://ie7-js.googlecode.com/svn/version/2.0(beta3)/IE8.js" type="text/javascript"></script>
+<![endif]-->
+	<%##= theme_javascript_include_tag 'yaronproducties', 'jquery-1_3_2.js' %>
+	<%= theme_javascript_include_tag 'yaronproducties', 'jquery.tools.min.js' %>
+	<%= theme_javascript_include_tag 'yaronproducties', 'jquery_fancybox-1_2_1.js' %>
+	<%#= theme_javascript_include_tag 'yaronproducties', 'jquery-ui-1.7.2.custom.min.js' %>
+	<%= theme_javascript_include_tag 'yaronproducties', 'custom.js' %>
+	<%= theme_javascript_include_tag 'yaronproducties', 'swfobject.js' %>
+	<%##= theme_javascript_include_tag 'yaronproducties', 'dialog.js' %>
+	
+	<%= theme_javascript_include_tag 'yaronproducties', 'jquery.metadata.js' %>
+	<%= theme_javascript_include_tag 'yaronproducties', 'ui.core.min.js' %>
+	<%= theme_javascript_include_tag 'yaronproducties', 'ui.draggable.min.js' %>
+	<%= theme_javascript_include_tag 'yaronproducties', 'ui.resizable.min.js' %>
+	<%= theme_javascript_include_tag 'yaronproducties', 'mbContainer.js' %>	
+	<%= theme_javascript_include_tag 'yaronproducties', 'jquery.jqtransform.js' %>
+	<%= theme_javascript_include_tag 'yaronproducties', 'jquery.lightbox-0.5.min.js' %>
+	
+	<%= javascript_include_tag :login %>	
+  <script type="text/javascript" charset="utf-8">
+    applyOrRemoveFCKeditors = function() {
+      $('textarea.wysiwyg').each(function() {
+        id = $(this).attr('id');
+        height = $(this).height();
+        if(height == 0) height = 200; // default height = 200px
+
+        FCKeditor.BasePath = '/javascripts/adva_fckeditor/fckeditor/';
+        
+        var oFCKeditor = new FCKeditor(id, '100%', height, 'frontpage');
+        oFCKeditor.Config['CustomConfigurationsPath'] = '/javascripts/adva_fckeditor/config.js';
+        if(typeof FCKGlobalConfig != 'undefined') {
+          for(var key in FCKGlobalConfig) {
+            oFCKeditor.Config[key] = FCKGlobalConfig[key];
+          }
+        }
+        oFCKeditor.ReplaceTextarea();
+      });
+    }
+
+    $(document).ready(function() {
+      applyOrRemoveFCKeditors();
+      $('select.columnsFilter').change(function() {
+        applyOrRemoveFCKeditors();
+      });
+    });
+  </script>
+<script type="text/javascript" charset="utf-8">
+$(function(){
+	$(".containerPlus").buildContainers({
+		maintainOnWindow:"false",
+		containment:"parent",
+		elementsPath:"/sites/site-1/themes/yaronproducties/elements/"
+	});
+      if (!$("#klantenContainer").mb_getState("closed")){
+        $('#close').fadeIn();$('#actions').fadeIn(); $("#open").hide(); $('#open_change').hide();
+      }
+
+      $('form.jqtransform').jqTransform({imgPath:'/sites/site-1/themes/yaronproducties/images/'});
+	  
+		$('#img a').lightBox();
+	  //$("a img[rel]").overlay();
+    });
+	
+</script>
+    <%= authorize_elements %>
+    <%= yield :head %>
+<body>

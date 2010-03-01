@@ -1,0 +1,5 @@
+<% if @wikipage && @wikipage.errors && @wikipage.errors.size > 0 %>
+  <%= error_messages_for(:wikipage) %>
+<% else %>
+  CRUD_OK
+<% end %>

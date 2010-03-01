@@ -1,0 +1,14 @@
+
+<h2><%= t(:'adva.sections.titles.forum_settings') %></h2>
+
+<% f.field_set :forum_settings do %>
+  <% column do %>
+		<%= f.text_field :topics_per_page, :label => true, :class => 'small' %>
+		<%= f.text_field :posts_per_page, :label => true, :class => 'small' %>
+	<% end %>
+
+  <% column do %>
+    <%= f.select :content_filter, filter_options, {}, :label => true, :tabindex => :section_topics_per_page %>
+    <span class="hint"><%= t(:'adva.forums.labels.post_content_filter') %></span>
+	<% end %>
+<% end %>

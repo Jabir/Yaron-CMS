@@ -1,0 +1,7 @@
+<div id="summary_big>">
+   <% item = @site.sections.find(:first, :conditions => ['title = ?', 'hoofdredactioneel']).articles.find(:first, :conditions => ["published_at is not null"], :order => 'created_at DESC') %>
+    <% if item %>
+        <h2><%= h item.title %></h2>
+		<%= article.excerpt_html %>
+    <% end %>
+</div>
