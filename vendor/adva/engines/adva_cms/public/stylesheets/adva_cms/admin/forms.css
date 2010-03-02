@@ -37,6 +37,7 @@ textarea {
 }
 textarea.big {
   height: 400px;
+  width: 500px;
 }
 select {
   margin: 3px 0;
