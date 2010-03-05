@@ -9,23 +9,21 @@
         bodyStyle: 'padding:10px'
       },
       items: [
-      <%# Belangrijk punt: onze crud plugin gaat niet werken met single_article_mode... %>
-      // new Ext.form.RadioGroup({
-      //   fieldLabel: 'Gedrag',
-      //   columns: 1,
-      //   items: [{
-      //     boxLabel: '<%= t(:'adva.sections.settings.single_article_mode') %>',
-      //     name: 'section[single_article_mode]',
-      //     inputValue: 'true',
-      //     checked: document.getElementById('section_single_article_mode_true').checked
-      //   },{
-      //     boxLabel: '<%= t(:'adva.sections.settings.multi_article_mode') %>',
-      //     name: 'section[single_article_mode]',
-      //     inputValue: 'false',
-      //     checked: document.getElementById('section_single_article_mode_false').checked
-      //   }]
-      // }),
-      {
+      new Ext.form.RadioGroup({
+        fieldLabel: 'Gedrag',
+        columns: 1,
+        items: [{
+          boxLabel: '<%= t(:'adva.sections.settings.single_article_mode') %>',
+          name: 'section[single_article_mode]',
+          inputValue: 'true',
+          checked: document.getElementById('section_single_article_mode_true').checked
+        },{
+          boxLabel: '<%= t(:'adva.sections.settings.multi_article_mode') %>',
+          name: 'section[single_article_mode]',
+          inputValue: 'false',
+          checked: document.getElementById('section_single_article_mode_false').checked
+        }]
+      }),{
         fieldLabel: 'Content filter',
         name: 'section[content_filter]',
         xtype: 'combo',

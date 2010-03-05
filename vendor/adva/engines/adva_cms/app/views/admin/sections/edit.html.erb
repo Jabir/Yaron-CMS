@@ -4,6 +4,18 @@
     registered_tabs[registered_tabs.length] = params;
   }
 
+  function modify_main_menu(menu) {
+    var new_menu = [];
+    $.each(menu,
+      function (index,item) {
+				if (!(/right/.test(item.id))) {
+          new_menu[new_menu.length] = item;
+        }
+      }
+    );
+    return new_menu;
+  }
+
   function extjs_body_items () {
     var tab_items = [{
       xtype: 'hidden',
@@ -131,6 +143,41 @@
           iconCls: 'silk-delete',
           handler: function() {
             window.location = '<%= admin_section_contents_path(@section) %>';
+          }
+        },{
+          text: 'Verwijderen',
+          iconCls: 'silk-delete',
+          handler: function() {
+          	Ext.Msg.show({
+          		title: 'Sectie verwijderen',
+          		msg: 'Deze sectie verwijderen',
+          		buttons: {
+          			ok: 'Verwijderen',
+          			cancel: 'Annuleren'
+          		},
+          		icon: Ext.MessageBox.QUESTION,
+          		fn: function(btn) {
+          			if (btn == "ok") {
+          				var mask = new Ext.LoadMask(Ext.getBody(), {
+          					msg: t['loader_text']
+          				});
+          				mask.show();
+
+          				$.ajax({
+          					url: '<%= admin_section_path(@site, @section) %>',
+          					cache: false,
+          					data: {
+          						authenticity_token: window._auth_token,
+                      _method: 'delete',
+          					},
+          					type: 'POST',
+          					success: function(html) {
+          					  window.location = '<%= admin_sections_path %>';
+          					}
+          				});
+          			}
+          		}
+          	});
           }
         }]
       }

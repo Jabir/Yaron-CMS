@@ -1,0 +1,680 @@
+<%= render :partial => "/admin/assets/sidebar", :locals => { :use_dnd => true, :site => @site } %>
+<script type="text/javascript" charset="utf-8">
+  var author_store;
+
+  function load_custom_stores () {
+    var author_store_data = new Array();
+    <% User.find(:all).each do |user| %>
+      author_store_data[author_store_data.length] = [<%= user.id.to_s %>, "<%= h user.name.gsub(/\"/,"\\") %>"];
+    <% end %>
+
+    author_store = new Ext.data.ArrayStore({
+      fields: ['author_id', 'name'],
+      data: author_store_data
+    });
+  }
+
+  function modify_main_menu(menu) {
+    var new_menu = [];
+    $.each(menu,
+      function (index,item) {
+				if (!(/right/.test(item.id))) {
+          new_menu[new_menu.length] = item;
+        }
+      }
+    );
+    return new_menu;
+  }
+  
+  var asset_mutations;
+  var asset_mutations_index;
+  function post_submit () {
+    asset_mutations = [];
+    asset_mutations_index = 0;
+
+    var container = document.getElementById("asset-drop-zone");
+    if (container) {
+      //
+      // Toevoegen
+      //
+      var divs = container.getElementsByTagName("div");
+      for (var c=0; c<divs.length; c++) {
+        if (/thumb-wrap/.test(divs[c].className) && /asset_/.test(divs[c].id)) {
+          var new_asset = true;
+          var assetid = divs[c].id.replace(/\D/g,"");
+
+          <% @article.assets.each do |asset| %>
+          if (<%= asset.id.to_s %> == assetid) {
+            new_asset = false;
+          }
+          <% end %>
+
+          if (new_asset) {
+            asset_mutations[asset_mutations.length] = "add " + assetid;
+          }
+		    }
+      }
+
+      //
+      // Verwijderen
+      //
+      <% @article.assets.each do |asset| %>
+        var keep_asset = false;
+
+        var divs = container.getElementsByTagName("div");
+        for (var c=0; c<divs.length; c++) {
+          if (/thumb-wrap/.test(divs[c].className) && divs[c].id == "asset_<%= asset.id.to_s %>") {
+  		      keep_asset = true;
+  		    }
+        }
+
+        if (!keep_asset) {
+          asset_mutations[asset_mutations.length] = "destroy <%= asset.id.to_s %>";
+        }
+      <% end %>
+    }
+
+    if (asset_mutations.length > 0) {
+      next_asset_mutation();
+    } else {
+      window.location = window.location;
+  	}
+  }
+
+  function next_asset_mutation () {
+    if (asset_mutations_index < asset_mutations.length) {
+      var am = asset_mutations[asset_mutations_index];
+      var id = am.replace(/\D/g,"");
+
+      if (/add /.test(am)) {
+        var parameters = {
+         authenticity_token: window._auth_token,
+         content_id: <%= @article.id.to_s %>
+        }
+        var url = '<%= admin_asset_contents_path(@site, '!recordid!') %>'.replace("!recordid!", id);
+
+        $.post(url, parameters, function(responseText) {
+          asset_mutations_index ++;
+          next_asset_mutation();
+        });
+      } else if (/destroy /.test(am)) {
+        var parameters = {
+         authenticity_token: window._auth_token,
+         _method: 'delete'
+        }
+        var url = '<%= admin_asset_content_path(@site, '!recordid!', @article) %>'.replace("!recordid!", id);
+        $.post(url, parameters, function(responseText) {
+          asset_mutations_index ++;
+          next_asset_mutation();
+        });
+      }
+    } else {
+      window.location = window.location;
+    }
+  }
+
+  var item_assets;
+  function extjs_body_items () {
+    load_custom_stores();
+    var title = <%= (@article.title).to_json() %>;
+    var date = <%= @article.updated_at.strftime("%Y-%m-%d %H:%M:%S").to_json() %>;
+    var author = <%= @article.author_id.to_json() %>;
+    var excerpt = <%= (@article.excerpt_html).to_json() %>;
+    var body = <%= (@article.body_html).to_json() %>;
+    var draft = <%= (@article.draft? ? 1 : 0).to_s %>;
+    var fixed_top = <%= @article.position < 0 ? "1" : "0" %>;
+
+    selected_record_title = title;
+
+    var meta_keywords = <%= (meta_value_from(@article.meta_keywords, @site.meta_keywords)).to_json %>;
+    var meta_description = <%= (meta_value_from(@article.meta_description, @site.meta_description)).to_json %>;
+    var meta_author = <%= (meta_value_from(@article.meta_author, @site.meta_author)).to_json %>;
+    var meta_copyright = <%= (meta_value_from(@article.meta_copyright, @site.meta_copyright)).to_json %>;
+    var meta_geourl = <%= (meta_value_from(@article.meta_geourl, @site.meta_geourl)).to_json %>;
+
+    var permalink = <%= (@article.permalink).to_json() %>;
+    var tag_list = <%= (@article.tag_list).to_json() %>;
+    var filter = <%= (@article.filter).to_json() %>;
+
+    //
+    // Vast variabele aanmaken met
+    // alle afbeeldingen-id's
+    //
+    item_assets = [];
+
+    <% @article.assets.each do |asset| %>
+      item_assets[item_assets.length] = {
+        border: false,
+        baseCls: 'x-plain-panel',
+        html: '<div class="thumb-wrap" id="asset_<%= asset.id.to_s %>">' +
+        '<div class="thumb thumb_for_'+ <%= asset.css_class.to_json %> + '"><span class="'+ <%= asset.css_class.to_json %> + '"></span><img src="' + <%= asset_image_args_for(asset)[0].to_json %> + '" class="thumb-img"></div>' +
+        '<span>' + <%= h(asset.title).to_json %> + '</span><div class="toolbox"><img src="/stylesheets/extjs/fam/delete.gif" title="Verwijderen" onclick="asset_delete(this);" /></div>'
+      };
+    <% end %>
+
+  	return [{
+  	  region: 'center',
+  	  layout: 'border',
+  	  bodyStyle: 'background-color: white;',
+  	  items: [{
+  	    region: 'north',
+    	  bodyStyle: 'padding-left: 10px; padding-right: 10px; padding-top: 10px',
+  	    layout: 'column',
+  	    border: false,
+  	    items: [{
+          columnWidth: .5,
+          layout: 'form',
+          border: false,
+          items: [{
+            xtype: 'textfield',
+            fieldLabel: 'Titel',
+            id: 'record_title',
+            name: 'title',
+            anchor: '95%',
+            value: title
+          }]
+    	  },{
+    	    columnWidth: .5,
+    	    layout: 'form',
+          border: false,
+          items: [{
+            xtype: 'combo',
+            fieldLabel: 'Gewijzigd door',
+            name: 'author_id',
+            anchor: '95%',
+            value: author,
+            store: author_store,
+            valueField: 'author_id',
+            displayField: 'name',
+            mode: 'local',
+            hiddenName: 'record_author_id',
+            hiddenId: 'record_author_id'
+          }]
+    	  }]
+    	},{
+    	  region: 'center',
+    	  layout: 'border',
+    	  border: false,
+    	  bodyStyle: 'background-color: white;',
+    	  items: [{
+    	    region: 'center',
+    	    xtype: 'tabpanel',
+          baseCls: 'tab-white',
+    	    plain: true,
+    	    activeTab: 0,
+    	    defaults: {
+    	        bodyStyle: 'padding:10px;'
+    	    },
+    	    items: [{
+            cls: 'x-plain',
+            title: 'Inleiding',
+            layout: 'fit',
+            items: {
+                xtype: 'htmleditor',
+                id: 'record_excerpt',
+                name: 'excerpt',
+                value: excerpt,
+                plugins: [
+                  new Ext.ux.form.HtmlEditor.Image(),  
+                ]
+            }
+    	    },{
+            cls: 'x-plain',
+            title: 'Hele artikel',
+            layout: 'fit',
+            items: {
+                xtype: 'htmleditor',
+                id: 'record_body',
+                name: 'body',
+                value: 'test',
+                value: body,
+                plugins: [
+                  new Ext.ux.form.HtmlEditor.Image(),  
+                ]
+            }
+    	    },{
+            title: 'Assets',
+            bodyStyle: 'padding: 0px;',
+            layout: 'anchor',
+            items: [{
+              border: false,
+              baseCls: 'x-plain',
+    	        bodyStyle: 'padding: 5px',
+              html: t['assets']['drop-zone'],
+              height: 25
+            },{
+              id: 'asset-drop-zone',
+              border: false,
+              baseCls: 'x-plain',
+              bodyStyle: 'padding: 5px',
+              anchor: '100%, -25',
+
+              animate:true,
+              enableDD:true,
+              containerScroll: true,
+              ddGroup: 'organizerDD',
+
+              items: item_assets,
+
+              listeners: {
+                afterrender: function(el) {
+                  new Ext.dd.DropTarget(el.body.dom, {
+                		ddGroup     : 'organizerDD',
+                		notifyDrop  : function(ddSource, e, data){
+                		  var target = document.getElementById("asset-drop-zone").getElementsByTagName("div")[1];
+                		  var current_assets = target.getElementsByTagName("div");
+
+                		  var items = data.ddel.getElementsByTagName("div");
+                		  for (var i=0; i<items.length; i++) {
+                		    var item = items[i];
+                		    if (/thumb_for/.test(item.className)) {
+                		      item = item.parentNode;
+                		      var bestaat_al = false;
+                    		  for (var c=0; c<current_assets.length; c++) {
+                    		    if (/thumb-wrap/.test(current_assets[c].className) && current_assets[c].id == item.id) {
+                    		      bestaat_al = true;
+                    		    }
+                    		  }
+                          if (!bestaat_al) {
+                            var div = target.appendChild(document.createElement("div"));
+                            div.innerHTML = item.innerHTML + '<div class="toolbox"><img src="/stylesheets/extjs/fam/delete.gif" title="Verwijderen" onclick="asset_delete(this);" />';
+                            div.id = item.id;
+                            div.className = item.className;
+                          }
+                		    }
+                		  }
+                			return(true);
+                		}
+                	});
+                }
+              }
+            }]
+    	    },{
+            title: 'Opties',
+            layout: 'form',
+            defaults: {
+                width: 230
+            },
+            defaultType: 'textfield',
+            items: [{
+              fieldLabel: 'Permalink',
+              name: 'permalink',
+              value: '',
+              id: 'record_permalink',
+              value: permalink
+            },{
+              fieldLabel: 'Tag list',
+              name: 'tag_list',
+              id: 'record_tag_list',
+              value: tag_list
+            },{
+              xtype: 'checkbox',
+              fieldLabel: 'Vast bovenin',
+              id: 'fixed_top',
+              name: 'fixed_top',
+              anchor: '95%',
+              checked: fixed_top == "1",
+              mode: 'local'
+            }]
+    	    },{
+            title: 'Meta tags',
+            layout: 'column',
+            border: false,
+            items: [{
+              columnWidth: .5,
+              layout: 'form',
+              border: false,
+              items: [{
+                xtype: 'textfield',
+                fieldLabel: 'Keywords',
+                id: 'record_meta_keywords',
+                name: 'meta_keywords',
+                anchor: '95%',
+                value: meta_keywords
+              },{
+                xtype: 'textarea',
+                fieldLabel: 'Description',
+                id: 'meta_description',
+                name: 'record_meta_description',
+                anchor: '95%',
+                value: meta_description
+              }]
+    	      },{
+              columnWidth: .5,
+              layout: 'form',
+              border: false,
+              items: [{
+                xtype: 'textfield',
+                fieldLabel: 'Author',
+                name: 'meta_author',
+                id: 'record_meta_author',
+                anchor: '95%',
+                value: meta_author
+              },{
+                xtype: 'textfield',
+                fieldLabel: 'Copyright',
+                name: 'meta_copyright',
+                id: 'record_meta_copyright',
+                anchor: '95%',
+                value: meta_copyright
+              },{
+                xtype: 'textfield',
+                fieldLabel: 'Geourl',
+                name: 'meta_geourl',
+                id: 'record_meta_geourl',
+                anchor: '95%',
+                value: meta_geourl
+              }]
+    	      }]
+    	    }],
+    	    buttons: [{
+            text: 'Opslaan',
+            iconCls: 'silk-accept',
+            handler: function() {
+              var mask = new Ext.LoadMask(Ext.getBody(), { msg: t['loader_text'] });
+              mask.show();
+              
+              var parameters = edit_article_form_values({});
+              parameters["authenticity_token"] = window._auth_token;
+              parameters["_method"] = "put";
+              
+              $.post('<%= admin_article_path(@site, @section, @article) %>',
+                parameters,
+                function(responseText) {
+                  responseText = strip_error_from_response(responseText)
+                  if (/errorExplanation/.test(responseText)) {
+                    mask.hide();
+                    Ext.Msg.minWidth = 400;
+                    Ext.Msg.show({
+                      title: t['error_title'],
+                      msg: responseText,
+                      buttons: {
+                        ok: t['ok_text']
+                      },
+                      icon: Ext.MessageBox.WARNING
+                    });
+                  } else {
+                    post_submit();
+                  }
+                }
+              );
+            }
+          }]
+        }]
+	    }]
+  	}];
+  }
+
+  function edit_article_form_values (parameters) {
+    parameters["article[title]"] = document.getElementById('record_title').value;
+    if (document.getElementById('record_author_id').value!="") {
+      parameters["article[author_id]"] = document.getElementById('record_author_id').value;
+    }
+    parameters["article[updated_at]"] = <%= @article.updated_at.strftime("%Y-%m-%d %H:%M:%S").to_json %>;
+    parameters["article[excerpt]"] = document.getElementById('record_excerpt').value;
+    if (document.getElementById('record_body')) {
+      parameters["article[body]"] = document.getElementById('record_body').value;
+    }
+    if (document.getElementById('record_permalink')) {
+      parameters["article[permalink]"] = document.getElementById('record_permalink').value;
+      parameters["article[tag_list]"] = document.getElementById('record_tag_list').value;
+    }
+    if (document.getElementById('record_meta_keywords')) {
+      parameters["article[meta_keywords]"] = document.getElementById('record_meta_keywords').value;
+      parameters["article[meta_description]"] = document.getElementById('meta_description').value;
+      parameters["article[meta_author]"] = document.getElementById('record_meta_author').value;
+      parameters["article[meta_copyright]"] = document.getElementById('record_meta_copyright').value;
+      parameters["article[meta_geourl]"] = document.getElementById('record_meta_geourl').value;
+    }
+    if (document.getElementById("fixed_top")) {
+      parameters["article[position]"] = document.getElementById("fixed_top").checked ? -1 : 0;
+    }
+    
+    parameters["save_revision"] = "Save";
+    parameters["cl"] = "en";
+    
+  	return parameters;
+  }
+
+  function asset_delete (ref) {
+    var asset = ref.parentNode.parentNode;
+    asset.parentNode.removeChild(asset);
+  }
+
+  function extjs_sidebar_items () {
+    return sidebar_drag_view();
+  }
+
+  ImageDragZone = function(view, config){
+      this.view = view;
+      ImageDragZone.superclass.constructor.call(this, view.getEl(), config);
+  };
+  Ext.extend(ImageDragZone, Ext.dd.DragZone, {
+      // We don't want to register our image elements, so let's 
+      // override the default registry lookup to fetch the image 
+      // from the event instead
+      getDragData : function(e){
+          var target = e.getTarget('.thumb-wrap');
+          if (target){
+              var view = this.view;
+              if (!view.isSelected(target)){
+                  view.onClick(e);
+              }
+              var selNodes = view.getSelectedNodes();
+              var dragData = {
+                  nodes: selNodes
+              };
+              if (selNodes.length == 1){
+                  dragData.ddel = target;
+                  dragData.single = true;
+              } else {
+                  var div = document.createElement('div'); // create the multi element drag "ghost"
+                  div.className = 'multi-proxy';
+                  for(var i = 0, len = selNodes.length; i < len; i++){
+                      div.appendChild(selNodes[i].cloneNode(true)); // image nodes only
+                      if((i+1) % 3 == 0){
+                          div.appendChild(document.createElement('br'));
+                      }
+                  }
+                  var count = document.createElement('div'); // selected image count
+                  count.innerHTML = i + ' images selected';
+                  div.appendChild(count);
+
+                  dragData.ddel = div;
+                  dragData.multi = true;
+              }
+              return dragData;
+          }
+          return false;
+      },
+
+      // the default action is to "highlight" after a bad drop
+      // but since an image can't be highlighted, let's frame it 
+      afterRepair:function(){
+          for(var i = 0, len = this.dragData.nodes.length; i < len; i++){
+              Ext.fly(this.dragData.nodes[i]).frame('#8db2e3', 1);
+          }
+          this.dragging = false;    
+      },
+
+      // override the default repairXY with one offset for the margins and padding
+      getRepairXY : function(e){
+          if(!this.dragData.multi){
+              var xy = Ext.Element.fly(this.dragData.ddel).getXY();
+              xy[0]+=3;xy[1]+=3;
+              return xy;
+          }
+          return false;
+      }
+  });
+  Ext.DataView.DragSelector = function(cfg){
+      cfg = cfg || {};
+      var view, proxy, tracker;
+      var rs, bodyRegion, dragRegion = new Ext.lib.Region(0,0,0,0);
+      var dragSafe = cfg.dragSafe === true;
+
+      this.init = function(dataView){
+          view = dataView;
+          view.on('render', onRender);
+      };
+
+      function fillRegions(){
+          rs = [];
+          view.all.each(function(el){
+              rs[rs.length] = el.getRegion();
+          });
+          bodyRegion = view.el.getRegion();
+      }
+
+      function cancelClick(){
+          return false;
+      }
+
+      function onBeforeStart(e){
+          return !dragSafe || e.target == view.el.dom;
+      }
+
+      function onStart(e){
+          view.on('containerclick', cancelClick, view, {single:true});
+          if(!proxy){
+              proxy = view.el.createChild({cls:'x-view-selector'});
+          }else{
+              if(proxy.dom.parentNode !== view.el.dom){
+                  view.el.dom.appendChild(proxy.dom);
+              }
+              proxy.setDisplayed('block');
+          }
+          fillRegions();
+          view.clearSelections();
+      }
+
+      function onDrag(e){
+          var startXY = tracker.startXY;
+          var xy = tracker.getXY();
+
+          var x = Math.min(startXY[0], xy[0]);
+          var y = Math.min(startXY[1], xy[1]);
+          var w = Math.abs(startXY[0] - xy[0]);
+          var h = Math.abs(startXY[1] - xy[1]);
+
+          dragRegion.left = x;
+          dragRegion.top = y;
+          dragRegion.right = x+w;
+          dragRegion.bottom = y+h;
+
+          dragRegion.constrainTo(bodyRegion);
+          proxy.setRegion(dragRegion);
+
+          for(var i = 0, len = rs.length; i < len; i++){
+              var r = rs[i], sel = dragRegion.intersect(r);
+              if(sel && !r.selected){
+                  r.selected = true;
+                  view.select(i, true);
+              }else if(!sel && r.selected){
+                  r.selected = false;
+                  view.deselect(i);
+              }
+          }
+      }
+
+      function onEnd(e){
+          if (!Ext.isIE) {
+              view.un('containerclick', cancelClick, view);    
+          }        
+          if(proxy){
+              proxy.setDisplayed(false);
+          }
+      }
+
+      function onRender(view){
+          tracker = new Ext.dd.DragTracker({
+              onBeforeStart: onBeforeStart,
+              onStart: onStart,
+              onDrag: onDrag,
+              onEnd: onEnd
+          });
+          tracker.initEl(view.el);
+      }
+  };
+  Ext.onReady(function(){
+    var dragZone = new ImageDragZone(sidebar_drag_assets(), { containerScroll:true, ddGroup: 'organizerDD'});
+  });
+</script>
+<%
+  only_movies = false unless only_movies
+  use_dnd = false unless use_dnd
+%>
+<script type="text/javascript" charset="utf-8">
+  var select_insert_image_instance = false;
+  var select_window = false;
+  function select_insert_image(ref) {
+    select_insert_image_instance = ref;
+    select_window = new Ext.Window({
+      layout: 'fit',
+      width: 354,
+      title: 'Asset invoegen',
+      height: 344,
+      modal: true,
+      shadow: true,
+      plain: true,
+      border: false,
+      closeAction: 'close',
+      items: select_insert_image_view(),
+    });
+    select_window.show(this);
+  }
+  function select_insert_image_view () {
+    var select_asset_store = new Ext.data.XmlStore({
+        proxy : new Ext.data.HttpProxy({
+            method: 'GET',
+            prettyUrls: false,
+            url: '<%= url_for admin_assets_url(@site) %>.xml'
+        }),
+        autoLoad: {params:{start: 0, limit: 18}},
+        root: 'record',
+        record: 'record',
+        id:'title',
+        totalRecords: 'results',
+        fields: ['id', 'title', 'data_content_typ', 'data_file_name', 'thumb_url', 'css_class', 'normal_url']
+    });
+
+    var select_assets_paging = new Ext.PagingToolbar({
+        pageSize: 18,
+        store: select_asset_store
+    });
+    return {
+			border: true,
+			id: 'sb',
+			layout: 'fit',
+			bodyStyle: 'padding: 0px; overflow: visible;',
+			items: new Ext.DataView({
+        itemSelector: 'div.thumb-wrap',
+        style: 'margin: 0px; padding-top: 5px; overflow:auto;',
+        multiSelect: true,
+        border: false,
+        store: select_asset_store,
+        tpl: new Ext.XTemplate(
+            '<tpl for=".">',
+            '<div class="thumb-wrap" url="{normal_url}" id="asset_{id}" style="cursor: pointer">',
+            '<div class="thumb thumb_for_{css_class}"><span class="{css_class}"></span><img src="{thumb_url}" class="thumb-img"></div>',
+            '<span>{title}</span></div>',
+            '</tpl>'
+        ),
+        listeners: {
+        	click: function(dataView,idx, node, e) {
+        	  //
+        	  // Eventuele parameters als GET meegeven aan insertImage...
+        	  //
+        	  //"http://www.google.nl/logos/olympics10-shorttrack-hp.png?width=50&height=50&border=1&align=left"
+        	  select_insert_image_instance.insertImage(node.getAttribute("url"));
+        	  select_window.close();
+        	},
+        	scope: this
+        }
+      }),
+      bbar: select_assets_paging
+		}
+  }
+</script>
+<% content_for :sidebar do -%>
+<% end -%>

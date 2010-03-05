@@ -10,7 +10,7 @@ class Admin::ArticlesController < Admin::BaseController
   
   cache_sweeper :article_sweeper, :category_sweeper, :tag_sweeper,
                 :only => [:create, :update, :destroy]
-
+  
   guards_permissions :article, :update => :update_all
 
   def index
@@ -22,14 +22,24 @@ class Admin::ArticlesController < Admin::BaseController
   end
 
   def new
+    if @section.try(:single_article_mode)
+      @article = @section.articles.build(:author_id => session[:uid], :title => @section.title, :body => "&nbsp;")
+      @article.save
+      redirect_to edit_admin_article_url(:id => @article.id)
+      return
+    end
     if !request.xhr?
       redirect_to url_for(:locale => params[:locale], :action => "index") + "#new" and return
     end
     defaults = { :comment_age => @section.comment_age, :filter => @section.content_filter }
     @article = @section.articles.build(defaults.update(params[:article] || {}))
+    
   end
 
   def edit
+    if @section.try(:single_article_mode)
+      render :action => 'edit_single' and return;
+    end
     if !request.xhr?
       redirect_to url_for(:locale => params[:locale], :action => "index") + "#" + params[:id].to_s and return
     end
@@ -117,10 +127,15 @@ class Admin::ArticlesController < Admin::BaseController
     end
 
     def set_article
+      original_locale = I18n.locale
+
       I18n.locale = :en
       ActiveRecord::Base.locale = :en
 
       @article = @section.articles.find(params[:id])
+
+      I18n.locale = original_locale
+      ActiveRecord::Base.locale = original_locale
     end
 
     def set_categories
