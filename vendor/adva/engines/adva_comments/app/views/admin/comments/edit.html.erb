@@ -1,3 +1,69 @@
+<script type="text/javascript" charset="utf-8">
+	function Eextjs_body_items () {
+		return {
+			region: 'center',
+			layout: 'border',
+			title: '<%= t(:'adva.comments.titles.edit') %>',
+			bodyStyle: 'background-color: white',
+			border: true,
+			items: {
+				bodyStyle: 'padding: 15px; padding-bottom: 0px;',
+				region: 'center',
+				xtype: 'form',
+				errorReader: new Ext.data.CrudReader(),
+				border: false,
+				items: [{
+					fieldLabel: '<%= t(:'adva.titles.comment') %>',
+					name: 'comment[body]',
+					value: document.getElementById('comment_body').value,
+					type: 'textarea',
+					width: 200
+				},{
+					xtype: 'hidden',
+					name: 'comment[approved]',
+					value: '0'
+				},{
+					fieldLabel: '<%= t(:'adva.comments.labels.approved') %>',
+					name: 'comment[approved]',
+					inputValue: '1',
+					xtype: 'checkbox',
+					checked: document.getElementById('comment_approved').checked
+				}],
+				buttons: [{
+					text: 'Opslaan',
+					iconCls: 'silk-accept',
+					handler: function() {
+						var mask = new Ext.LoadMask(Ext.getBody(), {
+							msg: t['loader_text']
+						});
+						mask.show();
+						this.ownerCt.ownerCt.getForm().submit({
+							url: '<%= admin_comment_path %>',
+							params: {
+								authenticity_token: '<%= form_authenticity_token %>',
+								_method: 'put'
+							},
+							success: function(form, action) {
+								mask.hide();
+							},
+							failure: function(form, action) {
+								mask.hide();
+								Ext.Msg.minWidth = 400;
+								Ext.MessageBox.alert(strip_error_from_response(action.response));
+							}
+						});
+					}
+				},{
+					text: 'Annuleren',
+					iconCls: 'silk-delete',
+					handler: function() {
+						window.location = '<%= admin_comment_path %>';
+					}
+				}]
+			}
+		};
+	}
+</script>
 <h3><%= t(:'adva.comments.titles.edit') %></h3>
 
 <% form_for :comment, @comment, :url => admin_comment_path(@comment), :html => {:method => :put} do |f| -%>

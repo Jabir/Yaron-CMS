@@ -4,7 +4,7 @@ class Admin::ConferencesController < Admin::BaseController
     @bigbluebutton = BigBlueButton.new({
       :username => 'admin@test.com',
       :password => 'admin',
-      :host => 'http://84.244.143.235',
+      :host => 'http://84.244.143.166',
       :path_prefix => 'bigbluebutton'
     })
     @conference = @bigbluebutton.conference_by_name(@site.name, @site.id.to_s)
