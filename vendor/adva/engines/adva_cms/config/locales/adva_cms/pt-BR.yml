@@ -794,7 +794,7 @@ pt-BR:
     info:
       greeting_logged_in: Olá <span>user</span>, você entrou no sistema.
     footer:
-      powered_by: Site incrementado por adva cms. Tema inspirado por depo.
+      powered_by: Site incrementado por Yaron-CMS. Tema inspirado por depo.
     flash:
       authentication_required_role: Você precisa ter o perfil {{role}} para ver esta página.
     sidebar:

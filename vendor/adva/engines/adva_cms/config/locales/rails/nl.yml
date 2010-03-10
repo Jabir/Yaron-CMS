@@ -13,7 +13,7 @@ nl:
     day_names: [zondag, maandag, dinsdag, woensdag, donderdag, vrijdag, zaterdag]
     abbr_day_names: [Zo, Ma, Di, Wo, Do, Vr, Za]
     month_names: [~, Januari, Februari, Maart, April, Mei, Juni, Juli, Augustus, September, Oktober, November, December]
-    abbr_month_names: [~, jan, feb, mar, apr, mei, jun, jul, aug, sep, okt, nov, dec]
+    abbr_month_names: [~, jan, feb, mrt, apr, mei, jun, jul, aug, sep, okt, nov, dec]
     order: [ :day, :month, :year ]
   
   time:

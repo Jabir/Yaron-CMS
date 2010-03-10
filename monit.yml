@@ -4,7 +4,7 @@ log: log/thin.log
 max_conns: 512
 timeout: 30
 #port: 4001
-chdir: /var/www/YP-CMS
+chdir: /var/www/Yaron-CMS
 environment: production
 max_persistent_conns: 256
 #servers: 1

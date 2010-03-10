@@ -792,7 +792,7 @@ es:
     info:
       greeting_logged_in: Hola <span>user</span>, ya has ingresado.
     footer:
-      powered_by: Site powered by adva cms. Theme inspired by depo.
+      powered_by: Site powered by Yaron-CMS. Theme inspired by depo.
     flash:
       authentication_required_role: Necesitas tener el rol {{role}} para ver esta página.
     sidebar:

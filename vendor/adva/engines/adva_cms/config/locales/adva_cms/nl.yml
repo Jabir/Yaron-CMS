@@ -66,7 +66,7 @@ nl:
       general_settings: Algemene instellingen
       history: Historie
       import: Importeren
-      install: YP-CMS installatie
+      install: Yaron-CMS installatie
       issues: Issues
       login: Inloggen
       logout: Uitloggen
@@ -193,7 +193,7 @@ nl:
         host: Host
       install:
         success_fully_created: You have successfully created your site. Enjoy!
-        welcome_to_installation: "Welcome to YP-CMS' less-than-one-minute installation process. Just fill in the information below and you're done."
+        welcome_to_installation: "Welcome to Yaron-CMS' less-than-one-minute installation process. Just fill in the information below and you're done."
         can_always_change_settings: Don't worry. You can always change these settings later.
         section_default: Home
       no_sites: Je hebt nog geen site gemaakt.

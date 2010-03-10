@@ -2,8 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
- 	<meta name="generator" content="YP-CMS - Open source content management platform" />
-  <title>YP-CMS: Admin <%= controller.controller_name %></title>
+ 	<meta name="generator" content="Yaron-CMS - Open source content management platform" />
+  <title>Yaron-CMS: Admin <%= controller.controller_name %></title>
   <%#= stylesheet_link_tag 'adva_cms/admin/reset.css' %>
   <%#= stylesheet_link_tag 'adva_cms/admin/layout.css' %>
   <%= stylesheet_link_tag 'adva_cms/admin/common.css' %>
@@ -31,7 +31,7 @@
 	<%= yield :head %>
 </head>
 <body>
-  <div id="top"><%= image_tag "yp-cms.png" %></div>
+  <div id="top"><%= image_tag "yaron-cms.png" %></div>
   <div style="display: none">
   	<%= @menu.build(self).root.render(:id => 'top') %>
   	<%= render :partial => 'admin/shared/header' %>

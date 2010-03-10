@@ -1,6 +1,6 @@
 #!/bin/sh
 #export TZ=UTC
 # set
-cd /var/www/YP-CMS/
+cd /var/www/Yaron-CMS/
 thin -C thin.yml restart
 

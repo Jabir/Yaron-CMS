@@ -749,7 +749,7 @@ fi:
     info:
       greeting_logged_in: Hei <span>user</span>, olet kirjautunut sisään.
     footer:
-      powered_by: "Netti-sivu toimii adva_cms:llä. Teeman inspiroinut depo."
+      powered_by: "Netti-sivu toimii Yaron-CMS:llä. Teeman inspiroinut depo."
     flash:
       authentication_required_role: Tarvitset roolin {{role}} nähdäksesi tämän sivun.
     sidebar:

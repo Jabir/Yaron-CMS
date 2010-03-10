@@ -114,8 +114,8 @@ de:
      general_settings: Allgemeine Einstellungen
      history: Verlauf
      import: Importieren
-     install: adva-cms Installation
-     installation: adva-cms Installation
+     install: Yaron-CMS Installation
+     installation: Yaron-CMS Installation
      issues: Belange
      login: Anmelden
      logout: Abmelden
@@ -240,7 +240,7 @@ de:
        host: Host
      install:
        success_fully_created: "Sie haben Ihre Webseite erfolgreich angelegt. Als nächstes sollten Sie die Struktur der Seite vervollständigen, indem Sie weitere Sektionen und Inhalte hinzufügen."
-       welcome_to_installation: "Willkommen beim adva-cms Installationsprozess! Um Ihre Webseite aufzusetzen, benötigen Sie weniger als zwei Minuten. Füllen Sie bitte einfach die folgenden Felder aus."
+       welcome_to_installation: "Willkommen beim Yaron-CMS Installationsprozess! Um Ihre Webseite aufzusetzen, benötigen Sie weniger als zwei Minuten. Füllen Sie bitte einfach die folgenden Felder aus."
        can_always_change_settings: "Hinweis: Die Einstellungen können später jederzeit im Administrationsbereich geändert werden."
        section_default: Startseite
      no_sites: Sie haben zur Zeit keine Webseiten angelegt.
@@ -993,7 +993,7 @@ de:
    info:
      greeting_logged_in: "Hallo <span>user</span>, Sie sind angemeldet."
    footer:
-     powered_by: "Webseite erstellt mit adva-cms (Theme: DePo-mod)."
+     powered_by: "Webseite erstellt mit Yaron-CMS (Theme: DePo-mod)."
      site_powered_by: "Webseite erstellt mit {{link}}."
      theme_inspired_by: "(Theme: {{link}}-mod)."
    flash:
