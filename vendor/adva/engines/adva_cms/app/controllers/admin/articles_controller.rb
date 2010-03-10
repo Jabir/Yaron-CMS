@@ -50,7 +50,11 @@ class Admin::ArticlesController < Admin::BaseController
     if @article.save
       trigger_events(@article)
       flash[:notice] = t(:'adva.articles.flash.create.success')
-      redirect_to edit_admin_article_url(:id => @article.id, :cl => content_locale)
+      if !request.xhr?
+        redirect_to edit_admin_article_url(:id => @article.id, :cl => content_locale)
+      else
+        render :text => ""
+      end
     else
       set_categories
       flash.now[:error] = t(:'adva.articles.flash.create.failure')
@@ -68,7 +72,11 @@ class Admin::ArticlesController < Admin::BaseController
     if save_with_revision? ? @article.save : @article.save_without_revision
       trigger_events(@article)
       flash[:notice] = t(:'adva.articles.flash.update.success')
-      redirect_to edit_admin_article_url(:cl => content_locale)
+      if !request.xhr?
+        redirect_to edit_admin_article_url(:cl => content_locale)
+      else
+        render :text => ""
+      end
     else
       set_categories
       flash.now[:error] = t(:'adva.articles.flash.update.failure')
