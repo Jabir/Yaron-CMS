@@ -66,7 +66,7 @@ en:
       general_settings: General settings
       history: History
       import: Import
-      install: YP-CMS installation
+      install: Yaron-CMS installation
       issues: Issues
       login: Login
       logout: Logout
@@ -192,7 +192,7 @@ en:
         host: Host
       install:
         success_fully_created: You have successfully created your site. Enjoy!
-        welcome_to_installation: "Welcome to YP-CMS' less-than-one-minute installation process. Just fill in the information below and you're done."
+        welcome_to_installation: "Welcome to Yaron-CMS' less-than-one-minute installation process. Just fill in the information below and you're done."
         can_always_change_settings: Don't worry. You can always change these settings later.
         section_default: Home
       no_sites: You currently do not have any sites created.
