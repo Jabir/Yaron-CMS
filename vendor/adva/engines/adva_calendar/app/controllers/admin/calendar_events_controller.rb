@@ -28,6 +28,8 @@ class Admin::CalendarEventsController < Admin::BaseController
   end
 
   def create
+    params[:calendar_event] = update_extjs_params(params[:calendar_event])
+    params[:calendar_event][:user_id] = session[:uid] unless params[:calendar_event].include?(:user_id) && params[:calendar_event][:user_id].to_s != ""
     @event = @calendar.events.new(params[:calendar_event])
     if @event.save
       trigger_events @event
@@ -44,6 +46,7 @@ class Admin::CalendarEventsController < Admin::BaseController
   end
 
   def update
+    params[:calendar_event] = update_extjs_params(params[:calendar_event])
     @event.attributes = params[:calendar_event]
     if @event.save
       trigger_events @event
@@ -113,6 +116,27 @@ class Admin::CalendarEventsController < Admin::BaseController
     def default_calendar_event_param(key, value)
       params[:calendar_event] ||= {}
       params[:calendar_event][key] ||= value
+    end
+    
+    def update_extjs_params(params)
+      logger.info params.to_yaml
+      params = update_extjs_date(params, :start_date) if params.include?(:start_date)
+      params = update_extjs_date(params, :end_date) if params.include?(:end_date)
+      logger.info params.to_yaml
+      return params
+    end
+    
+    def update_extjs_date(params, key)
+      params[(key.to_s + "(1i)").to_sym] = params[key].year.to_s
+      params[(key.to_s + "(2i)").to_sym] = params[key].month.to_s
+      params[(key.to_s + "(3i)").to_sym] = params[key].day.to_s
+      params[(key.to_s + "(4i)").to_sym] = params[key].hour.to_s
+      params[(key.to_s + "(5i)").to_sym] = params[key].min.to_s
+      params[(key.to_s + "(6i)").to_sym] = params[key].sec.to_s
+
+      params.delete(key)
+      
+      return params
     end
 end
 

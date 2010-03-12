@@ -662,11 +662,7 @@
         ),
         listeners: {
         	click: function(dataView,idx, node, e) {
-        	  //
-        	  // Eventuele parameters als GET meegeven aan insertImage...
-        	  //
-        	  //"http://www.google.nl/logos/olympics10-shorttrack-hp.png?width=50&height=50&border=1&align=left"
-        	  select_insert_image_instance.insertImage(node.getAttribute("url"));
+        	  select_insert_image_instance.insertImage(node);
         	  select_window.close();
         	},
         	scope: this

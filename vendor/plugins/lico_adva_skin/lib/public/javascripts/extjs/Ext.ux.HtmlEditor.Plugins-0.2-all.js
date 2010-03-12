@@ -15,8 +15,17 @@ Ext.ux.form.HtmlEditor.Image = Ext.extend(Ext.util.Observable, {
     selectImage: function() {
       select_insert_image(this);
     },
-    insertImage: function(img) {
-      this.hash = img;
+    insertImage: function(node) {
+  	  var url = node.getAttribute("url");
+  	  
+  	  $.each(
+  	    $(node).find("span.movie"),
+  	    function(ix, item) {
+  	      url = "/movie_thumb/" + node.id.replace(/asset_/,"") + "?movie="+node.getElementsByTagName("img")[0].getAttribute('src') + "&width=300&height=300&class=movie";
+  	    }
+  	  );
+
+      this.hash = url;
       this.cmp.execCmd('InsertImage', this.hash);
 
       var textarea = document.getElementById(this.cmp.getId());

@@ -22,6 +22,7 @@
           order: 'asc'
         }
       },
+      add_record_path: '<%= admin_playlists_path(@site) %>',
       grid: {
         empty_details: 'Selecteer een playlist voor details.'
       },
@@ -32,25 +33,33 @@
       },
       edit: {
         url: '<%= admin_playlist_path(@site, '!recordid!') %>'
+      },
+      destroy: {
+        url: '<%= admin_playlist_path(@site, '!recordid!') %>',
+        message: "Wil je de geselecteerde playlist echt verwijderen?<br /><br />Het verwijderen kan niet ongedaan gemaakt worden."
       }
     });
   }
   
   function edit_playlist_form_values (parameters) {
-    var container = document.getElementById("asset-drop-zone");
-    var divs = container.getElementsByTagName("div");
-    parameters["assets[]"] = [];
-    for (var c=0; c<divs.length; c++) {
-      if (/thumb-wrap/.test(divs[c].className) && /asset_/.test(divs[c].id)) {
-        var assetid = divs[c].id.replace(/\D/g,"");
-        parameters["assets[]"][parameters["assets[]"].length] = assetid;
-	    }
+    parameters["playlist[title]"] = document.getElementById('record_title').value;
+    if (document.getElementById('asset-drop-zone')) {
+      var container = document.getElementById("asset-drop-zone");
+      var divs = container.getElementsByTagName("div");
+      parameters["assets[]"] = [];
+      for (var c=0; c<divs.length; c++) {
+        if (/thumb-wrap/.test(divs[c].className) && /asset_/.test(divs[c].id)) {
+          var assetid = divs[c].id.replace(/\D/g,"");
+          parameters["assets[]"][parameters["assets[]"].length] = assetid;
+  	    }
+      }
     }
 
   	return parameters;
   }
   
   function edit_playlist_form (record) {
+    var title = xmlvalue(record,"title");
     item_assets = [];
     $.each(
       record.getElementsByTagName("asset"),
@@ -66,62 +75,84 @@
     );
 
   	return [{
-      border: false,
-      bodyStyle: 'padding: 0px;',
-      layout: 'anchor',
-      items: [{
+	    xtype: 'tabpanel',
+	    plain: true,
+	    activeTab: 0,
+	    height: 195,
+	    defaults: {
+	        bodyStyle: 'padding:10px'
+	    },
+	    items: [{
+        cls: 'x-plain',
+        title: 'Algemeen',
+  	    layout: 'form',
         border: false,
-        baseCls: 'x-plain',
-        bodyStyle: 'padding: 5px',
-        html: t['assets']['drop-zone'],
-        height: 25
-      },{
-        id: 'asset-drop-zone',
-        border: false,
-        baseCls: 'x-plain',
-        bodyStyle: 'padding: 5px',
-        height: 120,
-        anchor: '100%, -25',
+        items: [{
+          xtype: 'textfield',
+          fieldLabel: 'Titel',
+          id: 'record_title',
+          name: 'title',
+          anchor: '95%',
+          value: title
+        }]
+	    },{
+        title: 'Assets',
+        bodyStyle: 'padding: 0px;',
+        layout: 'anchor',
+        items: [{
+          border: false,
+          baseCls: 'x-plain',
+          bodyStyle: 'padding: 5px',
+          html: t['assets']['drop-zone'],
+          height: 25
+        },{
+          id: 'asset-drop-zone',
+          border: false,
+          baseCls: 'x-plain',
+          bodyStyle: 'padding: 5px',
+          height: 120,
+          anchor: '100%, -25',
 
-        animate:true,
-        enableDD:true,
-        containerScroll: true,
-        ddGroup: 'organizerDD',
+          animate:true,
+          enableDD:true,
+          containerScroll: true,
+          ddGroup: 'organizerDD',
 
-        items: item_assets,
+          items: item_assets,
 
-        listeners: {
-          afterrender: function(el) {
-            new Ext.dd.DropTarget(el.body.dom, {
-          		ddGroup     : 'organizerDD',
-          		notifyDrop  : function(ddSource, e, data){
-          		  var target = document.getElementById("asset-drop-zone").getElementsByTagName("div")[1];
-          		  var current_assets = target.getElementsByTagName("div");
+          listeners: {
+            afterrender: function(el) {
+              new Ext.dd.DropTarget(el.body.dom, {
+            		ddGroup     : 'organizerDD',
+            		notifyDrop  : function(ddSource, e, data){
+            		  var target = document.getElementById("asset-drop-zone").getElementsByTagName("div")[1];
+            		  var current_assets = target.getElementsByTagName("div");
           		  
-          		  var items = data.ddel.getElementsByTagName("div");
-          		  for (var i=0; i<items.length; i++) {
-          		    var item = items[i];
-          		    if (item.className == "thumb") {
-          		      item = item.parentNode;
-          		      var bestaat_al = false;
-              		  for (var c=0; c<current_assets.length; c++) {
-              		    if (/thumb-wrap/.test(current_assets[c].className) && current_assets[c].id == item.id) {
-              		      bestaat_al = true;
-              		    }
-              		  }
-                    if (!bestaat_al) {
-                      var div = target.appendChild(document.createElement("div"));
-                      div.innerHTML = item.innerHTML + '<div class="toolbox"><img src="/stylesheets/extjs/fam/delete.gif" title="Verwijderen" onclick="asset_delete(this);" />';
-                      div.id = item.id;
-                      div.className = item.className;
-                    }
-          		    }
-          		  }
-          			return(true);
-          		}
-          	});
+            		  var items = data.ddel.getElementsByTagName("div");
+            		  for (var i=0; i<items.length; i++) {
+            		    var item = items[i];
+            		    if (/thumb_for/.test(item.className)) {
+            		      item = item.parentNode;
+            		      var bestaat_al = false;
+                		  for (var c=0; c<current_assets.length; c++) {
+                		    if (/thumb-wrap/.test(current_assets[c].className) && current_assets[c].id == item.id) {
+                		      bestaat_al = true;
+                		    }
+                		  }
+                      if (!bestaat_al) {
+                        var div = target.appendChild(document.createElement("div"));
+                        div.innerHTML = item.innerHTML + '<div class="toolbox"><img src="/stylesheets/extjs/fam/delete.gif" title="Verwijderen" onclick="asset_delete(this);" />';
+                        div.id = item.id;
+                        div.className = item.className;
+                      }
+            		    }
+            		  }
+            			return(true);
+            		}
+            	});
+            }
           }
-        }
+        }]
       }]
     }];
   }

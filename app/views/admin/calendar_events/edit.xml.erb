@@ -8,7 +8,7 @@
 		<end_date><%= @event.end_date.strftime("%Y-%m-%d %H:%M:%S") %></end_date>
 		<all_day><%= @event.all_day %></all_day>
 		<author><%= h @event.user_id%></author>
-		<body><%= @event.body %></body>
+		<body><%= h(@event.body) %></body>
 		<date><%= @event.updated_at.strftime("%Y-%m-%d %H:%M:%S") %></date>
 		<draft><%= @event.draft? ? "1" : "0" %></draft>
 		

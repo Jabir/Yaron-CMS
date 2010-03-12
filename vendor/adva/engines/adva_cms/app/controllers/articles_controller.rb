@@ -16,7 +16,7 @@ class ArticlesController < BaseController
 
   authenticates_anonymous_user
   acts_as_commentable
-
+  
   def index
     respond_to do |format|
       format.html { render :template => "#{@section.type.tableize}/articles/index" }
@@ -27,6 +27,11 @@ class ArticlesController < BaseController
     respond_to do |format|
       format.html { render :template => "#{@section.type.tableize}/articles/show" }
     end
+  end
+  
+  def movie_thumb
+    a = Asset.find(params[:asset_id])
+    send_file File.join(RAILS_ROOT, "public", a.base_url(:medium)), :type => 'image/jpeg', :disposition => 'inline'
   end
 
   protected

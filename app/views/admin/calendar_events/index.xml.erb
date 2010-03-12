@@ -7,8 +7,8 @@
 			<title><%= h calendar_event.title %></title>
 			<host><%= h calendar_event.host %></host>
 			<location><%=h calendar_event.location %></location>
-			<start_date><%= calendar_event.start_date.strftime("%Y-%m-%d %H:%M:%S") %></start_date>
-			<end_date><%= calendar_event.end_date.strftime("%Y-%m-%d %H:%M:%S") %></end_date>
+			<start_date><%= calendar_event.start_date.strftime("%Y-%m-%d %H:%M") %></start_date>
+			<end_date><%= calendar_event.end_date.strftime("%Y-%m-%d %H:%M") %></end_date>
 			<all_day><%= calendar_event.all_day %></all_day>
 			<draft><%= calendar_event.draft? ? "1" : "0" %></draft>
 			<created_at><%= calendar_event.created_at.strftime("%Y/%m/%d") %></created_at>

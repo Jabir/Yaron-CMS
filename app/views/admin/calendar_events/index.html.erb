@@ -22,20 +22,7 @@
       function (index,item) {
         var add_tab = true;
         
-        add_tab = !(/right/.test(item.id));
-        // alleen tab new
-        //         if (/right/.test(item.id)) {
-        //           var target_index = item.id.replace(/^right_/,"");
-        //  $("#page #main_menu .actions > li ").each(function(index, li) {
-        //    if (index == target_index) {
-        //      if (/articles\/new/.test(li.getElementsByTagName("A")[0].href)) {
-        //        add_tab = false;
-        //      }
-        //    }
-        //  });
-        // }
-					
-				if (add_tab) {
+				if (!(/right/.test(item.id))) {
           new_menu[new_menu.length] = item;
         }
       }
@@ -227,12 +214,14 @@
 		if (document.getElementById('body')) {
 			parameters["calendar_event[body]"] = document.getElementById('body').value;
 		}
-		if (document.getElementById('user_id').value!="") {
+		if (document.getElementById('user_id') && document.getElementById('user_id').value!="") {
 			parameters["calendar_event[user_id]"] = document.getElementById('user_id').value;
 		}
 		
-		parameters["calendar_event[permalink]"] = document.getElementById('permalink').value;
-		parameters["calendar_event[tag_list]"] = document.getElementById('tag_list').value;
+		if (document.getElementById('permalink')) {
+		  parameters["calendar_event[permalink]"] = document.getElementById('permalink').value;
+		  parameters["calendar_event[tag_list]"] = document.getElementById('tag_list').value;
+	  }
 
 		parameters["save_revision"] = "Save";
 		parameters["cl"] = "en";
@@ -302,7 +291,7 @@
 						id: 'start_date',
 						name: 'start_date', 
 						dateFormat: "d-m-Y",
-						timeFormat: "h:i",
+						timeFormat: "H:i",
 						value: start_date//xmlvalue(record,"start_date").replace(/(\d*)\:(\d*) (\d*)\-(\d*)\-(\d*)/,"$5-$4-$3 $1:$2:00")
 					},{
 						xtype: 'xdatetime',
@@ -310,7 +299,7 @@
 						id: 'end_date',
 						name: 'end_date',
 						dateFormat: "d-m-Y",
-						timeFormat: "h:i",
+						timeFormat: "H:i",
 						value: end_date//xmlvalue(record,"end_date").replace(/(\d*)\:(\d*) (\d*)\-(\d*)\-(\d*)/,"$5-$4-$3 $1:$2:00")
 					},{
 						xtype: 'combo',
@@ -327,11 +316,10 @@
 				}]
 			},{
 				title: 'Body',
-				layout: 'form',
+				layout: 'fit',
 				items: [{
-					fieldLabel: 'Body',
 					xtype: 'htmleditor',
-					height: 175,
+					height: 138,
 					name: 'body',
 					id: 'body',
 					value: body

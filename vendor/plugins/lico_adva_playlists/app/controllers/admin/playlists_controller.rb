@@ -12,10 +12,21 @@ class Admin::PlaylistsController < Admin::BaseController
   def edit
     @playlist = Playlist.find(params[:id])
   end
+  
+  def create
+    params[:playlist][:site_id] = params[:site_id]
+    @playlist = Playlist.new(params[:playlist])
+    if @playlist.save
+      render :text => "OK"
+    else
+      render :action => 'new', :layout => false
+    end
+    
+  end
 
   def update
     @playlist = Playlist.find(params[:id])
-    
+    render :layout => false and return unless @playlist.update_attributes(params[:playlist])
     @playlist.playlist_assets.each do |pa|
       if !(params.include?(:assets)) || !(params[:assets].include?(pa.asset_id.to_s))
         pa.destroy
@@ -33,6 +44,12 @@ class Admin::PlaylistsController < Admin::BaseController
     end if params.include?(:assets)
 
     render :text => "CRUD_OK"
+  end
+  
+  def destroy
+    @playlist = Playlist.find(params[:id])
+    @playlist.destroy
+    render :text => ""
   end
   
   protected

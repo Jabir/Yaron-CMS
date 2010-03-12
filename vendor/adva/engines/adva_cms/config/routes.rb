@@ -11,6 +11,8 @@ ActionController::Routing::Routes.draw do |map|
   map.filter 'section_paths'
   map.filter 'pagination'
 
+  map.connect 'movie_thumb/:asset_id', :controller => 'articles', :action => 'movie_thumb'
+  
   map.page                             'pages/:section_id',
                                        :controller   => 'articles',
                                        :action       => "index",

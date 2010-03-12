@@ -1,0 +1,5 @@
+<% if @playlist && @playlist.errors && @playlist.errors.size > 0 %>
+  <%= error_messages_for(:playlist) %>
+<% else %>
+  CRUD_OK
+<% end %>

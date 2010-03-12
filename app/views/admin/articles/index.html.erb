@@ -22,22 +22,7 @@
     $.each(
       menu,
       function (index,item) {
-        var add_tab = true;
-        
-        add_tab = !(/right/.test(item.id));
-        // alleen tab new
-        //         if (/right/.test(item.id)) {
-        //           var target_index = item.id.replace(/^right_/,"");
-        //  $("#page #main_menu .actions > li ").each(function(index, li) {
-        //    if (index == target_index) {
-        //      if (/articles\/new/.test(li.getElementsByTagName("A")[0].href)) {
-        //        add_tab = false;
-        //      }
-        //    }
-        //  });
-        // }
-					
-				if (add_tab) {
+				if (!(/right/.test(item.id))) {
           new_menu[new_menu.length] = item;
         }
       }
@@ -863,11 +848,7 @@
         ),
         listeners: {
         	click: function(dataView,idx, node, e) {
-        	  //
-        	  // Eventuele parameters als GET meegeven aan insertImage...
-        	  //
-        	  //"http://www.google.nl/logos/olympics10-shorttrack-hp.png?width=50&height=50&border=1&align=left"
-        	  select_insert_image_instance.insertImage(node.getAttribute("url"));
+        	  select_insert_image_instance.insertImage(node);
         	  select_window.close();
         	},
         	scope: this

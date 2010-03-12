@@ -1888,9 +1888,9 @@ function grid_columns() {
             column.xtype = 'textfield';
             if (columndef.editor) {
               columndef.editor.xtype = 'xdatetime';
-              columndef.editor.timeFormat = 'H:i:s';
+              columndef.editor.timeFormat = 'H:i';
               columndef.editor.timeConfig = {
-                altFormats:'H:i:s',
+                altFormats:'H:i',
                 allowBlank:true    
               };
               columndef.editor.dateFormat = 'd.n.Y';
@@ -2028,9 +2028,14 @@ function form_items(record) {
 //   return 420;
 // }
 function xmlvalue(element, value) {
-    if (element.getElementsByTagName(value).length > 0 && element.getElementsByTagName(value)[0].childNodes.length > 0) {
-        return element.getElementsByTagName(value)[0].firstChild.nodeValue;
+  if (element.getElementsByTagName(value).length > 0 && element.getElementsByTagName(value)[0].childNodes.length > 0) {
+    var target = element.getElementsByTagName(value)[0];
+    var data = "";
+    for (var c=0; c<target.childNodes.length; c++) {
+      data += target.childNodes[c].nodeValue;
     }
+    return data;
+  }
 }
 
 //

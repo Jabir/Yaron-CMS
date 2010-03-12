@@ -19,6 +19,8 @@ class BaseController < ApplicationController
     end
 
     def set_section(type = nil)
+      return if params[:action] == 'movie_thumb'
+
       if @site
         @section = params[:section_id].present? ? @site.sections.find(params[:section_id]) : @site.sections.root
       end
