@@ -1,0 +1,232 @@
+<% content_for :sidebar do end %>
+<script type="text/javascript" charset="utf-8">
+function extjs_body_items() {
+	return init_lico_adva_crud({
+		columns: [{
+			label: 'Auteur',
+			name: 'author',
+			type: 'string'
+		},{
+			label: 'Datum',
+			name: 'updated_at',
+			type: 'string'
+		},{
+			label: 'Commentaar op',
+			name: 'comment_for',
+			type: 'string',
+		},{
+			label: 'Goedgekeurd',
+			name: 'active',
+			type: 'boolean'
+		}],
+		store: {
+			url: '<%= url_for admin_comments_path %>.xml',
+			sort: {
+			  by: 'updated_at',
+				order: 'desc'
+			}
+		},
+		grid: {
+      empty_details: 'Selecteer een commentaar voor details.'
+		},
+		show: {
+			url: '<%= edit_admin_comment_path('!recordid!') %>',
+			custom_form: edit_comment_form,
+			custom_form_values: edit_comment_form_values
+		},
+		edit: {
+			url: '<%= admin_comment_path('!recordid!') %>',
+			custom_actions: function(doc) {
+				var active = xmlvalue(doc,"active");
+				buttons = [];
+				if (active=="1") {
+					buttons[buttons.length] = {
+						text: 'Goedkeuring intrekken',
+						iconCls: 'silk-delete',
+						handler: function(btn, ev) {
+							if (grid.getSelectionModel().hasSelection()) {
+								var cell = grid.getSelectionModel().getSelected();
+								Ext.Msg.show({
+									id: 'publish-confirm',
+									title: 'Goedkeuring intrekken',
+									msg: 'Weet je zeker dat je de goedkeuring van dit commentaar wilt intrekken?',
+									buttons: {
+										ok: 'Intrekken',
+										cancel: 'Annuleren'
+									},
+									icon: Ext.MessageBox.QUESTION,
+									fn: function(btn) {
+										if (btn == "ok") {
+											var mask = new Ext.LoadMask(Ext.getBody(), {
+												msg: t['loader_text']
+											});
+											mask.show();
+              				$.ajax({
+              					url: xmlvalue(selected_record,"unapprove_link"),
+              					cache: false,
+              					data: {
+              						authenticity_token: window._auth_token,
+                          _method: 'put',
+                          "comment[approved]": 0,
+													"site_id" : <%= @site.id %>,
+													"id" : xmlvalue(selected_record,"id"),
+              					},
+              					type: 'POST',
+              					success: function(html) {
+              						store.reload();
+              						mask.hide();
+              					}
+              				});
+              			}
+              		}
+              	});
+              }
+            },
+            scope: this
+          }
+        } else {
+					buttons[buttons.length] = {
+						text: 'Goedkeuren',
+						iconCls: 'silk-accept',
+						handler: function(btn, ev) {
+							if (grid.getSelectionModel().hasSelection()) {
+								var cell = grid.getSelectionModel().getSelected();
+								Ext.Msg.show({
+									id: 'publish-confirm',
+									title: 'Goedkeuren',
+									msg: 'Weet je zeker dat je dit commentaar wilt goedkeuren?',
+									buttons: {
+										ok: 'Goedkeuren',
+										cancel: 'Annuleren'
+									},
+									icon: Ext.MessageBox.QUESTION,
+									fn: function(btn) {
+										if (btn == "ok") {
+											var mask = new Ext.LoadMask(Ext.getBody(), {
+												msg: t['loader_text']
+											});
+											mask.show();
+              				$.ajax({
+              					url: xmlvalue(selected_record,"approve_link"),
+              					cache: false,
+              					data: {
+              						authenticity_token: window._auth_token,
+                          _method: 'put',
+                          "comment[approved]": 1,
+													"site_id" : <%= @site.id %>,
+													"id" : xmlvalue(selected_record,"id"),
+              					},
+              					type: 'POST',
+              					success: function(html) {
+              						store.reload();
+              						mask.hide();
+              					}
+              				});
+              			}
+              		}
+              	});
+              }
+            },
+            scope: this
+          }
+        }
+        return buttons;
+      }
+    },
+		destroy: {
+			url: '<%= admin_comment_path(@site, '!recordid!') %>',
+      message: 'Weet je zeker dat je dit commentaar wilt verwijderen?'
+		}
+	});
+}
+
+function edit_comment_form_values (parameters) {
+  parameters["comment[body]"] = document.getElementById('record_body').value;
+	return parameters;
+}
+
+function edit_comment_form (record) {
+  var body = xmlvalue(record,"body");
+
+  return [{
+    layout: 'fit',
+    height: 170,
+    items: {
+        xtype: 'textarea',
+        id: 'record_body',
+        name: 'body',
+        value: body
+    }
+  }];
+
+  // var name = xmlvalue(record,"name");
+  // var author = xmlvalue(record,"author");
+  // var version = xmlvalue(record,"version");
+  // var homepage = xmlvalue(record,"homepage");
+  // var summary = xmlvalue(record,"summary");
+  // selected_record_title = name;
+  // 
+  // return [{
+  //     xtype: 'tabpanel',
+  //     plain: true,
+  //     activeTab: 0,
+  //     defaults: {
+  //       bodyStyle: 'padding:10px'
+  //  },
+  //  items: [{
+  //    title: 'Thema',
+  //    layout: 'column',
+  //    border: false,
+  //    items: [{
+  //      columnWidth: .5,
+  //      layout: 'form',
+  //      border: false,
+  //      items: [{
+  //        xtype: 'textfield',
+  //        fieldLabel: 'Naam',
+  //        id: 'name',
+  //        name: 'name',
+  //        value: name
+  //      },{
+  //        xtype: 'combo',
+  //        fieldLabel: 'Gewijzigd door',
+  //        name: 'author',
+  //        value: author,
+  //        store: author_store,
+  //        valueField: 'author',
+  //        displayField: 'author',
+  //        mode: 'local',
+  //        hiddenName: 'author',
+  //        //hiddenId: 'author_id'
+  //      },{
+  //        xtype: 'textfield',
+  //        fieldLabel: 'Versie',
+  //        id: 'version',
+  //        name: 'version',
+  //        value: version
+  //      }]
+  //    },{
+  //      columnWidth: .5,
+  //      layout: 'form',
+  //      border: false,
+  //      items: [{
+  //        xtype: 'textfield',
+  //        fieldLabel: 'homepage',
+  //        width: '230',
+  //        id: 'homepage',
+  //        name: 'homepage',
+  //        value: homepage
+  //      },{
+  //        xtype: 'textarea',
+  //        fieldLabel: 'Summary',
+  //        width: '230',
+  //        id: 'summary',
+  //        name: 'summary',
+  //        value: summary
+  //      }]
+  //    }]
+  //  }]
+  // }];
+}
+  
+</script>

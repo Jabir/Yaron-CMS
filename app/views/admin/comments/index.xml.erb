@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<results><%= @comments.length.to_s %></results>
+	<% @comments.each do |comment| %>
+		<record>
+			<id><%= comment.id.to_s %></id>
+			<author><%= h comment.author_name.to_s + " (" + comment.author_email.to_s + ")"%></author>
+			<updated_at><%= comment.created_at.strftime("%H:%M %d-%m-%Y")%></updated_at>
+			<comment_for><%= h comment.commentable.type.to_s + " " + comment.commentable.title.to_s %></comment_for>
+			<active><%= comment.approved.to_s %></active>
+		</record>
+	<% end %>
+</dataset>

@@ -213,6 +213,7 @@
       parameters["article[author_id]"] = document.getElementById('record_author_id').value;
     }
     parameters["article[updated_at]"] = xmlvalue(selected_record,"date");
+    parameters["article[published_at]"] = document.getElementById('record_published_at').value;
     parameters["article[excerpt]"] = document.getElementById('record_excerpt').value;
     if (document.getElementById('record_body')) {
       parameters["article[body]"] = document.getElementById('record_body').value;
@@ -356,6 +357,7 @@
   function edit_article_form (record) {
     var title = xmlvalue(record,"title");
     var date = xmlvalue(record,"date");
+    var published_at = xmlvalue(record,"published_at");
     var author = xmlvalue(record,"author");
     var category = xmlvalue(record,"category");
     var excerpt = xmlvalue(record,"excerpt");
@@ -438,6 +440,15 @@
           mode: 'local',
           hiddenName: 'record_author_id',
           hiddenId: 'record_author_id'
+        },{
+					xtype: 'xdatetime',
+					dateFormat: "d-m-Y",
+					timeFormat: "H:i",
+          fieldLabel: 'Publicatiedatum (UTC)',
+          id: 'record_published_at',
+          name: 'published_at',
+          anchor: '95%',
+          value: published_at
         }]
   	  }]
   	},{

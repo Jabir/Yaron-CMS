@@ -6,7 +6,7 @@
 			<id><%= photo.id.to_s %></id>
 			<title><%= h photo.title %></title>
 			<author><%= photo.author %></author>
-			<comments><%#= photo.comments.present : t(:"adva.common.none") %></comments>
+      <draft><%= photo.draft? ? "1" : "0" %></draft>
 			<published><%= photo.published_at %></published>
 			<data_file_name><%= photo.data_file_name %></data_file_name>
 		</record>

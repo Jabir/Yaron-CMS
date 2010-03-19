@@ -1,42 +1,10 @@
 <script type="text/javascript" charset="utf-8">
-	//
-	// Voor artikelen specifieke combo-data
-	//
-	var author_store;
-
-	function load_custom_stores () {
-		var author_store_data = new Array();
-		<% User.find(:all).each do |user| %>
-			author_store_data[author_store_data.length] = [<%= user.id.to_s %>, "<%= h user.name.gsub(/\"/,"\\") %>"];
-		<% end %>
-
-		author_store = new Ext.data.ArrayStore({
-			fields: ['author_id', 'name'],
-			data: author_store_data
-		});
-	}
-	
 	function modify_main_menu(menu) {
 		var new_menu = [];
     $.each(
       menu,
       function (index,item) {
-        var add_tab = true;
-        
-        add_tab = !(/right/.test(item.id));
-        // alleen tab new
-        //         if (/right/.test(item.id)) {
-        //           var target_index = item.id.replace(/^right_/,"");
-        //  $("#page #main_menu .actions > li ").each(function(index, li) {
-        //    if (index == target_index) {
-        //      if (/articles\/new/.test(li.getElementsByTagName("A")[0].href)) {
-        //        add_tab = false;
-        //      }
-        //    }
-        //  });
-        // }
-					
-				if (add_tab) {
+        if (!(/right/.test(item.id))) {
           new_menu[new_menu.length] = item;
         }
       }
@@ -44,12 +12,106 @@
     return new_menu;
   }
   
-  
-  //
-  // Init CRUD
-  //
+  var import_window = false;
+  var import_form = false;
+	function extjs_toolbar_items () {
+    return [{
+        text: 'Toevoegen',
+        iconCls: 'silk-add',
+        handler: function(btn, ev) {
+          var import_form = new Ext.FormPanel({
+            frame: false,
+            labelWidth: 110,
+            bodyStyle: 'padding:5px 10px 0;',
+            fileUpload: true,
+            errorReader: new Ext.data.CrudReader(),
+            reader: new Ext.data.CrudReader(),
+            items: [{
+              xtype: 'textfield',
+              fieldLabel: 'Titel',
+              name: 'photo[title]'
+            },{
+              xtype: 'fileuploadfield',
+              id: 'form-file',
+              emptyText: 'Selecteer een foto',
+              fieldLabel: 'Foto',
+              name: 'photo[data]'
+            }],
+            buttons: [{
+              text: 'Annuleren',
+              iconCls: 'silk-cancel',
+        			handler: function(btn, ev) {
+                import_window.destroy();
+              },
+              scope: this
+            },{
+              text:'Importeren',
+              iconCls: 'silk-add',
+        			handler: function(btn, ev) {
+                if(import_form.getForm().isValid()){
+                  import_form.getForm().submit({
+                      url: '<%= admin_photos_path(@site.id, @section) %>',
+                      waitMsg: 'Bezig met toevoegen...',
+                      params: {
+                        authenticity_token: window._auth_token
+                      },
+                      success: function(fp, o){
+                        if (__last_xhr_result=="OK") {
+                          store.reload();
+                          import_window.destroy();
+                          generic_loader.hide();
+                        } else {
+                          import_window.show();
+                          generic_loader.hide();
+                          Ext.MessageBox.show({
+                            title: 'Foto toevoegen',
+                            msg: __last_xhr_result,
+                            buttons: Ext.MessageBox.OK,
+                            icon: Ext.MessageBox.ERROR
+                          });
+                        }
+                      },
+                      failure: function(fp, o) {
+                        if (__last_xhr_result=="OK") {
+                          store.reload();
+                          import_window.destroy();
+                          generic_loader.hide();
+                        } else {
+                          import_window.show();
+                          generic_loader.hide();
+                          Ext.MessageBox.show({
+                            title: 'Foto toevoegen',
+                            msg: __last_xhr_result,
+                            buttons: Ext.MessageBox.OK,
+                            icon: Ext.MessageBox.ERROR
+                          });
+                        }
+                      }
+                  });
+                }
+              },
+            }]
+          });
+          
+          import_window = new Ext.Window({
+            layout: 'fit',
+            width: 500,
+            title: 'Foto toevoegen',
+            height: 133,
+            modal: true,
+            shadow: true,
+            plain: true,
+            border: false,
+            closeAction: 'close',
+            items: import_form
+          });
+          import_window.show(this);
+        },
+        scope: this
+    }];
+	}
+	
 	function extjs_body_items() {
-		load_custom_stores();
 		return init_lico_adva_crud({
 			columns: [{
 				label: 'titel',
@@ -57,21 +119,10 @@
 				type: 'string',
 				submit_value: 'photo[title]'
 			},{
-				label: 'Redacteur',
-				name: 'author',
-				type: 'combo',
-				submit_value: 'photo[author_id]',
-				combo: {
-					value: 'author_id',
-					label: 'name',
-					store: author_store
-				}
-			},{
-				label: 'published',
-				name: 'published',
-				type: 'string',
+        label: 'Concept',
+        name: 'draft',
+        type: 'boolean'
 			}],
-      add_record_path: '<%= admin_photos_path(@site.id, @section) %>',
       store: {
         url: '<%= url_for admin_photos_path(@site.id, @section) %>.xml',
         sort: {
@@ -80,7 +131,7 @@
         }
       },
       grid: {
-        //empty_details: t['board']['selection_empty']
+        empty_details: 'Selecteer een afbeelding voor details'
       },
       show: {
         url: '<%= edit_admin_photo_path(@site, @section, '!recordid!') %>',
@@ -88,75 +139,188 @@
         custom_form_values: edit_photo_form_values
       },
       edit: {
-        url: '<%= admin_photo_path(@site, @section, '!recordid!') %>'
+        url: '<%= admin_photo_path(@site, @section, '!recordid!') %>',
+        custom_actions: function(doc) {
+          var id = xmlvalue(doc,"id");
+          var draft = xmlvalue(doc,"draft");
+          if (draft=="1") {
+            return [{
+                text: 'Publiceren',
+                iconCls: 'silk-accept',
+                handler: function(btn, ev) {
+                    if (grid.getSelectionModel().hasSelection()) {
+                        var cell = grid.getSelectionModel().getSelected();
+
+                      	Ext.Msg.show({
+                      		id: 'publish-confirm',
+                      		title: 'Foto publiceren',
+                      		msg: 'Weet je zeker dat je deze foto wilt publiceren?',
+                      		buttons: {
+                      			ok: 'Publiceren',
+                      			cancel: t['cancel_text']
+                      		},
+                      		icon: Ext.MessageBox.QUESTION,
+                      		fn: function(btn) {
+                      			if (btn == "ok") {
+                      				var mask = new Ext.LoadMask(Ext.getBody(), {
+                      					msg: t['loader_text']
+                      				});
+                      				mask.show();
+
+                              d = new Date();
+                              
+                      				$.ajax({
+                      					url: crud_options.edit.url.replace(/!recordid!/, id),
+                      					cache: false,
+                      					data: {
+                      						authenticity_token: window._auth_token,
+                                  _method: 'put',
+                      						"photo[published_at]": d.getDate()+"-"+(d.getMonth()+1)+"-"+d.getFullYear(),
+                                  "photo[updated_at]": xmlvalue(selected_record,"date")
+                      					},
+                      					type: 'POST',
+                      					success: function(html) {
+                      						store.reload();
+                      						mask.hide();
+                      					}
+                      				});
+                      			}
+                      		}
+                      	});
+                    }
+                },
+                scope: this
+              }]
+          } else {
+            return [{
+                text: 'Publicatie intrekken',
+                iconCls: 'silk-delete',
+                handler: function(btn, ev) {
+                    if (grid.getSelectionModel().hasSelection()) {
+                        var cell = grid.getSelectionModel().getSelected();
+
+                      	Ext.Msg.show({
+                      		id: 'publish-confirm',
+                      		title: 'Publicatie intrekken',
+                      		msg: 'Weet je zeker dat je de publicatie van deze foto wilt intrekken?',
+                      		buttons: {
+                      			ok: 'Intrekken',
+                      			cancel: t['cancel_text']
+                      		},
+                      		icon: Ext.MessageBox.QUESTION,
+                      		fn: function(btn) {
+                      			if (btn == "ok") {
+                      				var mask = new Ext.LoadMask(Ext.getBody(), {
+                      					msg: t['loader_text']
+                      				});
+                      				mask.show();
+
+                              d = new Date();
+                              
+                      				$.ajax({
+                      					url: crud_options.edit.url.replace(/!recordid!/, id),
+                      					cache: false,
+                      					data: {
+                      						authenticity_token: window._auth_token,
+                                  _method: 'put',
+                      						"photo[published_at]": "",
+                                  "photo[updated_at]": xmlvalue(selected_record,"date")
+                      					},
+                      					type: 'POST',
+                      					success: function(html) {
+                      						store.reload();
+                      						mask.hide();
+                      					}
+                      				});
+                      			}
+                      		}
+                      	});
+                    }
+                },
+                scope: this
+              }]
+          }
+        }
       },
       destroy: {
         url: '<%= admin_photo_path(@site, @section, '!recordid!') %>',
-        //message: t['board']['delete_confirm']
+        message: 'Weet je zeker dat je deze afbeelding wilt verwijderen?'
       }
     });
   }
   
   function edit_photo_form_values (parameters) {
-		parameters["photo[title]"] = document.getElementById('title').value;
-		parameters["photo[author]"] = document.getElementById('author_id').value;
-		parameters["photo[comment_age]"] = document.getElementById('comment_age').value;
-		parameters["photo[tag_list]"] = document.getElementById('tag_list').value;
+    parameters["photo[title]"] = document.getElementById('record_title').value;
+    if (document.getElementById("sets_select")) {
+      var selected_sets = [""];
+      var items = document.getElementById("sets_select").getElementsByTagName("input");
+      for (var c=0; c<items.length; c++) {
+        if (items[c].checked) {
+          selected_sets[selected_sets.length] = items[c].id.replace(/set_/,"");
+        }
+      }
+    
+      parameters["photo[set_ids][]"] = selected_sets;
+    }
 
 		return parameters;
 	}
 
 	function edit_photo_form (record) {
-		var title = xmlvalue(record,"title");
-		var author = xmlvalue(record, "author");
-		var comment_age = xmlvalue(record, "comment_age");
-		var tag_list = xmlvalue(record, "tag_list");
-		selected_record_title = title;
+    var title = xmlvalue(record,"title");
 
-		return [{
-			xtype: 'tabpanel',
-			plain: true,
-			activeTab: 0,
-			defaults: {
-				bodyStyle: 'padding:10px'
-			},
-			items: [{
-				title: 'Photo',
-				layout: 'column',
-				border: false,
-				items: [{
-					columnWidth: .5,
-					layout: 'form',
-					border: false,
-					items: [{
-						xtype: 'textfield',
-						fieldLabel: 'titel',
-						id: 'title',
-						name: 'title',
-						value: title
-					},{
+    var sets_select = "";
+    var current_sets = record.getElementsByTagName("set");
+    <% @section.sets.each do |set| %>
+      var selected = false;
+      for (var c=0; c<current_sets.length; c++) {
+        if (xmlvalue(current_sets[c],"id") == "<%= set.id.to_s %>") {
+          selected = true;
+        }
+      }
+      sets_select += "<div><input " + (selected ? 'checked="checked" ':"") + "type='checkbox' name='set_<%= set.id.to_s %>' id='set_<%= set.id.to_s %>' /><label style='display: inline; padding-left: 1em;' for='set_<%= set.id.to_s %>'><%= h set.title %></label>";
+    <% end %>
 
-					},{
-						xtype: 'textfield',
-						fieldLabel: 'Tag list',
-						id: 'tag_list',
-						name: 'tag_list',
-						value: tag_list
-					},{
-						xtype: 'combo',
-						fieldLabel: 'Gewijzigd door',
-						name: 'author_id',
-						value: author,
-						store: author_store,
-						valueField: 'author_id',
-						displayField: 'name',
-						mode: 'local',
-						hiddenName: 'record_author_id',
-						hiddenId: 'record_author_id'
-					}]
-				}]
-			}]
-		}];
+  	return [{
+	    layout: 'column',
+	    border: false,
+	    items: [{
+        columnWidth: .5,
+        layout: 'form',
+        border: false,
+        items: [{
+          xtype: 'textfield',
+          fieldLabel: 'Titel',
+          id: 'record_title',
+          name: 'title',
+          anchor: '95%',
+          value: title
+        }]
+  	  }]
+  	},{
+	    xtype: 'tabpanel',
+	    plain: true,
+	    activeTab: 0,
+	    height: 195,
+	    defaults: {
+	        bodyStyle: 'padding:10px'
+	    },
+	    items: [{
+        cls: 'x-plain',
+        title: 'Foto',
+        layout: 'fit',
+        html: '<img src="'+xmlvalue(record,"thumb_url")+'" />'
+      },{
+        cls: 'x-plain',
+        title: 'Sets',
+        layout: 'fit',
+        items: {
+            id: 'sets_select',
+            border: false,
+            html: sets_select
+        }
+	    }]
+  	}];
 	}
 </script>
 <% content_for :sidebar do -%>

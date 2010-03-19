@@ -1,0 +1,13 @@
+<root>
+		<record>
+			<id><%= @comment.id.to_s %></id>
+			<author><%= h @comment.author_name.to_s + " (" + @comment.author_email.to_s + ")"%></author>
+			<updated_at><%= @comment.updated_at.strftime("%H:%M %d-%m-%Y")%></updated_at>
+			<article><%= h @comment.commentable.title.to_s %></article>
+			<active><%= @comment.approved.to_s %></active>
+			<body><%= h @comment.body.to_s %></body>
+
+			<unapprove_link><%= admin_comment_path(@comment) %></unapprove_link>
+			<approve_link><%= admin_comment_path(@comment) %></approve_link>
+		</record>
+</root>

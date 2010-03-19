@@ -4,22 +4,7 @@
     $.each(
       menu,
       function (index,item) {
-        var add_tab = true;
-        
-        add_tab = !(/right/.test(item.id));
-        // alleen tab new
-        //         if (/right/.test(item.id)) {
-        //           var target_index = item.id.replace(/^right_/,"");
-        //  $("#page #main_menu .actions > li ").each(function(index, li) {
-        //    if (index == target_index) {
-        //      if (/articles\/new/.test(li.getElementsByTagName("A")[0].href)) {
-        //        add_tab = false;
-        //      }
-        //    }
-        //  });
-        // }
-					
-				if (add_tab) {
+				if (!(/right/.test(item.id))) {
           new_menu[new_menu.length] = item;
         }
       }
@@ -48,7 +33,7 @@
         }
       },
       grid: {
-        //empty_details: t['board']['selection_empty']
+        empty_details: 'Selecteer een set voor details'
       },
       show: {
         url: '<%= edit_admin_set_path(@site, @section, '!recordid!') %>',
@@ -60,7 +45,7 @@
       },
       destroy: {
         url: '<%= admin_set_path(@site, @section, '!recordid!') %>',
-        //message: t['board']['delete_confirm']
+        message: 'Weet je zeker dat je deze set wilt verwijderen?'
       }
     });
   }

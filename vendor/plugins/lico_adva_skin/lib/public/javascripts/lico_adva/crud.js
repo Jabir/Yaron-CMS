@@ -1796,7 +1796,7 @@ function init_crud_grid() {
         loadMask: true,
         iconCls: 'silk-grid',
         plugins: [editor],
-        tbar: toolbar_items,
+        tbar: toolbar_items.length > 0 ? toolbar_items : null,
 
         view: new Ext.grid.GroupingView({
             forceFit: true
@@ -1828,7 +1828,7 @@ function init_crud_grid() {
         sm: new Ext.grid.RowSelectionModel({
             singleSelect: true
         }),
-        bodyStyle: "border-top: 0px",
+        bodyStyle: toolbar_items.length > 0 ? "border-top: 0px" : "",
         region: 'center'
     });
 

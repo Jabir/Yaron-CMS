@@ -27,14 +27,19 @@ class Admin::PhotosController < Admin::BaseController
 
   def create
     @photo = @section.photos.build(params[:photo])
-    @photo.set_content_type
-
+    begin
+      @photo.set_content_type
+    rescue
+    end
+    
     if @photo.save
-      flash[:notice] = t(:'adva.photos.flash.photo.create.success')
-      redirect_to edit_admin_photo_url(@site, @section, @photo)
+      render :text => "OK"
+      # flash[:notice] = t(:'adva.photos.flash.photo.create.success')
+      # redirect_to edit_admin_photo_url(@site, @section, @photo)
     else
-      flash[:error] = t(:'adva.photos.flash.photo.create.failure')
-      render :action => 'new'
+      render :text => t(:'adva.photos.flash.photo.create.failure')
+      # flash[:error] = t(:'adva.photos.flash.photo.create.failure')
+      # render :action => 'new'
     end
   end
 
@@ -63,7 +68,7 @@ class Admin::PhotosController < Admin::BaseController
     end
 
     def params_author
-      author = User.find(params[:photo][:author]) || current_user
+      author = params.include?(:photo) && params[:photo].include?(:author) ? User.find(params[:photo][:author]) || current_user : current_user
       set_photo_param(:author, author) or raise t(:'adva.photos.params.author')
     end
 

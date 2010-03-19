@@ -3,11 +3,20 @@
 		<id><%= @photo.id.to_s %></id>
 		<title><%= h @photo.title %></title>
 		<author><%= @photo.author.id if @photo.author %></author>
-		<comments><%#= photo.comments.present : t(:"adva.common.none") %></comments>
+    <draft><%= @photo.draft? ? "1" : "0" %></draft>
 		<published_at><%= @photo.published_at %></published_at>
 		<data_file_name><%= @photo.data_file_name %></data_file_name>
 		<comment_age><%= @photo.comment_age %></comment_age>
 		<tag_list><%= @photo.tag_list %></tag_list>
-		<set><%#= @photo.set_list %></set>
+    <thumb_url><%= @photo.base_url(:thumb) %></thumb_url>
+		<sets>
+		  <% @photo.sets.each do |set| %>
+		    <set>
+          <id><%= set.id.to_s %></id>
+          <title><%= h set.title %></title>
+		    </set>
+		  <% end %>
+		</sets>
+		
 	</record>
 </root>

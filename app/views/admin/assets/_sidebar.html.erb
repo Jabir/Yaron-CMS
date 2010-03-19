@@ -7,6 +7,7 @@
 
   var sidebar_assets;
   var assets_paging;
+  var asset_find_window;
   function sidebar_drag_view () {
     var sidebar_items = sidebar_drag_assets();
     var assets_paging = new Ext.PagingToolbar({
@@ -63,12 +64,92 @@
           });
         },
         scope: this
+      }, {
+        text: 'Filter',
+        iconCls: 'silk-find',
+        handler: function(btn, ev) {
+          if (!asset_find_window) {
+            asset_find_window = new Ext.Window({
+              layout:'fit',
+              title: 'Filter',
+              width: 350,
+              height: 150,
+              closeAction:'hide',
+              plain: true,
+              modal: true,
+              shadow: true,
+              border: false,
+
+              items: new Ext.FormPanel({
+                labelWidth: 75,
+                frame: true,
+                bodyStyle: 'padding:5px 5px 0',
+                width: 350,
+                defaults: {width: 230},
+                defaultType: 'textfield',
+                items: [{
+                  fieldLabel: 'Veld',
+                  xtype: "combo",
+      						hiddenName: 'asset_find_field',
+      						hiddenId: 'asset_find_field',
+          				triggerAction: 'all',
+          				forceSelection: true,
+                  mode: 'local',
+                  store: new Ext.data.ArrayStore({
+                    id: 0,
+                    fields: [
+                      'id',
+                      'text'
+                    ],
+                    data: [['title', 'Titel'], ['data_file_name', 'Bestandsnaam']]
+                  }),
+                  valueField: 'id',
+                  displayField: 'text',
+                  value: 'title'
+                },{
+                  fieldLabel: 'Bevat',
+                  name: 'find_value',
+                  id: 'asset_find_value'
+                }]
+              }),
+
+              buttons: [{
+                text: 'Annuleer',
+                iconCls: 'silk-delete',
+                handler: function() {
+                  asset_find_window.hide();
+                }
+              },{
+                text:'Filter',
+                iconCls: 'silk-find',
+                handler: function() {
+                  asset_find_window.hide();
+                  set_asset_query_phrase(document.getElementById('asset_find_value').value, document.getElementById('asset_find_field').value);
+                }
+              }]
+            });
+          }
+          asset_find_window.show();
+        },
+        scope: this
       }],
       bbar: assets_paging
 		}
   }
   var assets_data;
   var asset_edit_id;
+  function set_asset_query_phrase (phrase, keyword) {
+    if (!keyword) {
+      keyword = "data_file_name";
+    }
+    var filter = phrase ? "filters[][selected]=" + keyword + "&filters[][title][scope]=contains&filters[][title][query]=" + encodeURIComponent(phrase) + "&filters[][data_file_name][scope]=contains&filters[][data_file_name][query]=" + encodeURIComponent(phrase) + "" : "";
+    <% if only_movies %>
+      assets_data.proxy.setUrl('<%= url_for admin_assets_url(@site) %>.xml?only=movie&' + filter, true);
+    <% else %>
+      assets_data.proxy.setUrl('<%= url_for admin_assets_url(@site) %>.xml?' + filter, true);
+    <% end %>
+    assets_data.reload();
+  }
   function sidebar_drag_assets () {
     if (!sidebar_assets) {
       assets_data = new Ext.data.XmlStore({
