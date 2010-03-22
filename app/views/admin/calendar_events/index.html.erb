@@ -15,6 +15,7 @@
 			data: author_store_data
 		});
 	}
+	
   function modify_main_menu(menu) {
     var new_menu = [];
     $.each(
@@ -222,21 +223,27 @@
 		  parameters["calendar_event[permalink]"] = document.getElementById('permalink').value;
 		  parameters["calendar_event[tag_list]"] = document.getElementById('tag_list').value;
 	  }
+		parameters["calendar_event[filter]"] = document.getElementById('filter').value;
 
 		parameters["save_revision"] = "Save";
-		parameters["cl"] = "en";
+		//parameters["cl"] = "en";
 
   	return parameters;
   }
   
 	function edit_calendar_event_form (record) {
+		var author_store_data = new Array();
+		<% User.find(:all).each do |user| %>
+			author_store_data[author_store_data.length] = [<%= user.id.to_s %>, "<%= h user.name.gsub(/\"/,"\\") %>"];
+		<% end %>
+
 		var title = xmlvalue(record,"title");
 		var host = xmlvalue(record,"host");
 		var location = xmlvalue(record,"location");
 		var start_date = xmlvalue(record,"start_date");
 		var end_date = xmlvalue(record,"end_date");
 		var body = xmlvalue(record,"body");
-		var user_id = xmlvalue(record,"user_id");
+		var author = xmlvalue(record,"author");
 		selected_record_title = title;
 		
 		var options = record.getElementsByTagName("options")[0];
@@ -304,14 +311,14 @@
 					},{
 						xtype: 'combo',
 						fieldLabel: 'Gewijzigd door',
-						//name: 'user_id',
-						//value: user_id,
-						//store: author_store,
-						//valueField: 'user_id',
-						//displayField: 'name',
-						//mode: 'local',
-						//hiddenName: 'record_user_id',
-						//hiddenId: 'record_user_id'
+						name: 'name',
+						value: author,
+						store: author_store,
+						valueField: 'user_id',
+						displayField: 'name',
+						mode: 'local',
+						hiddenName: 'user_id',
+						hiddenId: 'user_id'
 					}],
 				}]
 			},{
@@ -327,28 +334,34 @@
 			},{
 				title: 'Opties',
 				layout: 'form',
-				defaults: {
-					width: 230
-				},
-				defaultType: 'textfield',
+				border: false,
 				items: [{
+					xtype: 'textfield',
 					fieldLabel: 'Permalink',
 					name: 'permalink',
 					id: 'permalink',
 					value: permalink
 				},{
+					xtype: 'textfield',
 					fieldLabel: 'Tag list',
 					name: 'tag_list',
 					id: 'tag_list',
 					value: tag_list
 				},{
+					xtype: 'combo',
 					fieldLabel: '<%= t(:'adva.labels.comment_filter') %>',
 					name: 'filter',
-					xtype: 'combo',
-					//triggerAction: 'all',
-					//forceSelection: true,
-					//transform:     'calendar_event_filter',
-					//lazyRender:     true
+					hiddenName: 'filter',
+					hiddenId: 'filter',
+					value: xmlvalue(record, "filter"),
+					mode: 'local',
+					valueField: 'item_id',
+					displayField: 'text',
+					triggerAction: 'all',
+					store: new Ext.data.ArrayStore({
+					  fields: ['item_id','text'],
+					  data: <%= filter_options.collect{|a| [a[1],a[0]]}.to_json().to_s %>
+					})
 				}]
 			}]
 		}];
