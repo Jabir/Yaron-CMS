@@ -440,15 +440,6 @@
           mode: 'local',
           hiddenName: 'record_author_id',
           hiddenId: 'record_author_id'
-        },{
-					xtype: 'xdatetime',
-					dateFormat: "d-m-Y",
-					timeFormat: "H:i",
-          fieldLabel: 'Publicatiedatum (UTC)',
-          id: 'record_published_at',
-          name: 'published_at',
-          anchor: '95%',
-          value: published_at
         }]
   	  }]
   	},{
@@ -552,34 +543,54 @@
             border: false,
             html: categories_select
         }
-	    },{
-        title: 'Opties',
-        layout: 'form',
-        defaults: {
-            width: 230
-        },
-        defaultType: 'textfield',
-        items: [{
-          fieldLabel: 'Permalink',
-          name: 'permalink',
-          value: '',
-          id: 'record_permalink',
-          value: permalink
-        },{
-          fieldLabel: 'Tag list',
-          name: 'tag_list',
-          id: 'record_tag_list',
-          value: tag_list
-        },{
-          xtype: 'checkbox',
-          fieldLabel: 'Vast bovenin',
-          id: 'fixed_top',
-          name: 'fixed_top',
-          anchor: '95%',
-          checked: fixed_top == "1",
-          mode: 'local'
-        }]
-	    },{
+			},{
+				title: 'Opties',
+				layout: 'column',
+				border: false,
+				items: [{
+					columnWidth: .5,
+					layout: 'form',
+					border: false,
+					items: [{
+						fieldLabel: 'Permalink',
+						name: 'permalink',
+						value: '',
+						id: 'record_permalink',
+						value: permalink,
+						xtype: 'textfield',
+						anchor: '95%'
+					},{
+						fieldLabel: 'Tag list',
+						name: 'tag_list',
+						id: 'record_tag_list',
+						value: tag_list,
+						xtype: 'textfield',
+						anchor: '95%'
+					},{
+						xtype: 'checkbox',
+						fieldLabel: 'Vast bovenin',
+						id: 'fixed_top',
+						name: 'fixed_top',
+						anchor: '95%',
+						checked: fixed_top == "1",
+						mode: 'local'
+					}]
+				},{
+					columnWidth: .5,
+					layout: 'form',
+					border: false,
+					items: [{
+						xtype: 'xdatetime',
+						dateFormat: "d-m-Y",
+						timeFormat: "H:i",
+						fieldLabel: 'Publicatiedatum (UTC)',
+						id: 'record_published_at',
+						name: 'published_at',
+						anchor: '95%',
+						value: published_at
+					}]
+				}]
+			},{
         title: 'Meta tags',
         layout: 'column',
         border: false,
