@@ -243,7 +243,7 @@
 		var start_date = xmlvalue(record,"start_date");
 		var end_date = xmlvalue(record,"end_date");
 		var body = xmlvalue(record,"body");
-		var author = xmlvalue(record,"author");
+		var user_id = xmlvalue(record,"user_id");
 		selected_record_title = title;
 		
 		var options = record.getElementsByTagName("options")[0];
@@ -312,7 +312,7 @@
 						xtype: 'combo',
 						fieldLabel: 'Gewijzigd door',
 						name: 'name',
-						value: author,
+						value: user_id,
 						store: author_store,
 						valueField: 'user_id',
 						displayField: 'name',

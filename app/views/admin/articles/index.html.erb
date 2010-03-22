@@ -213,7 +213,6 @@
       parameters["article[author_id]"] = document.getElementById('record_author_id').value;
     }
     parameters["article[updated_at]"] = xmlvalue(selected_record,"date");
-    parameters["article[published_at]"] = document.getElementById('record_published_at').value;
     parameters["article[excerpt]"] = document.getElementById('record_excerpt').value;
     if (document.getElementById('record_body')) {
       parameters["article[body]"] = document.getElementById('record_body').value;
@@ -221,6 +220,7 @@
     if (document.getElementById('record_permalink')) {
       parameters["article[permalink]"] = document.getElementById('record_permalink').value;
       parameters["article[tag_list]"] = document.getElementById('record_tag_list').value;
+      parameters["article[published_at]"] = document.getElementById('record_published_at').value;
     }
     if (document.getElementById('record_meta_keywords')) {
       parameters["article[meta_keywords]"] = document.getElementById('record_meta_keywords').value;
@@ -357,7 +357,6 @@
   function edit_article_form (record) {
     var title = xmlvalue(record,"title");
     var date = xmlvalue(record,"date");
-    var published_at = xmlvalue(record,"published_at");
     var author = xmlvalue(record,"author");
     var category = xmlvalue(record,"category");
     var excerpt = xmlvalue(record,"excerpt");
@@ -378,6 +377,7 @@
     var permalink = xmlvalue(options,"permalink");
     var tag_list = xmlvalue(options,"tag_list");
     var filter = xmlvalue(options,"filter");
+		var published_at = xmlvalue(options,"published_at");
     
     //
     // Vast variabele aanmaken met

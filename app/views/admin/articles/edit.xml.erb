@@ -5,7 +5,6 @@
     <draft><%= @article.draft? ? "1" : "0" %></draft>
     <fixed_top><%= @article.position < 0 ? "1" : "0" %></fixed_top>
     <date><%= @article.updated_at.strftime("%Y-%m-%d %H:%M:%S") %></date>
-    <published_at><%= @article.published_at.nil? ? "" : @article.published_at.utc.strftime("%Y-%m-%d %H:%M:%S") %></published_at>
     <author><%= h @article.author.id if @article.author %></author>
     <excerpt><%= h @article.excerpt_html %></excerpt>
     <body><%= h @article.body_html %></body>
@@ -22,6 +21,7 @@
       <permalink><%= h @article.permalink %></permalink>
       <tag_list><%= h @article.tag_list %></tag_list>
       <filter><%= h @article.filter %></filter>
+      <published_at><%= @article.published_at.nil? ? "" : @article.published_at.utc.strftime("%Y-%m-%d %H:%M:%S") %></published_at>
     </options>
 
     <categories>
