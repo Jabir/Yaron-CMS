@@ -1,0 +1,8 @@
+<root>
+		<record>
+			<id><%= @topic.id.to_s %></id>
+			<locked><%= @topic.locked.to_s %></locked>
+			<sticky><%= @topic.sticky.to_s %></sticky>
+			<title><%= h @topic.title %></title>
+		</record>
+</root>

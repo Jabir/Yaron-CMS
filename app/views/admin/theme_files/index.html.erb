@@ -1,0 +1,180 @@
+<script type="text/javascript" charset="utf-8">
+	var import_window = false;
+	function extjs_toolbar_items () {
+    return [{
+        text: 'Uploaden',
+        iconCls: 'silk-package-add',
+        handler: function(btn, ev) {
+          generic_loader.show();
+          in_submit = false;
+          $.ajax({
+            type: 'GET',
+            dataType: "script",
+            url: '<%= import_admin_theme_files_path(@site, @theme) %>.js',
+            success: function(data) {
+              generic_loader.hide();
+              
+              var items = {
+                border: false,
+                bodyStyle: "background-color: rgb(223, 232, 246); padding: 10px",
+                html: data
+              };
+              
+              if (popup_body_items) {
+                items = popup_body_items;
+              }
+              
+              import_window = new Ext.Window({
+                layout: 'fit',
+                width: 500,
+                title: 'Bestand importeren',
+                height: 103,
+                modal: true,
+                shadow: true,
+                plain: true,
+                border: false,
+                closeAction: 'close',
+                items: items,
+              });
+              import_window.show(this);
+            }
+          });
+        },
+        scope: this
+    }];
+	}
+  
+	function modify_main_menu(menu) {
+		var new_menu = [];
+		$.each(menu,
+			function (index,item) {
+				if (!(/right/.test(item.id))) {
+					new_menu[new_menu.length] = item;
+				}
+			}
+		);
+		return new_menu;
+	}
+
+	function extjs_body_items() {
+		return init_lico_adva_crud({
+			columns: [{
+				label: 'Pad',
+				name: 'path',
+				type: 'string',
+				hidden: true
+			},{
+				label: 'Bestandsnaam',
+				name: 'name',
+				type: 'string',
+			}],
+			store: {
+				url: '<%= url_for admin_theme_files_path(@site.id, @theme.id) %>.xml',
+				sort: {
+				  by: 'name',
+					order: 'asc'
+				},
+				group: 'path'
+			},
+			grid: {
+				show_detail_panel: false
+			},
+			show: {
+				url: '<%= edit_admin_theme_file_path(@site.id, @theme.id, '!recordid!') %>',
+				custom_show_action: show_file
+			},
+			edit: {
+				url: '<%= admin_theme_file_path(@site, @theme.id, '!recordid!') %>',
+				custom_actions: function(doc) {
+          return {
+            text: 'Vervangen',
+            iconCls: 'silk-accept',
+            handler: function(btn, ev) {
+            },
+            scope: this
+          };
+        }
+      },
+			destroy: {
+				url: '<%= admin_theme_file_path(@site, @theme.id, '!recordid!') %>',
+        message: 'Weet je zeker dat je dit bestand wilt verwijderen?'
+			}
+		});
+	}
+	
+  function show_file (id) {
+    generic_loader.show();
+    $.ajax({
+      type: 'GET',
+      dataType: "script",
+      url: '<%= admin_theme_file_path(@site, @theme, '!recordid!') %>.js'.replace(/!recordid!/,id),
+      success: function(data) {
+        generic_loader.hide();
+        
+        var items = {
+          border: false,
+          bodyStyle: "background-color: rgb(223, 232, 246); padding: 10px",
+          html: data
+        };
+        
+        if (popup_body_items) {
+          items = popup_body_items;
+        }
+        
+        import_window = new Ext.Window({
+          layout: 'fit',
+          width: 500,
+          title: 'Bestand bewerken',
+          height: 500,
+          modal: true,
+          shadow: true,
+          plain: true,
+          border: false,
+          closeAction: 'close',
+          items: items,
+        });
+        import_window.show(this);
+        if (document.getElementById('file_data')) {
+          document.getElementById('file_data').onkeydown = keypressed_allow_tab;
+        }
+      }
+    });
+    return false;
+  }
+  function keypressed_allow_tab(e) {
+  	var key = null;
+  	if (window.event) {
+  	  key = event.keyCode;
+  	} else if (e.which) {
+  	  key = e.which;
+	  }
+
+  	if (key != null && key == 9) {
+  		if (document.selection) {
+  			this.focus();
+  			var sel = document.selection.createRange();
+  			sel.text = "\t";
+  		} else if(this.selectionStart || this.selectionStart == "0") {
+  			var scrollY = this.scrollTop;
+  			var scrollX = this.scrollLeft;
+
+  			var start = this.selectionStart;
+  			var end = this.selectionEnd;
+
+  			this.value = this.value.substring(0,start) + "\t" + this.value.substring(end,this.value.length);
+
+  			this.focus();
+  			this.selectionStart = start+1;
+  			this.selectionEnd = start+1;
+
+  			this.scrollTop = scrollY;
+  			this.scrollLeft = scrollX;
+  		} else {
+  		  this.value += "\t";
+		  }
+  		return false;
+  	}
+  }
+</script>
+<% content_for :sidebar do -%>
+<% end -%>

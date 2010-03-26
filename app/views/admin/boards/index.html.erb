@@ -1,25 +1,9 @@
 <script type="text/javascript" charset="utf-8">
   function modify_main_menu(menu) {
     var new_menu = [];
-    $.each(
-      menu,
+    $.each(menu,
       function (index,item) {
-        var add_tab = true;
-        
-        add_tab = !(/right/.test(item.id));
-        // alleen tab new
-        //         if (/right/.test(item.id)) {
-        //           var target_index = item.id.replace(/^right_/,"");
-        //  $("#page #main_menu .actions > li ").each(function(index, li) {
-        //    if (index == target_index) {
-        //      if (/articles\/new/.test(li.getElementsByTagName("A")[0].href)) {
-        //        add_tab = false;
-        //      }
-        //    }
-        //  });
-        // }
-					
-				if (add_tab) {
+				if (!(/right/.test(item.id))) {
           new_menu[new_menu.length] = item;
         }
       }
@@ -28,25 +12,18 @@
   }
   
   
-  //
-  // Init CRUD
-  //
   function extjs_body_items() {
     return init_lico_adva_crud({
       columns: [{
-          label: 'titel',
+          label: 'Titel',
           name: 'title',
           type: 'string',
           submit_value: 'board[title]'
         }, {
-          label: 'omschrijving',
+          label: 'Omschrijving',
           name: 'description', 
           type: 'string',
           submit_value: 'board[description]'
-		},{
-		  label: 'Aantal Topics',
-		  name: 'topics_count',
-		  type: 'boolean',
       }],
       add_record_path: '<%= admin_boards_path(@site.id, @section) %>',
       store: {
@@ -57,7 +34,7 @@
         }
       },
       grid: {
-        //empty_details: t['board']['selection_empty']
+        empty_details: 'Selecteer een board voor details'
       },
       show: {
         url: '<%= edit_admin_board_path(@site, @section, '!recordid!') %>',
@@ -69,7 +46,7 @@
       },
       destroy: {
         url: '<%= admin_board_path(@site, @section, '!recordid!') %>',
-        //message: t['board']['delete_confirm']
+        message: 'Weet je zeker dat je dit board wilt verwijderen?'
       }
     });
   }
@@ -88,35 +65,26 @@
     selected_record_title = title;
 
   	return [{
-      xtype: 'tabpanel',
-      plain: true,
-      activeTab: 0,
-      defaults: {
-        bodyStyle: 'padding:10px'
-      },
+      layout: 'column',
+      border: false,
       items: [{
-        title: 'Forum',
-        layout: 'column',
+        columnWidth: .5,
+        layout: 'form',
         border: false,
         items: [{
-          columnWidth: .5,
-          layout: 'form',
-          border: false,
-          items: [{
-            xtype: 'textfield',
-            fieldLabel: 'titel',
-            id: 'title',
-            name: 'title',
-            anchor: '95%',
-            value: title
-          }, {
-            xtype: 'textfield',
-            fieldLabel: 'omschrijving',
-            id: 'description',
-            name: 'description',
-            anchor: '95%',
-            value: description
-          }]
+          xtype: 'textfield',
+          fieldLabel: 'titel',
+          id: 'title',
+          name: 'title',
+          anchor: '100%',
+          value: title
+        }, {
+          xtype: 'textfield',
+          fieldLabel: 'omschrijving',
+          id: 'description',
+          name: 'description',
+          anchor: '100%',
+          value: description
         }]
       }]
     }];

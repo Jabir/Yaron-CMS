@@ -25,6 +25,10 @@ ActionController::Routing::Routes.draw do |map|
                          :name_prefix => "admin_",
                          :namespace   => "admin/"
 
+  map.resources :posts, :path_prefix => "admin/sites/:site_id/sections/:section_id",
+                        :name_prefix => "admin_",
+                        :namespace   => "admin/"
+
   map.resources :boards, :path_prefix => "admin/sites/:site_id/sections/:section_id",
                          :name_prefix => "admin_",
                          :namespace   => "admin/",

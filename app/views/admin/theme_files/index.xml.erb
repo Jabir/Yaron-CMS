@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<% @theme.files.each do |file| %>
+		<record>
+			<id><%= file.id.to_s %></id>
+			<path><%= h file.directory.to_s %></path>
+			<name><%= h file.name.to_s %></name>
+		</record>
+	<% end %>
+</dataset>

@@ -1,0 +1,115 @@
+<script type="text/javascript" charset="utf-8">
+  var topic_store;
+  function load_custom_stores () {
+    var topic_store_data = new Array();
+    <% @section.topics.find(:all).each do |topic| %>
+      topic_store_data[topic_store_data.length] = [<%= topic.id.to_s %>, "<%= h topic.title.gsub(/\"/,"\\") %>"];
+    <% end %>
+
+    topic_store = new Ext.data.ArrayStore({
+      fields: ['topic_id', 'title'],
+      data: topic_store_data
+    });
+  }
+  
+
+  function modify_main_menu(menu) {
+    var new_menu = [];
+    $.each(menu,
+      function (index,item) {
+				if (!(/right/.test(item.id))) {
+          new_menu[new_menu.length] = item;
+        }
+      }
+    );
+    return new_menu;
+  }
+  
+	function extjs_body_items() {
+    load_custom_stores();
+		return init_lico_adva_crud({
+			columns: [{
+				label: 'Topic',
+				name: 'topic',
+        type: 'combo',
+        submit_value: 'post[commentable_id]',
+        combo: {
+          value: 'topic_id',
+          label: 'title',
+          store: topic_store
+        },
+				hidden: true
+			},{
+				label: 'Bericht',
+				name: 'title',
+				type: 'string',
+        submit_value: 'post[body]'
+			},{
+				label: 'Datum',
+				name: 'updated_at',
+				type: 'string'
+			},{
+				label: 'Datum',
+				name: 'updated_at_time',
+				type: 'string',
+				hidden: true
+			}],
+      add_record_path: '<%= admin_posts_path(@site.id, @section) %>',
+      store: {
+        url: '<%= url_for admin_posts_path ( @site.id, @section) %>.xml',
+        sort: {
+          by: 'updated_at_time',
+          order: 'asc'
+        },
+        group: 'topic'
+      },
+      grid: {
+        empty_details: 'Selecteer een post voor meer details'
+      },
+      show: {
+       url: '<%= edit_admin_post_path(@site, @section, '!recordid!') %>',
+       custom_form: edit_post_form,
+       custom_form_values: edit_post_form_values
+      },
+      edit: {
+       url: '<%= admin_post_path(@site, @section, '!recordid!') %>'
+      },
+      destroy: {
+       url: '<%= admin_post_path(@site, @section, '!recordid!') %>',
+       message: 'Weet je zeker dat je dit topic wilt verwijderen?',
+       reload_page_after_destroy: true
+       // na het verwijderen van de laatste post van een topic wordt ook het topic verwijderd..
+       // hele scherm maar even vernieuwen totdat topic_store een remote store wordt..
+      }
+    });
+  }
+  
+  function edit_post_form_values (parameters) {
+    parameters["post[body]"] = document.getElementById('body').value;
+    return parameters;
+  }
+  
+  function edit_post_form(record) {
+     var body = xmlvalue(record, "body");
+
+     return [{
+         layout: 'column',
+         border: false,
+         items: [{
+            columnWidth: 1,
+            layout: 'form',
+            border: false,
+            items: [{
+               xtype: 'textarea',
+               fieldLabel: 'Bericht',
+               id: 'body',
+               name: 'body',
+               anchor: '100%',
+               value: body
+            }]
+         }]
+     }];
+  }
+</script>
+<% content_for :sidebar do -%>
+<% end -%>

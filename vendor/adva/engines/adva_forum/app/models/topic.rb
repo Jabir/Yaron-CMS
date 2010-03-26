@@ -15,7 +15,7 @@ class Topic < ActiveRecord::Base
 
   before_validation :set_section, :set_site
   validates_presence_of :section, :title
-  validates_presence_of :body, :on => :create
+  # validates_presence_of :body, :on => :create
 
   attr_accessor :body
   delegate :comment_filter, :to => :site

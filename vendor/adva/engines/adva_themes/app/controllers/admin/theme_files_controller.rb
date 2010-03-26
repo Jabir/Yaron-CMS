@@ -30,16 +30,19 @@ class Admin::ThemeFilesController < Admin::BaseController
     expire_pages_by_site! # FIXME: -> sweeper?
     @files.each { |f| expire_template!(f) }
 
-    flash[:notice] = t(:'adva.theme_files.flash.create.success') # FIXME upload.failure
-    redirect_to admin_theme_files_url(@site, @theme.id)
-
+    # flash[:notice] = t(:'adva.theme_files.flash.create.success') # FIXME upload.failure
+    # redirect_to admin_theme_files_url(@site, @theme.id)
+    render :text => "OK"
   rescue ActiveRecord::RecordInvalid => e
     respond_to do |format|
       format.html do
-        flash[:error] = t(:'adva.theme_files.flash.create.failure') # FIXME upload.failure
-        render :action => :import
+        # flash[:error] = t(:'adva.theme_files.flash.create.failure') # FIXME upload.failure
+        # render :action => :import
+        render :text => t(:'adva.theme_files.flash.create.failure')
       end
     end
+  rescue
+    render :text => t(:'adva.theme_files.flash.create.failure')
   end
 
   def update

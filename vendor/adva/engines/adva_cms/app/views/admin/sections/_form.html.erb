@@ -1,9 +1,3 @@
-<% content_for :sidebar do %>
-	<p class="hint text_only large padded">
-		<%= t :'adva.sections.hints.parent_setting_for_edit' %>
-	</p>
-<% end %>
-
 <h2><%= t(:'adva.titles.general_settings') %></h2>
 
 <% f.field_set do %>
@@ -24,4 +18,3 @@
 <% end %>
 
 <%= render :partial => "admin/sections/settings/#{@section.type.underscore}", :locals => { :f => f } %>
-<%#= render :partial => "admin/sections/settings/permissions", :locals => { :f => f } %>

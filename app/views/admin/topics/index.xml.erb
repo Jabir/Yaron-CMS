@@ -5,7 +5,10 @@
     <record>
       <id><%= topic.id.to_s %></id>
       <board_id><%= h topic.board_id %></board_id>
-	  <title><%= h topic.title %></title>
+      <title><%= h topic.title %></title>
+      <locked><%= h topic.locked.to_s %></locked>
+      <sticky><%= h topic.sticky.to_s %></sticky>
+      <board><%= h(topic.board.nil? ? "" : topic.board.title.to_s) %></board>
       <last_author_name><%= topic.last_author_name %></last_author_name>
       <posts_count><%= topic.posts_count %></posts_count>
     </record>

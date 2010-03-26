@@ -1465,6 +1465,8 @@ function init_crud_store() {
             // authenticity_token: window._auth_token
             },
         remoteSort: false,
+		remoteGroup: false,
+		groupField: crud_options["store"]["group"],
         reader: new Ext.data.XmlReader(
         {
             id: 'id',
@@ -1842,18 +1844,24 @@ function init_crud_grid() {
         }
     });
 
-    return [
-    grid,
-    {
-        id: 'crud_detail',
-        region: 'south',
-        bodyStyle: {
-            background: '#ffffff',
-            padding: '7px'
-        },
-        html: crud_options["grid"].empty_details
-    }
-    ];
+	if (crud_options["grid"]["show_detail_panel"] === false) {
+	    return [
+	    	grid
+	    ];
+	} else {
+		return [
+	    grid,
+	    {
+	        id: 'crud_detail',
+	        region: 'south',
+	        bodyStyle: {
+	            background: '#ffffff',
+	            padding: '7px'
+	        },
+	        html: crud_options["grid"].empty_details
+	    }
+	    ];
+	}
 }
 
 function grid_columns() {
@@ -1863,7 +1871,8 @@ function grid_columns() {
     function(index, column) {
         var columndef = {
             header: column["label"],
-            dataIndex: column["name"]
+            dataIndex: column["name"],
+			hidden: column["hidden"]
         };
 
         if (column["submit_value"] + "" != "undefined") {
@@ -1940,6 +1949,11 @@ function grid_columns() {
 // Details
 //
 function show_record_details(id) {
+	if (crud_options.show["custom_show_action"] + "" != "undefined") {
+        if (!crud_options.show["custom_show_action"](id)) {
+			return;
+		}
+    }
     if (!empty_crud_detail && document.getElementById('crud_detail')) {
         empty_crud_detail = document.getElementById('crud_detail').innerHTML;
     }
@@ -2067,12 +2081,16 @@ function delete_record(id) {
                     },
                     type: 'POST',
                     success: function(html) {
-                        document.getElementById('crud_detail').innerHTML = empty_crud_detail;
-                        crud_panel.setSize("99%", "99%");
-                        crud_panel.setSize("100%", "100%");
-                        selected_record = null;
-                        store.reload();
-                        mask.hide();
+						if (crud_options.destroy.reload_page_after_destroy) {
+							window.location = window.location
+						} else {
+	                        document.getElementById('crud_detail').innerHTML = empty_crud_detail;
+	                        crud_panel.setSize("99%", "99%");
+	                        crud_panel.setSize("100%", "100%");
+	                        selected_record = null;
+	                        store.reload();
+	                        mask.hide();
+						}
                     }
                 });
             }

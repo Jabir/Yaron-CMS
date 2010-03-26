@@ -1,12 +1,9 @@
 <script type="text/javascript" charset="utf-8">
-  //
-  // Voor artikelen specifieke combo-data
-  //
   var board_store;
 
   function load_custom_stores () {
     var board_store_data = new Array();
-    <% Board.find(:all).each do |board| %>
+    <% @section.boards.find(:all).each do |board| %>
       board_store_data[board_store_data.length] = [<%= board.id.to_s %>, "<%= h board.title.gsub(/\"/,"\\") %>"];
     <% end %>
 
@@ -19,25 +16,9 @@
 
   function modify_main_menu(menu) {
     var new_menu = [];
-    $.each(
-      menu,
+    $.each(menu,
       function (index,item) {
-        var add_tab = true;
-        
-        add_tab = !(/right/.test(item.id));
-        // alleen tab new
-        //         if (/right/.test(item.id)) {
-        //           var target_index = item.id.replace(/^right_/,"");
-        //  $("#page #main_menu .actions > li ").each(function(index, li) {
-        //    if (index == target_index) {
-        //      if (/articles\/new/.test(li.getElementsByTagName("A")[0].href)) {
-        //        add_tab = false;
-        //      }
-        //    }
-        //  });
-        // }
-					
-				if (add_tab) {
+				if (!(/right/.test(item.id))) {
           new_menu[new_menu.length] = item;
         }
       }
@@ -45,104 +26,125 @@
     return new_menu;
   }
   
-  
-  //
-  // Init CRUD
-  //
 	function extjs_body_items() {
+    load_custom_stores();
 		return init_lico_adva_crud({
 			columns: [{
-				label: 'titel',
+				label: 'Board',
+				name: 'board',
+        type: 'combo',
+        submit_value: 'topic[board_id]',
+        combo: {
+          value: 'board_id',
+          label: 'title',
+          store: board_store
+        },
+        hidden: true
+			},{
+				label: 'Titel',
 				name: 'title',
 				type: 'string',
-				//submit_value: 'topic[title]'
-			},{
-				label: 'omschrijving',
-				name: 'description', 
-				type: 'string',
-				//submit_value: 'topic[description]'
+        submit_value: 'topic[title]'
 			},{
 				label: 'Laatste auteur',
 				name: 'last_author_name',
-				type: 'string',
+				type: 'string'
 			},{
 				label: 'Aantal Posts',
 				name: 'posts_count',
-				type: 'string',
+				type: 'string'
+			},{
+				label: 'Sticky',
+				name: 'sticky',
+				type: 'boolean'
+			},{
+				label: 'Locked',
+				name: 'locked',
+				type: 'boolean'
 			}],
-		//  add_record_path: '<%= admin_topics_path(@site.id, @section) %>',
+     add_record_path: '<%= admin_topics_path(@site.id, @section) %>',
       store: {
         url: '<%= url_for admin_topics_path ( @site.id, @section) %>.xml',
         sort: {
           by: 'title',
           order: 'asc'
-        }
+        },
+        group: 'board'
       },
       grid: {
-        //empty_details: t['board']['selection_empty']
-      //},
-      //show: {
-      //  url: '<%#= edit_topic_path(@site, @section, '!recordid!') %>',
-      //  custom_form: edit_topic_form,
-      //  custom_form_values: edit_topic_form_values
-      //},
-      //edit: {
-      //  url: '<%#= topic_path(:forums, @section, '!recordid!') %>'
-      //},
-      //destroy: {
-      //  url: '<%#= topic_path(@site, @section, '!recordid!') %>',
-      //  //message: t['board']['delete_confirm']
+        empty_details: 'Selecteer een topic voor meer details'
+      },
+      show: {
+       url: '<%= edit_admin_topic_path(@site, @section, '!recordid!') %>',
+       custom_form: edit_topic_form,
+       custom_form_values: edit_topic_form_values
+      },
+      edit: {
+       url: '<%= admin_topic_path(@site, @section, '!recordid!') %>'
+      },
+      destroy: {
+       url: '<%= admin_topic_path(@site, @section, '!recordid!') %>',
+       message: 'Weet je zeker dat je dit topic wilt verwijderen?'
       }
     });
   }
   
-//  function edit_topic_form_values (parameters) {
-//    parameters["topic[title]"] = document.getElementById('title').value;
-//    parameters["topic[description]"] = document.getElementById('description').value;
-
-
-//  	return parameters;
-//  }
+  function edit_topic_form_values (parameters) {
+    parameters["topic[title]"] = document.getElementById('title').value;
+    parameters["topic[sticky]"] = document.getElementById('sticky').checked ? "1" : "0";
+    parameters["topic[locked]"] = document.getElementById('locked').checked ? "true" : "false";
+    return parameters;
+  }
   
-//  function edit_topic_form (record) {
-//    var title = xmlvalue(record,"title");
-//    var description = xmlvalue(record,"description");
-//    selected_record_title = title;
+  function edit_topic_form(record) {
+     var title = xmlvalue(record, "title");
+     var description = xmlvalue(record, "description");
+     selected_record_title = title;
 
-//  	return [{
-//      xtype: 'tabpanel',
-//      plain: true,
-//      activeTab: 0,
-//      defaults: {
-//        bodyStyle: 'padding:10px'
-//      },
-//      items: [{
-//        title: 'Forum',
-//        layout: 'column',
-//        border: false,
-//        items: [{
-//          columnWidth: .5,
-//          layout: 'form',
-//          border: false,
-//          items: [{
-//            xtype: 'textfield',
-//            fieldLabel: 'titel',
-//            id: 'title',
-//            name: 'title',
-//            anchor: '95%',
-//            value: title
-//          }, {
-//            xtype: 'textfield',
-//            fieldLabel: 'omschrijving',
-//            id: 'description',
-//            name: 'description',
-//            anchor: '95%',
-//            value: description
-//          }]
-//        }]
-//      }]
-//    }];
-//  }
+     return [{
+       layout: 'column',
+       border: false,
+       items: [{
+          columnWidth: 1,
+          layout: 'form',
+          border: false,
+          items: [{
+             xtype: 'textfield',
+             fieldLabel: 'Titel',
+             id: 'title',
+             name: 'title',
+             anchor: '100%',
+             value: title
+          }]
+        },{
+          columnWidth: "100px",
+          layout: 'form',
+          border: false,
+          items: [{
+             xtype: 'checkbox',
+             fieldLabel: 'Sticky',
+             id: 'sticky',
+             name: 'sticky',
+             anchor: '95%',
+             value: '1',
+             checked: xmlvalue(record, "sticky") == "1"
+           }]
+         },{
+           columnWidth: "100px",
+           layout: 'form',
+           border: false,
+           items: [{
+              xtype: 'checkbox',
+              fieldLabel: 'Locked',
+              id: 'locked',
+              name: 'locked',
+              anchor: '95%',
+              value: '1',
+              checked: xmlvalue(record, "locked") == "true"
+          }]
+       }]
+     }];
+  }
 </script>
 <% content_for :sidebar do -%>
 <% end -%>

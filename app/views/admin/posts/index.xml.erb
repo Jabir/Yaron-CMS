@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+  <results><%#= @boards.total_entries.to_s %></results>
+  <% @posts.each do |post| %>
+    <record>
+      <id><%= post.id.to_s %></id>
+      <topic_id><%= h post.commentable_id %></topic_id>
+      <title><%= h(post.body.length > 50 ? post.body[0,50] + "..." : post.body) %></title>
+      <topic><%= h(post.commentable_id.nil? ? "" : post.commentable.title.to_s) %></topic>
+			<updated_at><%= post.created_at.strftime("%H:%M %d-%m-%Y")%></updated_at>
+			<updated_at_time><%= post.created_at.to_i.to_s %></updated_at_time>
+    </record>
+  <% end %>
+</dataset>

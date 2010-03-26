@@ -9,12 +9,22 @@ module Menus
       end
     end
 
+    class Posts < Menu::Group
+      define do
+        id :main
+        parent Sites.new.build(scope).find(:sections)
+
+        menu :left, :class => 'left', :type => Sections::Forum
+      end
+    end
+
     class Sections
       class Forum < Menu::Menu
         define do
           item :section, :content => content_tag(:h4, "#{@section.title}:")
-          item :topics,   :action => :index, :resource => [@section, :topic]
           item :boards,   :action => :index, :resource => [@section, :board]
+          item :topics,   :action => :index, :resource => [@section, :topic]
+          item :posts,    :action => :index, :resource => [@section, :post]
           item :settings, :action => :edit,  :resource => @section
         end
       end
