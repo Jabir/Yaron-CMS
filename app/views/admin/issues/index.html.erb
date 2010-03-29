@@ -76,6 +76,9 @@
 		parameters["issue[title]"] = document.getElementById('title').value;
 		parameters["issue[body]"] = document.getElementById('body').value;
 		parameters["issue[draft]"] = document.getElementById('state').checked ? "1" : "0";
+		parameters["issue[tracking_campaign]"] = document.getElementById('tracking_campaign').value;
+		parameters["issue[tracking_source]"] = document.getElementById('tracking_source').value;
+		parameters["issue[filter]"] = document.getElementById('filter').value;
 
 		return parameters;
 	}
@@ -85,6 +88,9 @@
 		var body = xmlvalue(record,"body");
 		var state = xmlvalue(record,"state");
 		selected_record_title = title;
+		var tracking_campaign = xmlvalue(record,"tracking_campaign");
+		var tracking_source = xmlvalue(record,"tracking_source");
+		var filter = xmlvalue(record,"filter");
 
 		return [{
 			xtype: 'tabpanel',
@@ -126,6 +132,53 @@
 						name: 'state',
 						checked: state == "draft",
 						mode: 'local'
+					}]
+				}]
+			},{
+				title: 'Tracking',
+				layout: 'column',
+				border: false,
+				items: [{
+					columnWidth: .5,
+					layout: 'form',
+					border: false,
+					items: [{
+						xtype: 'textfield',
+						fieldLabel: 'tracking_campaign',
+						id: 'tracking_campaign',
+						name: 'tracking_campaign',
+						value: tracking_campaign
+					},{
+						xtype: 'textfield',
+						fieldLabel: 'tracking_source',
+						id: 'tracking_source',
+						name: 'tracking_source',
+						value: tracking_source
+					}]
+				}]
+			},{
+				title: 'Filter',
+				layout: 'column',
+				border: false,
+				items: [{
+					columnWidth: .5,
+					layout: 'form',
+					border: false,
+					items: [{
+						xtype: 'combo',
+						fieldLabel: 'Filter',
+						name: 'filter',
+						hiddenName: 'filter',
+						hiddenId: 'filter',
+						value: xmlvalue(record, "filter"),
+						mode: 'local',
+						valueField: 'item_id',
+						displayField: 'text',
+						triggerAction: 'all',
+						store: new Ext.data.ArrayStore({
+						  fields: ['item_id','text'],
+						  data: <%= filter_options.collect{|a| [a[1],a[0]]}.to_json().to_s %>
+						})
 					}]
 				}]
 			}]
