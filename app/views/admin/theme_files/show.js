@@ -8,6 +8,18 @@ popup_body_items = new Ext.FormPanel({
 	reader: new Ext.data.CrudReader(),
 	items: [{
 		<% if @file.respond_to?(:text) %>
+			layout: 'form',
+			border: false,
+			labelWidth: 100,
+			bodyStyle: 'padding-left: 5px',
+			items: {
+				xtype: 'textfield',
+	      		fieldLabel: 'Bestandsnaam',
+	      		name: 'file[base_path]',
+				id: 'file_base_path',
+				value: <%= @file.base_path.to_json %>
+			}
+		},{
 			xtype: 'textarea',
 			name: 'file[data]',
 			id: 'file_data',
@@ -74,7 +86,8 @@ popup_body_items = new Ext.FormPanel({
 				data: {
 					authenticity_token: window._auth_token,
 					_method: 'put',
-					'file[data]': document.getElementById('file_data').value
+					'file[data]': document.getElementById('file_data').value,
+					'file[base_path]': document.getElementById('file_base_path').value
 				},
 				type: 'POST',
 				success: function(html) {

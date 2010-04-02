@@ -200,7 +200,7 @@
   function select_insert_image(ref) {
     select_insert_image_instance = ref;
     select_window = new Ext.Window({
-      layout: 'fit',
+      layout: 'border',
       width: 354,
       title: 'Asset invoegen',
       height: 344,
@@ -209,10 +209,15 @@
       plain: true,
       border: false,
       closeAction: 'close',
-      items: select_insert_image_view(),
+      items: [
+        select_insert_image_view()
+      ]
     });
     select_window.show(this);
   }
+  
+  var insert_asset_toggle_buttons = [];
+  var insert_asset_align = "";
   function select_insert_image_view () {
     var select_asset_store = new Ext.data.XmlStore({
         proxy : new Ext.data.HttpProxy({
@@ -232,9 +237,48 @@
         pageSize: 18,
         store: select_asset_store
     });
+    
+    var toggle_handler = function(item, pressed) {
+      if (!pressed) {
+        item.toggle(true, true);
+      } else {
+        $.each(insert_asset_toggle_buttons,
+          function(index, other_item) {
+            if (item != other_item) {
+              other_item.toggle(false, true);
+            } else {
+              insert_asset_align = index == 0 ? "" : (index == 1 ? "left" : "right");
+            }
+          }
+        )
+      }
+    };
+    
+    insert_asset_toggle_buttons = [];
+    insert_asset_align = "";
+    insert_asset_toggle_buttons[insert_asset_toggle_buttons.length] = new Ext.Button({
+      icon: '/stylesheets/extjs/fam/text_padding_bottom.gif',
+      enableToggle: true,
+      pressed: true,
+      toggleHandler: toggle_handler
+    });
+
+    insert_asset_toggle_buttons[insert_asset_toggle_buttons.length] = new Ext.Button({
+      icon: '/stylesheets/extjs/fam/text_padding_left.gif',
+      enableToggle: true,
+      toggleHandler: toggle_handler
+    });
+
+    insert_asset_toggle_buttons[insert_asset_toggle_buttons.length] = new Ext.Button({
+      icon: '/stylesheets/extjs/fam/text_padding_right.gif',
+      enableToggle: true,
+      toggleHandler: toggle_handler
+    });
+
     return {
 			border: true,
 			id: 'sb',
+			region: 'center',
 			layout: 'fit',
 			bodyStyle: 'padding: 0px; overflow: visible;',
 			items: new Ext.DataView({
@@ -252,13 +296,16 @@
         ),
         listeners: {
         	click: function(dataView,idx, node, e) {
-        	  select_insert_image_instance.insertImage(node);
+        	  select_insert_image_instance.insertImage(node, insert_asset_align);
         	  select_window.close();
         	},
         	scope: this
         }
       }),
-      bbar: select_assets_paging
+      bbar: select_assets_paging,
+      tbar: new Ext.Toolbar({
+        items: insert_asset_toggle_buttons
+      })
 		}
   }
 </script>

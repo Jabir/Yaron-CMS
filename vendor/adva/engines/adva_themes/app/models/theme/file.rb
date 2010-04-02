@@ -137,7 +137,11 @@ class Theme < ActiveRecord::Base
       def move_data_file
         if moved?
           mkdir_p(::File.dirname(path))
-          FileUtils.mv(path_was, path)
+          begin
+            FileUtils.mv(path_was, path)
+          rescue
+            # het ding was al verplaatst?
+          end
           rm_empty_directories(path_was)
         end
       end

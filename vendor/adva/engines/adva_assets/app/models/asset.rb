@@ -72,9 +72,9 @@ class Asset < ActiveRecord::Base
         self.content_type = (`file -Ib #{temp_path} 2>/dev/null || file -ib #{temp_path} 2>/dev/null`.gsub(/\n/,"")).gsub(/\;.*/,"")
         self.data_content_type = self.content_type
       end
-    
+
       if temp_path && matches?(:movie)
-        self.duration = (`ffmpeg -i #{temp_path} 2>&1 | grep duration | grep -v total | cut -d ':' -f 2 | sed s/\\ //`.gsub(/\n/,""))
+        self.duration = (`ffmpeg -i #{temp_path} 2>&1 | grep -i duration | grep -v total | cut -d ':' -f 2,3,4,5,6 | cut -d '.' -f 1 | sed s/\\ //`.gsub(/\n/,""))
       end
     rescue
     end

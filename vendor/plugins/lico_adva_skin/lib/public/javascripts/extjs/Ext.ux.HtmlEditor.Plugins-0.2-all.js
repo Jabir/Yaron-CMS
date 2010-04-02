@@ -15,7 +15,7 @@ Ext.ux.form.HtmlEditor.Image = Ext.extend(Ext.util.Observable, {
     selectImage: function() {
       select_insert_image(this);
     },
-    insertImage: function(node) {
+    insertImage: function(node, align) {
   	  var url = node.getAttribute("url");
   	  
   	  $.each(
@@ -25,6 +25,10 @@ Ext.ux.form.HtmlEditor.Image = Ext.extend(Ext.util.Observable, {
   	    }
   	  );
 
+  	  if (align != "") {
+		url += /\?/.test(url) ? "&" : "?";
+  		url += "align=" + align;
+  	  }	
       this.hash = url;
       this.cmp.execCmd('InsertImage', this.hash);
 

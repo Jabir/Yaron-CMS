@@ -55,10 +55,14 @@ class Admin::ConferencesController < Admin::BaseController
       }
     rescue
     end
-    if @conference.add_scheduled_sessions new_params
-      render :text => "CRUD_OK"
-    else
-      render :text => @conference.last_error
+    begin
+      if @conference.add_scheduled_sessions new_params
+        render :text => "CRUD_OK"
+      else
+        render :text => @conference.last_error
+      end
+    rescue
+      render :text => "Het toevoegen van de sessie is mislukt"
     end
   end
   

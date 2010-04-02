@@ -1,25 +1,9 @@
 <script type="text/javascript" charset="utf-8">
   function modify_main_menu(menu) {
     var new_menu = [];
-    $.each(
-      menu,
+    $.each(menu,
       function (index,item) {
-        var add_tab = true;
-        
-        add_tab = !(/right/.test(item.id));
-        // alleen tab new
-        //         if (/right/.test(item.id)) {
-        //           var target_index = item.id.replace(/^right_/,"");
-        //  $("#page #main_menu .actions > li ").each(function(index, li) {
-        //    if (index == target_index) {
-        //      if (/articles\/new/.test(li.getElementsByTagName("A")[0].href)) {
-        //        add_tab = false;
-        //      }
-        //    }
-        //  });
-        // }
-					
-				if (add_tab) {
+				if (!(/right/.test(item.id))) {
           new_menu[new_menu.length] = item;
         }
       }
@@ -27,9 +11,6 @@
     return new_menu;
   }
   
-  //
-  // Init CRUD
-  //
 	function extjs_body_items() {
 		return init_lico_adva_crud({
 			columns: [{
@@ -55,7 +36,7 @@
         }
       },
       grid: {
-        //empty_details: t['board']['selection_empty']
+        empty_details: 'Selecteer een uitgave voor meer details'
       },
       show: {
         url: '<%= edit_admin_adva_issue_path(@site, @newsletter, '!recordid!') %>',
@@ -67,7 +48,7 @@
       },
       destroy: {
         url: '<%= admin_adva_issue_path(@site, @newsletter, '!recordid!') %>',
-        //message: t['board']['delete_confirm']
+        message: 'Weet u zeker dat u deze uitgave wilt verwijderen?'
       }
     });
   }
@@ -76,9 +57,13 @@
 		parameters["issue[title]"] = document.getElementById('title').value;
 		parameters["issue[body]"] = document.getElementById('body').value;
 		parameters["issue[draft]"] = document.getElementById('state').checked ? "1" : "0";
-		parameters["issue[tracking_campaign]"] = document.getElementById('tracking_campaign').value;
-		parameters["issue[tracking_source]"] = document.getElementById('tracking_source').value;
-		parameters["issue[filter]"] = document.getElementById('filter').value;
+		if (document.getElementById('tracking_campaign')) {
+		  parameters["issue[tracking_campaign]"] = document.getElementById('tracking_campaign').value;
+		  parameters["issue[tracking_source]"] = document.getElementById('tracking_source').value;
+		}
+		if (document.getElementById('filter')) {
+		  parameters["issue[filter]"] = document.getElementById('filter').value;
+	  }
 
 		return parameters;
 	}

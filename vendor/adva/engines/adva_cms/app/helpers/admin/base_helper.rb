@@ -36,7 +36,7 @@ module Admin::BaseHelper
   end
 
   def link_to_clear_cached_pages(site)
-    link_to(t(:'adva.cached_pages.links.clear_all'), admin_cached_pages_path(site), :method => :delete)
+    link_to(t(:'adva.cached_pages.links.clear_all'), admin_cached_pages_path(site), :id => 'cache_clear_all', :method => :delete)
   end
 
   def link_to_restore_plugin_defaults(site, plugin)

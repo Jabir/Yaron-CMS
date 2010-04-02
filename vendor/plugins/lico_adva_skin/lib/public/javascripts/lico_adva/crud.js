@@ -1180,6 +1180,25 @@ Ext.onReady(function() {
                             TableTree.toggle($('table.list'), 'sections', li.getElementsByTagName("A")[0].href);
                             event.preventDefault();
                             return false;
+													} else if (li.getElementsByTagName("A")[0].id == 'cache_clear_all') {
+														generic_loader.show();
+														var f = document.createElement('form'); 
+														f.style.display = 'none'; 
+														this.parentNode.appendChild(f); 
+														f.method = 'POST'; 
+														f.action = li.getElementsByTagName("A")[0].href;
+														var m = document.createElement('input'); 
+														m.setAttribute('type', 'hidden'); 
+														m.setAttribute('name', '_method'); 
+														m.setAttribute('value', 'delete'); 
+														f.appendChild(m);
+														var s = document.createElement('input'); 
+														s.setAttribute('type', 'hidden'); 
+														s.setAttribute('name', 'authenticity_token'); 
+														s.setAttribute('value', window._auth_token); 
+														f.appendChild(s);
+														f.submit();
+														return false;
                           } else {
                             var mask = new Ext.LoadMask(Ext.getBody(), {
                                 msg: t['loader_text']
@@ -1801,7 +1820,8 @@ function init_crud_grid() {
         tbar: toolbar_items.length > 0 ? toolbar_items : null,
 
         view: new Ext.grid.GroupingView({
-            forceFit: true
+            forceFit: true,
+			startCollapsed: crud_options["grid"].start_collapsed
         }),
 
         colModel: new Ext.grid.ColumnModel({

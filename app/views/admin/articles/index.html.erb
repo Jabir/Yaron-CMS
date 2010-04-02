@@ -87,28 +87,8 @@
                       		icon: Ext.MessageBox.QUESTION,
                       		fn: function(btn) {
                       			if (btn == "ok") {
-                      				var mask = new Ext.LoadMask(Ext.getBody(), {
-                      					msg: t['loader_text']
-                      				});
-                      				mask.show();
-
                               d = new Date();
-                              
-                      				$.ajax({
-                      					url: crud_options.edit.url.replace(/!recordid!/, id),
-                      					cache: false,
-                      					data: {
-                      						authenticity_token: window._auth_token,
-                                  _method: 'put',
-                      						"article[published_at]": d.getDate()+"-"+(d.getMonth()+1)+"-"+d.getFullYear(),
-                                  "article[updated_at]": xmlvalue(selected_record,"date")
-                      					},
-                      					type: 'POST',
-                      					success: function(html) {
-                      						store.reload();
-                      						mask.hide();
-                      					}
-                      				});
+                      			  set_publicatie(d.getDate()+"-"+(d.getMonth()+1)+"-"+d.getFullYear());
                       			}
                       		}
                       	});
@@ -135,28 +115,7 @@
                       		icon: Ext.MessageBox.QUESTION,
                       		fn: function(btn) {
                       			if (btn == "ok") {
-                      				var mask = new Ext.LoadMask(Ext.getBody(), {
-                      					msg: t['loader_text']
-                      				});
-                      				mask.show();
-
-                              d = new Date();
-                              
-                      				$.ajax({
-                      					url: crud_options.edit.url.replace(/!recordid!/, id),
-                      					cache: false,
-                      					data: {
-                      						authenticity_token: window._auth_token,
-                                  _method: 'put',
-                      						"article[published_at]": "",
-                                  "article[updated_at]": xmlvalue(selected_record,"date")
-                      					},
-                      					type: 'POST',
-                      					success: function(html) {
-                      						store.reload();
-                      						mask.hide();
-                      					}
-                      				});
+                      			  set_publicatie("");
                       			}
                       		}
                       	});
@@ -171,6 +130,78 @@
         url: '<%= admin_article_path(@site, @section, '!recordid!') %>',
         message: "Wil je het geselecteerde artikel echt verwijderen?<br /><br />Het verwijderen kan niet ongedaan gemaakt worden."
       }
+    });
+  }
+  
+  function set_publicatie (published_at) {
+    var mask = new Ext.LoadMask(Ext.getBody(), {
+        msg: t['loader_text']
+    });
+    mask.show();
+
+    var cell = grid.getSelectionModel().getSelected();
+    var id = cell.id;
+
+    //
+    // Parameters submit verzamelen op basis
+    // van submit_value in options
+    //
+    var parameters = {
+        authenticity_token: window._auth_token,
+        _method: 'put',
+        "article[published_at]": published_at
+    }
+
+    parameters = crud_options.show["custom_form_values"](parameters),
+
+    $.post(crud_options.edit.url.replace(/\!recordid\!/, id), parameters,
+    function(responseText) {
+        article_add_mode = false;
+        responseText = responseText.replace(/[\r\n]/g, "").replace(/.*?(<div class="errorExplanation".*?<\/div>).*/, "$1");
+        if (/errorExplanation/.test(responseText)) {
+            //
+            // Submit mislukt
+            //
+            mask.hide();
+            Ext.Msg.show({
+                title: t['error_title'],
+                msg: responseText,
+                buttons: {
+                    ok: t['ok_text']
+                },
+                icon: Ext.MessageBox.WARNING
+            });
+        } else {
+            //
+            // Submit gelukt
+            //
+            if (typeof(post_submit) != "undefined") {
+                post_submit("edit",
+                function() {
+                    document.getElementById('crud_detail').innerHTML = empty_crud_detail;
+                    crud_panel.setSize("99%", "99%");
+                    crud_panel.setSize("100%", "100%");
+                    selected_record = null;
+                    grid.getSelectionModel().clearSelections();
+                    store.reload({
+                        callback: function() {
+                            mask.hide();
+                        }
+                    });
+                });
+            } else {
+                document.getElementById('crud_detail').innerHTML = empty_crud_detail;
+                crud_panel.setSize("99%", "99%");
+                crud_panel.setSize("100%", "100%");
+                selected_record = null;
+                grid.getSelectionModel().clearSelections();
+                store.reload({
+                    callback: function() {
+                        mask.hide();
+                    }
+                });
+            }
+        }
     });
   }
   

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <%
-  @scheduled_sessions = @conference.scheduled_sessions
+  @scheduled_sessions = @conference.scheduled_sessions if @conference
 %>
 <dataset>
-  <results><%= @scheduled_sessions.length.to_s %></results>
+  <results><%= @scheduled_sessions ? @scheduled_sessions.length.to_s : 0 %></results>
   <% @scheduled_sessions.each do |scheduled_session| %>
     <record>
       <id><%= scheduled_session.id.to_s %></id>
@@ -15,5 +15,5 @@
       <end_datetime><%= Time.parse(scheduled_session.end_date_time).strftime("%H:%M %d-%m-%Y") %></end_datetime>
       <link><%= h scheduled_session.link %></link>
     </record>
-  <% end %>
+  <% end if @scheduled_session %>
 </dataset>
