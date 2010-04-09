@@ -17,10 +17,10 @@ class Admin::IssuesController < Admin::BaseController
   end
 
   def edit
-    if !@issue.editable?
-      flash[:error] = t(:"adva.messages.not_editable")
-      redirect_to admin_adva_issue_url(@site, @newsletter, @issue)
-    end
+    # if !@issue.editable?
+    #   flash[:error] = t(:"adva.messages.not_editable")
+    #   redirect_to admin_adva_issue_url(@site, @newsletter, @issue)
+    # end
   end
 
   def create
@@ -36,6 +36,7 @@ class Admin::IssuesController < Admin::BaseController
   end
 
   def update
+    render :text => "CRUD_OK" and return unless @issue.editable?
     @issue.update_attributes(params[:issue])
     remove_relative_paths
 

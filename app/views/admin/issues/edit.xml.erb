@@ -8,5 +8,22 @@
 		<tracking_campaign><%= @issue.tracking_campaign %></tracking_campaign>
 		<tracking_source><%= @issue.tracking_source %></tracking_source>
 		<filter><%= @issue.filter %></filter>
+		<editable><%= @issue.editable? ? "true" : "false" %></editable>
+		
+		<delivery>
+		  <published><%= @issue.published? ? "true" : "false" %></published>
+		  <queued><%= @issue.queued? ? "true" : "false" %></queued>
+		  <delivered><%= @issue.delivered? ? "true" : "false" %></delivered>
+		  
+		  <admin_adva_delivery_path><%= admin_adva_delivery_path(@site, @newsletter, @issue) %></admin_adva_delivery_path>
+
+      <% if @issue.queued? %>
+        <msg><%= t(:"adva.newsletter.label.issue_deliver_at_long", :delivery_time => @issue.deliver_at ? l(@issue.deliver_at, :format => :long) : "") %></msg>
+      <% end %>
+
+      <% if @issue.delivered? %>
+        <msg><%= t(:"adva.newsletter.delivered_at", :delivered_time => l(@issue.delivered_at, :format => :long)) %></msg>
+      <% end %>
+		</delivery>
 	</record>
 </root>

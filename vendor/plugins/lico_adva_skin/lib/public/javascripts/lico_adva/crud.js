@@ -262,7 +262,7 @@ Ext.ux.form.DateTime = Ext.extend(Ext.form.Field, {
     /**
      * @cfg {String} timeFormat Format of TimeField. Can be localized. (defaults to 'g:i A')
      */
-    ,timeFormat:'g:i A'
+    ,timeFormat:'H:i'
     /**
      * @cfg {Object} dateConfig Config for DateField constructor.
      */
@@ -1992,25 +1992,33 @@ function show_record_details(id) {
             load_custom_stores();
         }
 
-        var form_buttons = [
-        {
-            text: 'Opslaan',
-            iconCls: 'silk-accept',
-            handler: function(btn, ev) {
-                if (grid.getSelectionModel().hasSelection()) {
-                    save_current_record();
-                }
-            },
-            scope: this
-        }
-        ];
+        var form_buttons = [];
+				var allow_save = true;
+        if (crud_options && crud_options.edit && crud_options.edit.allow_save) {
+					allow_save = crud_options.edit.allow_save(record);
+				}
+				
+				if (allow_save) {
+					var form_buttons = [
+	        {
+	            text: 'Opslaan',
+	            iconCls: 'silk-accept',
+	            handler: function(btn, ev) {
+	                if (grid.getSelectionModel().hasSelection()) {
+	                    save_current_record();
+	                }
+	            },
+	            scope: this
+	        }
+	        ];
+				}
 
         if (crud_options.edit && crud_options.edit.custom_actions) {
             $.each(
-            crud_options.edit.custom_actions(doc),
-            function(index, action) {
-                form_buttons[form_buttons.length] = action
-            }
+	            crud_options.edit.custom_actions(doc),
+	            function(index, action) {
+	                form_buttons[form_buttons.length] = action
+	            }
             );
         }
 
@@ -2101,16 +2109,16 @@ function delete_record(id) {
                     },
                     type: 'POST',
                     success: function(html) {
-						if (crud_options.destroy.reload_page_after_destroy) {
-							window.location = window.location
-						} else {
-	                        document.getElementById('crud_detail').innerHTML = empty_crud_detail;
-	                        crud_panel.setSize("99%", "99%");
-	                        crud_panel.setSize("100%", "100%");
-	                        selected_record = null;
-	                        store.reload();
-	                        mask.hide();
-						}
+											if (crud_options.destroy.reload_page_after_destroy) {
+												window.location = window.location
+											} else {
+                        document.getElementById('crud_detail').innerHTML = empty_crud_detail;
+                        crud_panel.setSize("99%", "99%");
+                        crud_panel.setSize("100%", "100%");
+                        selected_record = null;
+                        store.reload();
+                        mask.hide();
+											}
                     }
                 });
             }

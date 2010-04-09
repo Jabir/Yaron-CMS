@@ -6,22 +6,23 @@ class Admin::IssueDeliveryController < Admin::BaseController
 
   def create
     if params[:send_all].present?
-      @issue.deliver ? flash[:notice] = t(:"adva.newsletter.flash.send_all") : failure_message
+      @issue.deliver ? flash[:notice] = "OK " + t(:"adva.newsletter.flash.send_all") : "FAIL " + failure_message
     elsif params[:send_all_later].present?
-      @issue.deliver(:later_at => params[:deliver_at]) ? flash[:notice] = t(:"adva.newsletter.flash.send_all_later") : failure_message
+      @issue.deliver(:later_at => params[:deliver_at]) ? flash[:notice] = "OK " + t(:"adva.newsletter.flash.send_all_later") : "FAIL " + failure_message
     else
-      @issue.deliver(:to => current_user) ? flash[:notice] = t(:"adva.newsletter.flash.send_preview_issue") : failure_message
+      @issue.deliver(:to => current_user) ? flash[:notice] = "OK " + t(:"adva.newsletter.flash.send_preview_issue") : "FAIL " + failure_message
     end
-    redirect_to admin_adva_issue_url(@site, @newsletter, @issue)
+    render :text => flash[:notice].to_s
+    # redirect_to admin_adva_issue_url(@site, @newsletter, @issue)
   end
   
   def destroy
     if @issue.cancel_delivery
-      flash[:notice] = t(:"adva.newsletter.flash.delivery_cancellation_success")
+      render :text => "OK " + t(:"adva.newsletter.flash.delivery_cancellation_success")
     else
-      flash[:error] = t(:"adva.newsletter.flash.delivery_cancellation_failed")
+      render :text => "FAIL " + t(:"adva.newsletter.flash.delivery_cancellation_failed")
     end
-    redirect_to admin_adva_issue_url(@site, @newsletter, @issue)
+    # redirect_to admin_adva_issue_url(@site, @newsletter, @issue)
   end
   
 

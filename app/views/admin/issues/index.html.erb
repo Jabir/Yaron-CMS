@@ -22,6 +22,10 @@
 				label: 'Concept',
 				name: 'draft',
 				type: 'boolean',
+			},{
+				label: 'Status',
+				name: 'state',
+				type: 'string',
 			}],
 			add_record_path: '<%= admin_adva_issues_path(@site.id, @newsletter.id) %>',
 			add_record_post: [{
@@ -44,7 +48,240 @@
         custom_form_values: edit_issue_form_values
       },
       edit: {
-        url: '<%= admin_adva_issue_path(@site, @newsletter, '!recordid!') %>'
+        url: '<%= admin_adva_issue_path(@site, @newsletter, '!recordid!') %>',
+        allow_save: allow_issue_save,
+        custom_actions: function(record) {
+          var editable = xmlvalue(record, "editable") == "true";
+          var draft = xmlvalue(record, "state") == "draft";
+          var delivery = record.getElementsByTagName("delivery")[0];
+          var published = xmlvalue(delivery, "published") == "true";
+          var queued = xmlvalue(delivery, "queued") == "true";
+          var delivered = xmlvalue(delivery, "delivered") == "true";
+      	  if (!draft) {
+            return [{
+              text: published ? "Versturen" : (queued ? "Wachtrij" : 'Verzonden'),
+              iconCls: published ? 'silk-email-go' : 'silk-email-open',
+              handler: function(btn, ev) {
+                //
+                // Verzendstatus ophalen
+                // 
+                var delivery = record.getElementsByTagName("delivery")[0];
+                var published = xmlvalue(delivery, "published") == "true";
+                var queued = xmlvalue(delivery, "queued") == "true";
+                var delivered = xmlvalue(delivery, "delivered") == "true";
+
+                if (published) {
+                  var publish_form = new Ext.FormPanel({
+                    frame: false,
+                    labelWidth: 110,
+                    bodyStyle: 'padding:5px 10px 0;',
+                    fileUpload: true,
+                    errorReader: new Ext.data.CrudReader(),
+                    reader: new Ext.data.CrudReader(),
+                    items: [{
+                      xtype: 'xdatetime',
+                      id: 'deliver_at',
+                      fieldLabel: 'Verzenden op',
+                      name: 'deliver_at[deliver_at]',
+                      dateValidator: function() {
+                        if (document.getElementById("deliver_at-date").value == "") {
+                          return false;
+                        }
+                        var year = "20" + document.getElementById("deliver_at-date").value.replace(/.*\/.*\/(.*)/,"$1");
+                        var day = document.getElementById("deliver_at-date").value.replace(/.*\/(.*)\/.*/,"$1");
+                        var month = parseInt(document.getElementById("deliver_at-date").value.replace(/(.*)\/.*\/.*/,"$1")) - 1;
+                        var difference = (new Date(year, month, day) - new Date());
+                        var days = Math.round(difference/(1000*60*60*24));
+                        if (days < -1) {
+                          return false;
+                        }
+                        return true;
+                      },
+                      timeValidator: function() {
+                        if (document.getElementById("deliver_at-date").value == "" || document.getElementById("deliver_at-time").value == "") {
+                          return false;
+                        }
+                        var year = "20" + document.getElementById("deliver_at-date").value.replace(/.*\/.*\/(.*)/,"$1");
+                        var day = document.getElementById("deliver_at-date").value.replace(/.*\/(.*)\/.*/,"$1");
+                        var month = parseInt(document.getElementById("deliver_at-date").value.replace(/(.*)\/.*\/.*/,"$1")) - 1;
+                        var hours = parseInt(document.getElementById("deliver_at-time").value.replace(/(.*):.*/,"$1"));
+                        var minutes = document.getElementById("deliver_at-time").value.replace(/.*:(.*)/,"$1");
+                        var difference = (new Date(year, month, day, hours, minutes) - new Date());
+                        if (difference < 0) {
+                          return false;
+                        }
+                        return true;
+                      }
+                    }],
+                    buttons: [{
+                      text: 'Annuleren',
+                      iconCls: 'silk-cancel',
+                      handler: function(btn, ev) {
+                        publish_window.destroy();
+                      },
+                      scope: this
+                    },{
+                      text:'Verzenden',
+                      iconCls: 'silk-add',
+                      handler: function(btn, ev) {
+                        if (publish_form.getForm().isValid()) {
+                          publish_form.getForm().submit({
+                            url: xmlvalue(delivery, "admin_adva_delivery_path"),
+                            waitMsg: 'Bezig met laden...',
+                            params: {
+                              authenticity_token: window._auth_token,
+                              "_method": "post",
+                              "send_all_later": "send_all_later"
+                            },
+                            success: function(fp, o){
+                              if (/^OK/.test(__last_xhr_result)) {
+                                store.reload();
+                                publish_window.destroy();
+                                generic_loader.hide();
+                              } else {
+                                publish_window.show();
+                                generic_loader.hide();
+                                Ext.MessageBox.show({
+                                  title: 'Nieuwsbrief verzenden',
+                                  msg: __last_xhr_result.replace(/^FAIL /,""),
+                                  buttons: Ext.MessageBox.OK,
+                                  icon: Ext.MessageBox.ERROR
+                                });
+                              }
+                            },
+                            failure: function(fp, o) {
+                              if (/^OK/.test(__last_xhr_result)) {
+                                store.reload();
+                                publish_window.destroy();
+                                generic_loader.hide();
+                              } else {
+                                publish_window.show();
+                                generic_loader.hide();
+                                Ext.MessageBox.show({
+                                  title: 'Nieuwsbrief verzenden',
+                                  msg: __last_xhr_result.replace(/^FAIL /,""),
+                                  buttons: Ext.MessageBox.OK,
+                                  icon: Ext.MessageBox.ERROR
+                                });
+                              }
+                            }
+                          });
+                        }
+                      },
+                    }]
+                  })
+                  var publish_window = new Ext.Window({
+                    layout: 'fit',
+                    width: 380,
+                    title: 'Nieuwsbrief versturen',
+                    height: 103,
+                    modal: true,
+                    shadow: true,
+                    plain: true,
+                    border: false,
+                    closeAction: 'close',
+                    items: publish_form
+                  });
+                  publish_window.show(this);
+                }
+                
+                if (queued) {
+                  var publish_form = new Ext.FormPanel({
+                     frame: false,
+                     labelWidth: 110,
+                     bodyStyle: 'padding:5px 10px 0;',
+                     fileUpload: true,
+                     errorReader: new Ext.data.CrudReader(),
+                     reader: new Ext.data.CrudReader(),
+                     items: [{
+                       border: false,
+                       html: xmlvalue(delivery, "msg")
+                     }],
+                     buttons: [{
+                       text: 'Ok',
+                       iconCls: 'silk-delete',
+                       handler: function(btn, ev) {
+                         publish_window.destroy();
+                       },
+                       scope: this
+                     },{
+                       text:'Intrekken',
+                       iconCls: 'silk-delete',
+                       handler: function(btn, ev) {
+                         if (publish_form.getForm().isValid()) {
+                           publish_form.getForm().submit({
+                             url: xmlvalue(delivery, "admin_adva_delivery_path"),
+                             waitMsg: 'Bezig met laden...',
+                             params: {
+                               authenticity_token: window._auth_token,
+                               "_method": "delete"
+                             },
+                             success: function(fp, o){
+                               if (/^OK/.test(__last_xhr_result)) {
+                                 store.reload();
+                                 publish_window.destroy();
+                                 generic_loader.hide();
+                               } else {
+                                 publish_window.show();
+                                 generic_loader.hide();
+                                 Ext.MessageBox.show({
+                                   title: 'Nieuwsbrief verzenden',
+                                   msg: __last_xhr_result.replace(/^FAIL /,""),
+                                   buttons: Ext.MessageBox.OK,
+                                   icon: Ext.MessageBox.ERROR
+                                 });
+                               }
+                             },
+                             failure: function(fp, o) {
+                               if (/^OK/.test(__last_xhr_result)) {
+                                 store.reload();
+                                 publish_window.destroy();
+                                 generic_loader.hide();
+                               } else {
+                                 publish_window.show();
+                                 generic_loader.hide();
+                                 Ext.MessageBox.show({
+                                   title: 'Nieuwsbrief verzenden',
+                                   msg: __last_xhr_result.replace(/^FAIL /,""),
+                                   buttons: Ext.MessageBox.OK,
+                                   icon: Ext.MessageBox.ERROR
+                                 });
+                               }
+                             }
+                           });
+                         }
+                       },
+                     }]
+                   })
+                   var publish_window = new Ext.Window({
+                     layout: 'fit',
+                     width: 380,
+                     title: 'Nieuwsbrief versturen',
+                     height: 103,
+                     modal: true,
+                     shadow: true,
+                     plain: true,
+                     border: false,
+                     closeAction: 'close',
+                     items: publish_form
+                   });
+                   publish_window.show(this);
+
+                }
+                
+                if (delivered) {
+                  Ext.MessageBox.show({
+                    title: 'Nieuwsbrief verzenden',
+                    msg: xmlvalue(delivery, "msg"),
+                    buttons: Ext.MessageBox.OK,
+                    icon: Ext.MessageBox.INFO
+                  });
+                }
+                
+              }
+            }]
+      	  } else return [];
+        }
       },
       destroy: {
         url: '<%= admin_adva_issue_path(@site, @newsletter, '!recordid!') %>',
@@ -67,6 +304,10 @@
 
 		return parameters;
 	}
+	
+	function allow_issue_save (record) {
+	  return xmlvalue(record, "editable") == "true";
+	}
   
 	function edit_issue_form (record) {
 		var title = xmlvalue(record,"title");
@@ -78,6 +319,34 @@
 		var filter = xmlvalue(record,"filter");
 
 		return [{
+		  layout: 'column',
+		  border: false,
+		  items: [{
+  			columnWidth: .5,
+  			layout: 'form',
+  			border: false,
+  			items: [{
+  				xtype: 'textfield',
+  				fieldLabel: 'titel',
+  				id: 'title',
+  				name: 'title',
+  				value: title,
+  				anchor: '95%'
+  			}]
+  		},{
+  			columnWidth: .5,
+  			layout: 'form',
+  			border: false,
+  			items: [{
+					xtype: 'checkbox',
+					fieldLabel: 'Concept',
+					id: 'state',
+					name: 'state',
+					checked: state == "draft",
+					mode: 'local'
+  			}]
+		  }]
+		},{
 			xtype: 'tabpanel',
 			plain: true,
 			activeTab: 0,
@@ -86,40 +355,18 @@
 			},
 			items: [{
 				title: 'Issue',
-				layout: 'column',
+				layout: 'fit',
 				border: false,
 				items: [{
-					columnWidth: .5,
-					layout: 'form',
-					border: false,
-					items: [{
-						xtype: 'textfield',
-						fieldLabel: 'titel',
-						id: 'title',
-						name: 'title',
-						value: title
-					},{
-						fieldLabel: 'Body',
-						xtype: 'htmleditor',
-						height: 150,
-						name: 'body',
-						id: 'body',
-						value: body
-					}]
-				},{
-					columnWidth: .5,
-					layout: 'form',
-					border: false,
-					items: [{
-						xtype: 'checkbox',
-						fieldLabel: 'Concept',
-						id: 'state',
-						name: 'state',
-						checked: state == "draft",
-						mode: 'local'
-					}]
+					fieldLabel: 'Body',
+					xtype: 'htmleditor',
+					height: 150,
+					name: 'body',
+					id: 'body',
+					value: body
 				}]
 			},{
+			  height: 176,
 				title: 'Tracking',
 				layout: 'column',
 				border: false,
@@ -132,16 +379,19 @@
 						fieldLabel: 'tracking_campaign',
 						id: 'tracking_campaign',
 						name: 'tracking_campaign',
+						anchor: '95%',
 						value: tracking_campaign
 					},{
 						xtype: 'textfield',
 						fieldLabel: 'tracking_source',
 						id: 'tracking_source',
 						name: 'tracking_source',
+						anchor: '95%',
 						value: tracking_source
 					}]
 				}]
 			},{
+			  height: 176,
 				title: 'Filter',
 				layout: 'column',
 				border: false,
@@ -153,6 +403,7 @@
 						xtype: 'combo',
 						fieldLabel: 'Filter',
 						name: 'filter',
+						anchor: '95%',
 						hiddenName: 'filter',
 						hiddenId: 'filter',
 						value: xmlvalue(record, "filter"),

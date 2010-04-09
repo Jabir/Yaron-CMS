@@ -6,6 +6,7 @@
 			<id><%= issue.id.to_s %></id>
 			<title><%= h issue.title %></title>
 			<draft><%= issue.draft? ? "1" : "0" %></draft>
+			<state><%= t(:"adva.state.#{issue.state}") %></state>
 		</record>
 	<% end %>
 </dataset>
