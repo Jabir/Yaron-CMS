@@ -49,7 +49,7 @@ nl:
       boards: Boards
       cache: Cache
       calendar_events: Events
-      categories: Categorieën
+      categories: Categorieen
       clear: Wissen
       clear_all: Wis alles
       comment: Commentaar
@@ -89,7 +89,7 @@ nl:
       plugins: Plugins
       posts: Bijdrages
       preview: Preview
-      publish_in_categories: Publiceer in deze categorieën
+      publish_in_categories: Publiceer in deze categorieen
       published: Gepubliceerd
       recently_logged_in: Recentelijk ingelogd
       restore_defaults: Standaard Instellingen Herstellen
@@ -152,8 +152,8 @@ nl:
       filter: How is your content written? If you used the graphical text editor, use the default Plain HTML option. Otherwise, choose your markup languange.
       meta_keywords: Enter a few words separated by commas to describe your content. Meta keywords make it easier for search engines to find your page.
       meta_description: Enter a short description of this page so a search engine can tell users what they can find here.
-      template: Enter the location (like “Templates/*”) of the template that articles in this section should use. If you're unsure, leave this field blank.
-      layout: Enter the location (like “Layouts/*”) of the layout that articles in this section should use. If you're unsure, leave this field blank.
+      template: Enter the location (like Templates/*) of the template that articles in this section should use. If you're unsure, leave this field blank.
+      layout: Enter the location (like Layouts/*) of the layout that articles in this section should use. If you're unsure, leave this field blank.
       akismet: Askimet is a third-party service to filter spam. If you've signed up for the service, enter your API Key and URL and check the box to enable this service.
       defensio: Defensio is a third-party service to filter spam. If you've signed up for the service, enter your API Key and URL and check the box to enable this service. 
       roles: Choose which areas this user can access on the site.
@@ -1067,3 +1067,14 @@ nl:
             description: Display a list with a given number of users
             form:
               count: Aantal gebruikers
+
+  YP-CMS:
+    common:
+      save:  Opslaan
+      title: Titel
+      date: Datum
+    titles:
+      permalink: Permalink
+      tag_list: Tag list
+      fixed_top: Vast bovenin
+      meta_tags: Meta tags

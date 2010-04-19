@@ -6,12 +6,12 @@
 
     return init_lico_adva_crud({
       columns: [{
-          label: 'Titel',
+          label: '<%= t(:'YP-CMS.common.title') %>',
           name: 'title',
           type: 'string',
           submit_value: 'article[title]'
         }, {
-          label: 'Datum',
+          label: '<%= t(:'YP-CMS.common.date') %>',
           name: 'created_at', 
           type: 'date',
           submit_value: 'article[updated_at]'
@@ -30,7 +30,7 @@
           name: 'draft',
           type: 'boolean'
         }, {
-          label: 'Vast bovenin',
+          label: '<%= t(:'YP-CMS.titles.fixed_top') %>',
           name: 'fixed_top',
           type: 'boolean'
       }],
