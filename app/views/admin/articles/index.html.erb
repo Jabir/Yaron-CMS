@@ -6,17 +6,17 @@
 
     return init_lico_adva_crud({
       columns: [{
-          label: '<%= t(:'YP-CMS.common.title') %>',
+          label: '<%= t(:'Yaron-CMS.common.title') %>',
           name: 'title',
           type: 'string',
           submit_value: 'article[title]'
         }, {
-          label: '<%= t(:'YP-CMS.common.date') %>',
+          label: '<%= t(:'Yaron-CMS.common.date') %>',
           name: 'created_at', 
           type: 'date',
           submit_value: 'article[updated_at]'
         }, {
-          label: 'Redacteur',
+          label: '<%= t(:'Yaron-CMS.common.author') %>',
           name: 'author',
           type: 'combo',
           submit_value: 'article[author_id]',
@@ -26,11 +26,11 @@
             store: author_store
           }
         }, {
-          label: 'Concept',
+          label: '<%= t(:'Yaron-CMS.common.draft') %>',
           name: 'draft',
           type: 'boolean'
         }, {
-          label: '<%= t(:'YP-CMS.titles.fixed_top') %>',
+          label: '<%= t(:'Yaron-CMS.titles.fixed_top') %>',
           name: 'fixed_top',
           type: 'boolean'
       }],
@@ -50,7 +50,7 @@
         }
       },
       grid: {
-        empty_details: 'Selecteer een artikel voor details.'
+        empty_details: '<%= t(:'Yaron-CMS.grid.articles') %>'
       },
       show: {
         url: '<%= edit_admin_article_path(@site, @section, '!recordid!') %>',
@@ -64,13 +64,13 @@
           var draft = xmlvalue(doc,"draft");
           if (draft=="1") {
             return [{
-                text: 'Preview',
+                text: '<%= t(:'Yaron-CMS.common.preview') %>',
                 iconCls: 'silk-world',
                 handler: function(btn, ev) {
                   window.open('<%= admin_article_path(@site, @section, '!recordid!') %>'.replace(/!recordid!/, xmlvalue(selected_record,"id")));
                 }
               }, {
-                text: 'Publiceren',
+                text: '<%= t(:'Yaron-CMS.common.publish') %>',
                 iconCls: 'silk-accept',
                 handler: function(btn, ev) {
                     if (grid.getSelectionModel().hasSelection()) {
@@ -416,7 +416,7 @@
         border: false,
         items: [{
           xtype: 'textfield',
-          fieldLabel: 'Titel',
+          fieldLabel: '<%= t(:'Yaron-CMS.common.title') %>',
           id: 'record_title',
           name: 'title',
           anchor: '95%',
@@ -428,7 +428,7 @@
         border: false,
         items: [{
           xtype: 'combo',
-          fieldLabel: 'Gewijzigd door',
+          fieldLabel: '<%= t(:'Yaron-CMS.common.edited_by') %>',
           name: 'author_id',
           anchor: '95%',
           value: author,
@@ -450,7 +450,7 @@
 	    },
 	    items: [{
         cls: 'x-plain',
-        title: 'Inleiding',
+        title: '<%= t(:'Yaron-CMS.titles.introduction') %>',
         layout: 'fit',
         items: {
             xtype: 'htmleditor',
@@ -463,7 +463,7 @@
         }
 	    },{
         cls: 'x-plain',
-        title: 'Hele artikel',
+        title: '<%= t(:'Yaron-CMS.titles.article_full') %>',
         layout: 'fit',
         items: {
             xtype: 'htmleditor',
@@ -476,7 +476,7 @@
             ]
         }
 	    },{
-        title: 'Assets',
+        title: '<%= t(:'Yaron-CMS.titles.assets') %>',
         bodyStyle: 'padding: 0px;',
         layout: 'anchor',
         items: [{
@@ -534,7 +534,7 @@
         }]
 	    },{
         cls: 'x-plain',
-        title: 'Categorieen',
+        title: '<%= t(:'Yaron-CMS.titles.categories') %>',
         layout: 'fit',
         items: {
             id: 'categories_select',
@@ -542,7 +542,7 @@
             html: categories_select
         }
 			},{
-				title: 'Opties',
+				title: '<%= t(:'Yaron-CMS.common.options') %>',
 				layout: 'column',
 				border: false,
 				items: [{
@@ -550,7 +550,7 @@
 					layout: 'form',
 					border: false,
 					items: [{
-						fieldLabel: 'Permalink',
+						fieldLabel: '<%= t(:'Yaron-CMS.titles.permalink') %>',
 						name: 'permalink',
 						value: '',
 						id: 'record_permalink',
@@ -558,7 +558,7 @@
 						xtype: 'textfield',
 						anchor: '95%'
 					},{
-						fieldLabel: 'Tag list',
+						fieldLabel: '<%= t(:'Yaron-CMS.titles.tag_list') %>Tag list',
 						name: 'tag_list',
 						id: 'record_tag_list',
 						value: tag_list,
@@ -566,7 +566,7 @@
 						anchor: '95%'
 					},{
 						xtype: 'checkbox',
-						fieldLabel: 'Vast bovenin',
+						fieldLabel: '<%= t(:'Yaron-CMS.titles.fixed_top') %>',
 						id: 'fixed_top',
 						name: 'fixed_top',
 						anchor: '95%',
@@ -581,7 +581,7 @@
 						xtype: 'xdatetime',
 						dateFormat: "d-m-Y",
 						timeFormat: "H:i",
-						fieldLabel: 'Publicatiedatum (UTC)',
+						fieldLabel: '<%= t(:'Yaron-CMS.common.publish_date') %>',
 						id: 'record_published_at',
 						name: 'published_at',
 						anchor: '95%',
@@ -589,7 +589,7 @@
 					}]
 				}]
 			},{
-        title: 'Meta tags',
+        title: '<%= t(:'Yaron-CMS.titles.meta_tags') %>',
         layout: 'column',
         border: false,
         items: [{
@@ -598,14 +598,14 @@
           border: false,
           items: [{
             xtype: 'textfield',
-            fieldLabel: 'Keywords',
+            fieldLabel: '<%= t(:'Yaron-CMS.titles.keywords') %>',
             id: 'record_meta_keywords',
             name: 'meta_keywords',
             anchor: '95%',
             value: meta_keywords
           },{
             xtype: 'textarea',
-            fieldLabel: 'Description',
+            fieldLabel: '<%= t(:'Yaron-CMS.titles.description') %>',
             id: 'meta_description',
             name: 'record_meta_description',
             anchor: '95%',
@@ -617,21 +617,21 @@
           border: false,
           items: [{
             xtype: 'textfield',
-            fieldLabel: 'Author',
+            fieldLabel: '<%= t(:'Yaron-CMS.common.author') %>',
             name: 'meta_author',
             id: 'record_meta_author',
             anchor: '95%',
             value: meta_author
           },{
             xtype: 'textfield',
-            fieldLabel: 'Copyright',
+            fieldLabel: '<%= t(:'Yaron-CMS.titles.copyright') %>',
             name: 'meta_copyright',
             id: 'record_meta_copyright',
             anchor: '95%',
             value: meta_copyright
           },{
             xtype: 'textfield',
-            fieldLabel: 'Geourl',
+            fieldLabel: '<%= t(:'Yaron-CMS.titles.geourl') %>',
             name: 'meta_geourl',
             id: 'record_meta_geourl',
             anchor: '95%',

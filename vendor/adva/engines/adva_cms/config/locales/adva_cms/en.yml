@@ -1065,14 +1065,65 @@ en:
             form:
               count: Number of users
 
-  YP-CMS:
+  Yaron-CMS:
     common:
       save: Save
+      cancel: Cancel
+      remove: Remove
+      add: Add
+      draft: Draft
       title: Title
       date: Date
+      author: Author
+      edited_by: Edited by
+      preview: Preview
+      publish: Publish
+      publish_revoke: Revoke Publish
+      options: Options
+      publish_date: Publish-date (UTC)
+      date: Date
+      revoke: Revoke
     titles:
       permalink: Permalink
       tag_list: Tag list
       fixed_top: Fixed top
       meta_tags: Meta tags
-      
+      assets: Assets
+      asset_add: Add Asset
+      asset_edit: Edit Asset
+      asset_remove: Remove Asset
+      asset_filter: Filter
+      approve: Approve
+      approve_revoke: Revoke Approval
+      approved: Approved
+      introduction: Introduction
+      article_full: Full article
+      body: Body
+      categories: Categories
+      keywords: Keywords
+      description: Description
+      copyright: Copyright
+      geourl: Geourl
+      field: Field
+      contains: Contains
+      host: Host
+      location: Location
+      start: Start
+      end: End
+      calendar: Calendar
+
+    grid:
+      articles: Selecteer een artikel voor details.
+      boards: Select a board for details
+      calendar: 
+      categories: Select a category for details.
+      comments: 
+    confirm:
+      remove:
+        boards: Do you really want to remove this board?
+        categories: Do you really want to remove this category?
+        comments: Do you really want to remove this comment?
+      approve:
+        comments: Weet je zeker dat je dit commentaar wilt goedkeuren?
+      revoke:
+        comments: Weet je zeker dat je de goedkeuring van dit commentaar wilt intrekken?

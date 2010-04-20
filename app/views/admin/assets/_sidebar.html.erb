@@ -50,7 +50,7 @@
               import_window = new Ext.Window({
                 layout: 'fit',
                 width: 400,
-                title: 'Asset toevoegen',
+                title: '<%= t(:'Yaron-CMS.titles.asset_add') %>',
                 height: 167,
                 modal: true,
                 shadow: true,
@@ -65,13 +65,13 @@
         },
         scope: this
       }, {
-        text: 'Filter',
+        text: '<%= t(:'Yaron-CMS.titles.asset_filter') %>',
         iconCls: 'silk-find',
         handler: function(btn, ev) {
           if (!asset_find_window) {
             asset_find_window = new Ext.Window({
               layout:'fit',
-              title: 'Filter',
+              title: '<%= t(:'Yaron-CMS.titles.asset_filter') %>',
               width: 350,
               height: 150,
               closeAction:'hide',
@@ -88,7 +88,7 @@
                 defaults: {width: 230},
                 defaultType: 'textfield',
                 items: [{
-                  fieldLabel: 'Veld',
+                  fieldLabel: '<%= t(:'Yaron-CMS.titles.field') %>',
                   xtype: "combo",
       						hiddenName: 'asset_find_field',
       						hiddenId: 'asset_find_field',
@@ -107,20 +107,20 @@
                   displayField: 'text',
                   value: 'title'
                 },{
-                  fieldLabel: 'Bevat',
+                  fieldLabel: '<%= t(:'Yaron-CMS.titles.contains') %>',
                   name: 'find_value',
                   id: 'asset_find_value'
                 }]
               }),
 
               buttons: [{
-                text: 'Annuleer',
+                text: '<%= t(:'Yaron-CMS.common.cancel') %>',
                 iconCls: 'silk-delete',
                 handler: function() {
                   asset_find_window.hide();
                 }
               },{
-                text:'Filter',
+                text:'<%= t(:'Yaron-CMS.titles.asset_filter') %>',
                 iconCls: 'silk-find',
                 handler: function() {
                   asset_find_window.hide();
@@ -211,7 +211,7 @@
                   import_window = new Ext.Window({
                     layout: 'fit',
                     width: 400,
-                    title: 'Asset bewerken',
+                    title: '<%= t(:'Yaron-CMS.titles.asset_edit') %>',
                     height: 167,
                     modal: true,
                     shadow: true,

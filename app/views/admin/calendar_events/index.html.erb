@@ -39,36 +39,36 @@
 		load_custom_stores();
 		return init_lico_adva_crud({
 			columns: [{
-				label: 'titel',
+				label: '<%= t(:'Yaron-CMS.common.title') %>',
 				name: 'title',
 				type: 'string',
 				submit_value: 'calendar_event[title]'
 			},{
-				label: 'host',
+				label: '<%= t(:'Yaron-CMS.titles.host') %>',
 				name: 'host', 
 				type: 'string',
 				submit_value: 'calendar_event[host]'
 			},{
-				label: 'locatie',
+				label: '<%= t(:'Yaron-CMS.titles.location') %>',
 				name: 'location', 
 				type: 'string',
 				submit_value: 'calendar_event[location]'
 			},{
-				label: 'Start',
+				label: '<%= t(:'Yaron-CMS.titles.start') %>',
 				name: 'start_date', 
 				type: 'datetime',
 				dateFormat: "d-m-Y",
 				timeFormat: "h:i",
 				submit_value: 'calendar_event[start_date]'
 			},{
-				label: 'Eind',
+				label: '<%= t(:'Yaron-CMS.titles.end') %>',
 				name: 'end_date', 
 				type: 'datetime',
 				dateFormat: "d-m-Y",
 				timeFormat: "h:i",
 				submit_value: 'calendar_event[end_date]'
 			},{
-				label: 'Concept',
+				label: '<%= t(:'Yaron-CMS.common.draft') %>',
 				name: 'draft',
 				type: 'boolean',
 			}],
@@ -88,7 +88,7 @@
         }
       },
       grid: {
-        //empty_details: t['board']['selection_empty']
+        empty_details: '<%= t(:'Yaron-CMS.grid.calendar') %>'
       },
       show: {
         url: '<%= edit_admin_calendar_event_path(@site, @section, '!recordid!') %>',
@@ -102,7 +102,7 @@
           var draft = xmlvalue(doc,"draft");
           if (draft=="1") {
             return [{
-                text: 'Publiceren',
+                text: '<%= t(:'Yaron-CMS.common.publish') %>',
                 iconCls: 'silk-accept',
                 handler: function(btn, ev) {
                     if (grid.getSelectionModel().hasSelection()) {
@@ -150,7 +150,7 @@
               }]
           } else {
             return [{
-                text: 'Publicatie intrekken',
+                text: '<%= t(:'Yaron-CMS.common.publish_revoke') %>',
                 iconCls: 'silk-delete',
                 handler: function(btn, ev) {
                     if (grid.getSelectionModel().hasSelection()) {
@@ -259,7 +259,7 @@
         bodyStyle: 'padding:10px'
       },
 			items: [{
-				title: 'Kalender',
+				title: '<%= t(:'Yaron-CMS.titles.calendar') %>',
 				layout: 'column',
 				border: false,
 				items: [{
@@ -271,19 +271,19 @@
 					border: false,
 					items: [{
 						xtype: 'textfield',
-						fieldLabel: 'Titel',
+						fieldLabel: '<%= t(:'Yaron-CMS.common.title') %>',
 						id: 'title',
 						name: 'title',
 						value: title
 					},{
 						xtype: 'textfield',
-						fieldLabel: 'Host',
+						fieldLabel: '<%= t(:'Yaron-CMS.titles.host') %>',
 						id: 'host',
 						name: 'host',
 						value: host
 					},{
 						xtype: 'textfield',
-						fieldLabel: 'Locatie',
+						fieldLabel: '<%= t(:'Yaron-CMS.titles.location') %>',
 						id: 'location',
 						name: 'location',
 						value: location
@@ -294,7 +294,7 @@
 					border: false,
 					items: [{
 						xtype: 'xdatetime',
-						fieldLabel: 'Start',
+						fieldLabel: '<%= t(:'Yaron-CMS.titles.start') %>',
 						id: 'start_date',
 						name: 'start_date', 
 						dateFormat: "d-m-Y",
@@ -302,7 +302,7 @@
 						value: start_date//xmlvalue(record,"start_date").replace(/(\d*)\:(\d*) (\d*)\-(\d*)\-(\d*)/,"$5-$4-$3 $1:$2:00")
 					},{
 						xtype: 'xdatetime',
-						fieldLabel: 'Eind',
+						fieldLabel: '<%= t(:'Yaron-CMS.titles.end') %>',
 						id: 'end_date',
 						name: 'end_date',
 						dateFormat: "d-m-Y",
@@ -310,7 +310,7 @@
 						value: end_date//xmlvalue(record,"end_date").replace(/(\d*)\:(\d*) (\d*)\-(\d*)\-(\d*)/,"$5-$4-$3 $1:$2:00")
 					},{
 						xtype: 'combo',
-						fieldLabel: 'Gewijzigd door',
+						fieldLabel: '<%= t(:'Yaron-CMS.common.edited_by') %>',
 						name: 'name',
 						value: user_id,
 						store: author_store,
@@ -322,7 +322,7 @@
 					}],
 				}]
 			},{
-				title: 'Body',
+				title: '<%= t(:'Yaron-CMS.titles.body') %>',
 				layout: 'fit',
 				items: [{
 					xtype: 'htmleditor',
@@ -332,18 +332,18 @@
 					value: body
 				}]
 			},{
-				title: 'Opties',
+				title: '<%= t(:'Yaron-CMS.common.options') %>',
 				layout: 'form',
 				border: false,
 				items: [{
 					xtype: 'textfield',
-					fieldLabel: 'Permalink',
+					fieldLabel: '<%= t(:'Yaron-CMS.titles.permalink') %>',
 					name: 'permalink',
 					id: 'permalink',
 					value: permalink
 				},{
 					xtype: 'textfield',
-					fieldLabel: 'Tag list',
+					fieldLabel: '<%= t(:'Yaron-CMS.titles.tag_list') %>',
 					name: 'tag_list',
 					id: 'tag_list',
 					value: tag_list

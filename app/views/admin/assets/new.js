@@ -22,14 +22,14 @@ popup_body_items = new Ext.FormPanel({
       name: 'assets[][data]'
     }],
     buttons: [{
-      text: 'Annuleren',
+      text: '<%= t(:'Yaron-CMS.common.cancel') %>',
       iconCls: 'silk-cancel',
 			handler: function(btn, ev) {
         import_window.destroy();
       },
       scope: this
     },{
-      text:'Toevoegen',
+      text:'<%= t(:'Yaron-CMS.common.add') %>',
       iconCls: 'silk-add',
 			handler: function(btn, ev) {
         if(popup_body_items.getForm().isValid()){
@@ -48,7 +48,7 @@ popup_body_items = new Ext.FormPanel({
                  import_window.show();
                   generic_loader.hide();
                   Ext.MessageBox.show({
-                    title: 'Asset toevoegen',
+                    title: '<%= t(:'Yaron-CMS.titles.asset_add') %>',
                     msg: __last_xhr_result,
                     buttons: Ext.MessageBox.OK,
                     icon: Ext.MessageBox.ERROR
@@ -64,7 +64,7 @@ popup_body_items = new Ext.FormPanel({
                  import_window.show();
                   generic_loader.hide();
                   Ext.MessageBox.show({
-                    title: 'Asset toevoegen',
+                    title: '<%= t(:'Yaron-CMS.titles.asset_add') %>',
                     msg: __last_xhr_result,
                     buttons: Ext.MessageBox.OK,
                     icon: Ext.MessageBox.ERROR

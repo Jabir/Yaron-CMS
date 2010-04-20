@@ -1068,13 +1068,65 @@ nl:
             form:
               count: Aantal gebruikers
 
-  YP-CMS:
+  Yaron-CMS:
     common:
       save:  Opslaan
+      cancel: Annuleer
+      remove: Verwijder
+      add: Toevoegen
+      draft: Concept
       title: Titel
       date: Datum
+      author: Redacteur
+      edited_by: Bewerkt door
+      preview: Preview
+      publish: Publiceren
+      publish_revoke: Publicatie Intrekken
+      options: Opties
+      publish_date: Publicatiedatum (UTC)
+      date: Datum
+      revoke: Intrekken
     titles:
       permalink: Permalink
       tag_list: Tag list
       fixed_top: Vast bovenin
       meta_tags: Meta tags
+      assets: Assets
+      asset_add: Asset invoegen
+      asset_edit: Asset bewerken
+      asset_remove: Asset verwijderen
+      asset_filter: Filter
+      approve: Goedkeuren
+      approve_revoke: Goedkeuring intrekken
+      approved: Goedgekeurd
+      introduction: Inleiding
+      article_full: Hele artikel
+      body: Body
+      categories: Categorieën
+      keywords: Keywords
+      description: Omschrijving
+      copyright: Copyright
+      geourl: Geourl
+      field: Veld
+      conains: Bevat
+      host: Host
+      location: Locatie
+      start: Start
+      end: Eind
+      calendar: Kalender
+      comment_on: Commentaar op
+    grid:
+      articles: Selecteer een artikel voor details.
+      boards: Selecteer een board voor details.
+      calendar: 
+      categories: Selecteer een categorie voor details.
+      comments: Selecteer een commentaar voor details.
+    confirm:
+      remove:
+        boards: Weet je zeker dat je dit board wilt verwijderen?
+        categories: Wil je de geselecteerde categorie echt verwijderen?
+        comments: Weet je zeker dat je dit commentaar wilt verwijderen?
+      approve:
+        comments: Weet je zeker dat je dit commentaar wilt goedkeuren?
+      revoke:
+        comments: Weet je zeker dat je de goedkeuring van dit commentaar wilt intrekken?

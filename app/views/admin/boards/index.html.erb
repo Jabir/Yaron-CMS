@@ -15,12 +15,12 @@
   function extjs_body_items() {
     return init_lico_adva_crud({
       columns: [{
-          label: 'Titel',
+          label: '<%= t(:'Yaron-CMS.common.title') %>',
           name: 'title',
           type: 'string',
           submit_value: 'board[title]'
         }, {
-          label: 'Omschrijving',
+          label: '<%= t(:'Yaron-CMS.titles.description') %>',
           name: 'description', 
           type: 'string',
           submit_value: 'board[description]'
@@ -34,7 +34,7 @@
         }
       },
       grid: {
-        empty_details: 'Selecteer een board voor details'
+        empty_details: '<%= t(:'Yaron-CMS.grid.boards') %>'
       },
       show: {
         url: '<%= edit_admin_board_path(@site, @section, '!recordid!') %>',
@@ -46,7 +46,7 @@
       },
       destroy: {
         url: '<%= admin_board_path(@site, @section, '!recordid!') %>',
-        message: 'Weet je zeker dat je dit board wilt verwijderen?'
+        message: '<%= t(:'Yaron-CMS.confirm.remove.boards') %>'
       }
     });
   }
@@ -73,14 +73,14 @@
         border: false,
         items: [{
           xtype: 'textfield',
-          fieldLabel: 'titel',
+          fieldLabel: '<%= t(:'Yaron-CMS.common.title') %>',
           id: 'title',
           name: 'title',
           anchor: '100%',
           value: title
         }, {
           xtype: 'textfield',
-          fieldLabel: 'omschrijving',
+          fieldLabel: '<%= t(:'Yaron-CMS.titles.description') %>',
           id: 'description',
           name: 'description',
           anchor: '100%',
