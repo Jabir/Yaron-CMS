@@ -7,7 +7,9 @@ if Rails.plugin?(:adva_google_analytics)
         track? &&
           newsletter.site.google_analytics_tracking_code.present? &&
           tracking_campaign.present? &&
-          tracking_source.present?
+          tracking_campaign.to_s != "" &&
+          tracking_source.present? &&
+          tracking_source.to_s != ""
       end
       alias :has_tracking_enabled? :tracking_enabled?
 
