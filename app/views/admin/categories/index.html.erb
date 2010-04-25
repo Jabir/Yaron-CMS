@@ -18,7 +18,7 @@
   function extjs_body_items() {
     return init_lico_adva_crud({
       columns: [{
-          label: '<%= t(:'Yaron-CMS.common.title') %>',
+          label: '<%= t(:'adva.common.title') %>',
           name: 'title',
           type: 'string',
           submit_value: 'category[title]'
@@ -32,7 +32,7 @@
         }
       },
       grid: {
-        empty_details: '<%= t(:'Yaron-CMS.grid.categories') %>'
+        empty_details: '<%= t(:'adva.grid.categories') %>'
       },
       show: {
         url: '<%= edit_admin_category_path(@site, @section, '!recordid!') %>',
@@ -44,7 +44,7 @@
       },
       destroy: {
         url: '<%= admin_category_path(@site, @section, '!recordid!') %>',
-        message: '<%= t(:'Yaron-CMS.confirm.remove.categories') %>'
+        message: '<%= t(:'adva.confirm.remove.categories') %>'
       }
     });
   }
@@ -64,7 +64,7 @@
       items: [
       {
           xtype: 'textfield',
-          fieldLabel: '<%= t(:'Yaron-CMS.common.title') %>',
+          fieldLabel: '<%= t(:'adva.common.title') %>',
           id: 'record_title',
           name: 'title',
           anchor: '95%',

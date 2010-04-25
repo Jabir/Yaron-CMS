@@ -39,36 +39,36 @@
 		load_custom_stores();
 		return init_lico_adva_crud({
 			columns: [{
-				label: '<%= t(:'Yaron-CMS.common.title') %>',
+				label: '<%= t(:'adva.common.title') %>',
 				name: 'title',
 				type: 'string',
 				submit_value: 'calendar_event[title]'
 			},{
-				label: '<%= t(:'Yaron-CMS.titles.host') %>',
+				label: '<%= t(:'adva.titles.host') %>',
 				name: 'host', 
 				type: 'string',
 				submit_value: 'calendar_event[host]'
 			},{
-				label: '<%= t(:'Yaron-CMS.titles.location') %>',
+				label: '<%= t(:'adva.titles.location') %>',
 				name: 'location', 
 				type: 'string',
 				submit_value: 'calendar_event[location]'
 			},{
-				label: '<%= t(:'Yaron-CMS.titles.start') %>',
+				label: '<%= t(:'adva.titles.start') %>',
 				name: 'start_date', 
 				type: 'datetime',
 				dateFormat: "d-m-Y",
 				timeFormat: "h:i",
 				submit_value: 'calendar_event[start_date]'
 			},{
-				label: '<%= t(:'Yaron-CMS.titles.end') %>',
+				label: '<%= t(:'adva.titles.end') %>',
 				name: 'end_date', 
 				type: 'datetime',
 				dateFormat: "d-m-Y",
 				timeFormat: "h:i",
 				submit_value: 'calendar_event[end_date]'
 			},{
-				label: '<%= t(:'Yaron-CMS.common.draft') %>',
+				label: '<%= t(:'adva.common.draft') %>',
 				name: 'draft',
 				type: 'boolean',
 			}],
@@ -88,7 +88,7 @@
         }
       },
       grid: {
-        empty_details: '<%= t(:'Yaron-CMS.grid.calendar') %>'
+        empty_details: '<%= t(:'adva.grid.calendar') %>'
       },
       show: {
         url: '<%= edit_admin_calendar_event_path(@site, @section, '!recordid!') %>',
@@ -102,7 +102,7 @@
           var draft = xmlvalue(doc,"draft");
           if (draft=="1") {
             return [{
-                text: '<%= t(:'Yaron-CMS.common.publish') %>',
+                text: '<%= t(:'adva.common.publish') %>',
                 iconCls: 'silk-accept',
                 handler: function(btn, ev) {
                     if (grid.getSelectionModel().hasSelection()) {
@@ -150,7 +150,7 @@
               }]
           } else {
             return [{
-                text: '<%= t(:'Yaron-CMS.common.publish_revoke') %>',
+                text: '<%= t(:'adva.common.publish_revoke') %>',
                 iconCls: 'silk-delete',
                 handler: function(btn, ev) {
                     if (grid.getSelectionModel().hasSelection()) {
@@ -259,7 +259,7 @@
         bodyStyle: 'padding:10px'
       },
 			items: [{
-				title: '<%= t(:'Yaron-CMS.titles.calendar') %>',
+				title: '<%= t(:'adva.titles.calendar') %>',
 				layout: 'column',
 				border: false,
 				items: [{
@@ -271,19 +271,19 @@
 					border: false,
 					items: [{
 						xtype: 'textfield',
-						fieldLabel: '<%= t(:'Yaron-CMS.common.title') %>',
+						fieldLabel: '<%= t(:'adva.common.title') %>',
 						id: 'title',
 						name: 'title',
 						value: title
 					},{
 						xtype: 'textfield',
-						fieldLabel: '<%= t(:'Yaron-CMS.titles.host') %>',
+						fieldLabel: '<%= t(:'adva.titles.host') %>',
 						id: 'host',
 						name: 'host',
 						value: host
 					},{
 						xtype: 'textfield',
-						fieldLabel: '<%= t(:'Yaron-CMS.titles.location') %>',
+						fieldLabel: '<%= t(:'adva.titles.location') %>',
 						id: 'location',
 						name: 'location',
 						value: location
@@ -294,7 +294,7 @@
 					border: false,
 					items: [{
 						xtype: 'xdatetime',
-						fieldLabel: '<%= t(:'Yaron-CMS.titles.start') %>',
+						fieldLabel: '<%= t(:'adva.titles.start') %>',
 						id: 'start_date',
 						name: 'start_date', 
 						dateFormat: "d-m-Y",
@@ -302,7 +302,7 @@
 						value: start_date//xmlvalue(record,"start_date").replace(/(\d*)\:(\d*) (\d*)\-(\d*)\-(\d*)/,"$5-$4-$3 $1:$2:00")
 					},{
 						xtype: 'xdatetime',
-						fieldLabel: '<%= t(:'Yaron-CMS.titles.end') %>',
+						fieldLabel: '<%= t(:'adva.titles.end') %>',
 						id: 'end_date',
 						name: 'end_date',
 						dateFormat: "d-m-Y",
@@ -310,7 +310,7 @@
 						value: end_date//xmlvalue(record,"end_date").replace(/(\d*)\:(\d*) (\d*)\-(\d*)\-(\d*)/,"$5-$4-$3 $1:$2:00")
 					},{
 						xtype: 'combo',
-						fieldLabel: '<%= t(:'Yaron-CMS.common.edited_by') %>',
+						fieldLabel: '<%= t(:'adva.common.edited_by') %>',
 						name: 'name',
 						value: user_id,
 						store: author_store,
@@ -322,7 +322,7 @@
 					}],
 				}]
 			},{
-				title: '<%= t(:'Yaron-CMS.titles.body') %>',
+				title: '<%= t(:'adva.titles.body') %>',
 				layout: 'fit',
 				items: [{
 					xtype: 'htmleditor',
@@ -332,18 +332,18 @@
 					value: body
 				}]
 			},{
-				title: '<%= t(:'Yaron-CMS.common.options') %>',
+				title: '<%= t(:'adva.common.options') %>',
 				layout: 'form',
 				border: false,
 				items: [{
 					xtype: 'textfield',
-					fieldLabel: '<%= t(:'Yaron-CMS.titles.permalink') %>',
+					fieldLabel: '<%= t(:'adva.titles.permalink') %>',
 					name: 'permalink',
 					id: 'permalink',
 					value: permalink
 				},{
 					xtype: 'textfield',
-					fieldLabel: '<%= t(:'Yaron-CMS.titles.tag_list') %>',
+					fieldLabel: '<%= t(:'adva.titles.tag_list') %>',
 					name: 'tag_list',
 					id: 'tag_list',
 					value: tag_list

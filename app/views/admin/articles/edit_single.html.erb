@@ -141,7 +141,7 @@
           border: false,
           items: [{
             xtype: 'textfield',
-            fieldLabel: '<%= t(:'Yaron-CMS.common.title') %>',
+            fieldLabel: '<%= t(:'adva.common.title') %>',
             id: 'record_title',
             name: 'title',
             anchor: '95%',
@@ -153,7 +153,7 @@
           border: false,
           items: [{
             xtype: 'combo',
-            fieldLabel: '<%= t(:'Yaron-CMS.common.edited_by') %>Gewijzigd door',
+            fieldLabel: '<%= t(:'adva.common.edited_by') %>Gewijzigd door',
             name: 'author_id',
             anchor: '95%',
             value: author,
@@ -181,7 +181,7 @@
     	    },
     	    items: [{
             cls: 'x-plain',
-            title: '<%= t(:'Yaron-CMS.titles.introduction') %>',
+            title: '<%= t(:'adva.titles.introduction') %>',
             layout: 'fit',
             items: {
                 xtype: 'htmleditor',
@@ -207,7 +207,7 @@
                 ]
             }
     	    },{
-            title: '<%= t(:'Yaron-CMS.titles.assets') %>',
+            title: '<%= t(:'adva.titles.assets') %>',
             bodyStyle: 'padding: 0px;',
             layout: 'anchor',
             items: [{
@@ -264,26 +264,26 @@
               }
             }]
     	    },{
-            title: '<%= t(:'Yaron-CMS.common.options') %>Opties',
+            title: '<%= t(:'adva.common.options') %>Opties',
             layout: 'form',
             defaults: {
                 width: 230
             },
             defaultType: 'textfield',
             items: [{
-              fieldLabel: '<%= t(:'Yaron-CMS.titles.permalink') %>',
+              fieldLabel: '<%= t(:'adva.titles.permalink') %>',
               name: 'permalink',
               value: '',
               id: 'record_permalink',
               value: permalink
             },{
-              fieldLabel: '<%= t(:'Yaron-CMS.titles.tag_list') %>',
+              fieldLabel: '<%= t(:'adva.titles.tag_list') %>',
               name: 'tag_list',
               id: 'record_tag_list',
               value: tag_list
             },{
               xtype: 'checkbox',
-              fieldLabel: '<%= t(:'Yaron-CMS.titles.fixed_top') %>',
+              fieldLabel: '<%= t(:'adva.titles.fixed_top') %>',
               id: 'fixed_top',
               name: 'fixed_top',
               anchor: '95%',
@@ -291,7 +291,7 @@
               mode: 'local'
             }]
     	    },{
-            title: '<%= t(:'Yaron-CMS.titles.meta_tags') %>',
+            title: '<%= t(:'adva.titles.meta_tags') %>',
             layout: 'column',
             border: false,
             items: [{
@@ -319,7 +319,7 @@
               border: false,
               items: [{
                 xtype: 'textfield',
-                fieldLabel: '<%= t(:'Yaron-CMS.common.author') %>',
+                fieldLabel: '<%= t(:'adva.common.author') %>',
                 name: 'meta_author',
                 id: 'record_meta_author',
                 anchor: '95%',
@@ -342,7 +342,7 @@
     	      }]
     	    }],
     	    buttons: [{
-            text: '<%= t(:'Yaron-CMS.common.save') %>',
+            text: '<%= t(:'adva.common.save') %>',
             iconCls: 'silk-accept',
             handler: function() {
               var mask = new Ext.LoadMask(Ext.getBody(), { msg: t['loader_text'] });

@@ -6,17 +6,17 @@
 
     return init_lico_adva_crud({
       columns: [{
-          label: '<%= t(:'Yaron-CMS.common.title') %>',
+          label: '<%= t(:'adva.common.title') %>',
           name: 'title',
           type: 'string',
           submit_value: 'article[title]'
         }, {
-          label: '<%= t(:'Yaron-CMS.common.date') %>',
+          label: '<%= t(:'adva.common.date') %>',
           name: 'created_at', 
           type: 'date',
           submit_value: 'article[updated_at]'
         }, {
-          label: '<%= t(:'Yaron-CMS.common.author') %>',
+          label: '<%= t(:'adva.common.author') %>',
           name: 'author',
           type: 'combo',
           submit_value: 'article[author_id]',
@@ -26,11 +26,11 @@
             store: author_store
           }
         }, {
-          label: '<%= t(:'Yaron-CMS.common.draft') %>',
+          label: '<%= t(:'adva.common.draft') %>',
           name: 'draft',
           type: 'boolean'
         }, {
-          label: '<%= t(:'Yaron-CMS.titles.fixed_top') %>',
+          label: '<%= t(:'adva.titles.fixed_top') %>',
           name: 'fixed_top',
           type: 'boolean'
       }],
@@ -50,7 +50,7 @@
         }
       },
       grid: {
-        empty_details: '<%= t(:'Yaron-CMS.grid.articles') %>'
+        empty_details: '<%= t(:'adva.grid.articles') %>'
       },
       show: {
         url: '<%= edit_admin_article_path(@site, @section, '!recordid!') %>',
@@ -64,13 +64,13 @@
           var draft = xmlvalue(doc,"draft");
           if (draft=="1") {
             return [{
-                text: '<%= t(:'Yaron-CMS.common.preview') %>',
+                text: '<%= t(:'adva.common.preview') %>',
                 iconCls: 'silk-world',
                 handler: function(btn, ev) {
                   window.open('<%= admin_article_path(@site, @section, '!recordid!') %>'.replace(/!recordid!/, xmlvalue(selected_record,"id")));
                 }
               }, {
-                text: '<%= t(:'Yaron-CMS.common.publish') %>',
+                text: '<%= t(:'adva.common.publish') %>',
                 iconCls: 'silk-accept',
                 handler: function(btn, ev) {
                     if (grid.getSelectionModel().hasSelection()) {
@@ -416,7 +416,7 @@
         border: false,
         items: [{
           xtype: 'textfield',
-          fieldLabel: '<%= t(:'Yaron-CMS.common.title') %>',
+          fieldLabel: '<%= t(:'adva.common.title') %>',
           id: 'record_title',
           name: 'title',
           anchor: '95%',
@@ -428,7 +428,7 @@
         border: false,
         items: [{
           xtype: 'combo',
-          fieldLabel: '<%= t(:'Yaron-CMS.common.edited_by') %>',
+          fieldLabel: '<%= t(:'adva.common.edited_by') %>',
           name: 'author_id',
           anchor: '95%',
           value: author,
@@ -450,7 +450,7 @@
 	    },
 	    items: [{
         cls: 'x-plain',
-        title: '<%= t(:'Yaron-CMS.titles.introduction') %>',
+        title: '<%= t(:'adva.titles.introduction') %>',
         layout: 'fit',
         items: {
             xtype: 'htmleditor',
@@ -463,7 +463,7 @@
         }
 	    },{
         cls: 'x-plain',
-        title: '<%= t(:'Yaron-CMS.titles.article_full') %>',
+        title: '<%= t(:'adva.titles.article_full') %>',
         layout: 'fit',
         items: {
             xtype: 'htmleditor',
@@ -476,7 +476,7 @@
             ]
         }
 	    },{
-        title: '<%= t(:'Yaron-CMS.titles.assets') %>',
+        title: <%= t(:'adva.titles.assets').to_json %>,
         bodyStyle: 'padding: 0px;',
         layout: 'anchor',
         items: [{
@@ -534,7 +534,7 @@
         }]
 	    },{
         cls: 'x-plain',
-        title: '<%= t(:'Yaron-CMS.titles.categories') %>',
+        title: '<%= t(:'adva.titles.categories') %>',
         layout: 'fit',
         items: {
             id: 'categories_select',
@@ -542,7 +542,7 @@
             html: categories_select
         }
 			},{
-				title: '<%= t(:'Yaron-CMS.common.options') %>',
+				title: '<%= t(:'adva.common.options') %>',
 				layout: 'column',
 				border: false,
 				items: [{
@@ -550,7 +550,7 @@
 					layout: 'form',
 					border: false,
 					items: [{
-						fieldLabel: '<%= t(:'Yaron-CMS.titles.permalink') %>',
+						fieldLabel: '<%= t(:'adva.titles.permalink') %>',
 						name: 'permalink',
 						value: '',
 						id: 'record_permalink',
@@ -558,7 +558,7 @@
 						xtype: 'textfield',
 						anchor: '95%'
 					},{
-						fieldLabel: '<%= t(:'Yaron-CMS.titles.tag_list') %>Tag list',
+						fieldLabel: '<%= t(:'adva.titles.tag_list') %>Tag list',
 						name: 'tag_list',
 						id: 'record_tag_list',
 						value: tag_list,
@@ -566,7 +566,7 @@
 						anchor: '95%'
 					},{
 						xtype: 'checkbox',
-						fieldLabel: '<%= t(:'Yaron-CMS.titles.fixed_top') %>',
+						fieldLabel: '<%= t(:'adva.titles.fixed_top') %>',
 						id: 'fixed_top',
 						name: 'fixed_top',
 						anchor: '95%',
@@ -581,7 +581,7 @@
 						xtype: 'xdatetime',
 						dateFormat: "d-m-Y",
 						timeFormat: "H:i",
-						fieldLabel: '<%= t(:'Yaron-CMS.common.publish_date') %>',
+						fieldLabel: '<%= t(:'adva.common.publish_date') %>',
 						id: 'record_published_at',
 						name: 'published_at',
 						anchor: '95%',
@@ -589,7 +589,7 @@
 					}]
 				}]
 			},{
-        title: '<%= t(:'Yaron-CMS.titles.meta_tags') %>',
+        title: '<%= t(:'adva.titles.meta_tags') %>',
         layout: 'column',
         border: false,
         items: [{
@@ -598,14 +598,14 @@
           border: false,
           items: [{
             xtype: 'textfield',
-            fieldLabel: '<%= t(:'Yaron-CMS.titles.keywords') %>',
+            fieldLabel: '<%= t(:'adva.titles.keywords') %>',
             id: 'record_meta_keywords',
             name: 'meta_keywords',
             anchor: '95%',
             value: meta_keywords
           },{
             xtype: 'textarea',
-            fieldLabel: '<%= t(:'Yaron-CMS.titles.description') %>',
+            fieldLabel: '<%= t(:'adva.titles.description') %>',
             id: 'meta_description',
             name: 'record_meta_description',
             anchor: '95%',
@@ -617,21 +617,21 @@
           border: false,
           items: [{
             xtype: 'textfield',
-            fieldLabel: '<%= t(:'Yaron-CMS.common.author') %>',
+            fieldLabel: '<%= t(:'adva.common.author') %>',
             name: 'meta_author',
             id: 'record_meta_author',
             anchor: '95%',
             value: meta_author
           },{
             xtype: 'textfield',
-            fieldLabel: '<%= t(:'Yaron-CMS.titles.copyright') %>',
+            fieldLabel: '<%= t(:'adva.titles.copyright') %>',
             name: 'meta_copyright',
             id: 'record_meta_copyright',
             anchor: '95%',
             value: meta_copyright
           },{
             xtype: 'textfield',
-            fieldLabel: '<%= t(:'Yaron-CMS.titles.geourl') %>',
+            fieldLabel: '<%= t(:'adva.titles.geourl') %>',
             name: 'meta_geourl',
             id: 'record_meta_geourl',
             anchor: '95%',

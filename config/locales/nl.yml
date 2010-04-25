@@ -4,12 +4,29 @@ nl:
       messages:
         only_integer: can only be whole number.
   adva:
+    grid:
+      articles: Selecteer een artikel voor details
+      categories: Selecteer een categorie voor details
+      comments: Selecteer een commentaar voor details
+    confirm:
+      approve:
+        comments: Weet je zeker dat je dit commentaar wilt goedkeuren?
+      revoke:
+        comments: Weet je zeker dat je de goedkeuring van dit commentaar wilt intrekken?
+      remove:
+        categories: Weet je zeker dat je deze categorie wilt verwijderen?
+        comments: Weet je zeker dat je dit commentaar wilt verwijderen?
     common:
       locale: taalschema
       content_locale: Content locale
       about: Over
       details: Details
+      date: Datum
+      author: Auteur
+      draft: Concept
       by_author: door {{author}}
+      edited_by: Bewerkt door
+      publish_date: Publicatiedatum
       cancel: Annuleren
       edit: Bewerk
       delete: Verwijder
@@ -21,6 +38,8 @@ nl:
       import: Importeren
       subscribe: Abboneren
       approve: Goedkeuren
+      revoke: Intrekken
+      approve_revoke: Intrekken
       unapprove: Afkeuren
       language: Taal
       none: geen
@@ -28,6 +47,9 @@ nl:
       previous: Vorige
       events: Gebeurtenissen
       you: Jij
+      options: Opties
+      preview: Voorbeeld
+      publish: Publiceren
       connector:
         or: of
       "yes": "ja"
@@ -38,6 +60,16 @@ nl:
       add: Voeg toe
       add_new: Voeg nieuwe toe
     titles: 
+      fixed_top: Vast bovenin
+      introduction: Introductie
+      article_full: Volledig artikel
+      description: Omschrijving
+      copyright: Copyright
+      comment_on: Commentaar op
+      approved: Goedgekeurd
+      geourl: Geo-url
+      categories: Categorieën
+      keywords: Sleutelwoorden
       accounts: Accounts
       actions: Acties
       activate: Activatie

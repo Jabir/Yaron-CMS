@@ -3,19 +3,19 @@
 function extjs_body_items() {
 	return init_lico_adva_crud({
 		columns: [{
-			label: '<%= t(:'Yaron-CMS.common.author') %>',
+			label: '<%= t(:'adva.common.author') %>',
 			name: 'author',
 			type: 'string'
 		},{
-			label: '<%= t(:'Yaron-CMS.common.date') %>',
+			label: '<%= t(:'adva.common.date') %>',
 			name: 'updated_at',
 			type: 'string'
 		},{
-			label: '<%= t(:'Yaron-CMS.titles.comment_on') %>',
+			label: '<%= t(:'adva.titles.comment_on') %>',
 			name: 'comment_for',
 			type: 'string',
 		},{
-			label: '<%= t(:'Yaron-CMS.titles.approved') %>',
+			label: '<%= t(:'adva.titles.approved') %>',
 			name: 'active',
 			type: 'boolean'
 		}],
@@ -27,7 +27,7 @@ function extjs_body_items() {
 			}
 		},
 		grid: {
-      empty_details: '<%= t(:'Yaron-CMS.grid.comments') %>'
+      empty_details: '<%= t(:'adva.grid.comments') %>'
 		},
 		show: {
 			url: '<%= edit_admin_comment_path('!recordid!') %>',
@@ -41,18 +41,18 @@ function extjs_body_items() {
 				buttons = [];
 				if (active=="1") {
 					buttons[buttons.length] = {
-						text: '<%= t(:'Yaron-CMS.common.approve_revoke') %>',
+						text: '<%= t(:'adva.common.approve_revoke') %>',
 						iconCls: 'silk-delete',
 						handler: function(btn, ev) {
 							if (grid.getSelectionModel().hasSelection()) {
 								var cell = grid.getSelectionModel().getSelected();
 								Ext.Msg.show({
 									id: 'publish-confirm',
-									title: '<%= t(:'Yaron-CMS.common.approve_revoke') %>',
-									msg: '<%= t(:'Yaron-CMS.confirm.revoke.comments') %>',
+									title: '<%= t(:'adva.common.approve_revoke') %>',
+									msg: '<%= t(:'adva.confirm.revoke.comments') %>',
 									buttons: {
-										ok: '<%= t(:'Yaron-CMS.common.revoke') %>',
-										cancel: '<%= t(:'Yaron-CMS.common.cancel.') %>'
+										ok: '<%= t(:'adva.common.revoke') %>',
+										cancel: '<%= t(:'adva.common.cancel.') %>'
 									},
 									icon: Ext.MessageBox.QUESTION,
 									fn: function(btn) {
@@ -86,18 +86,18 @@ function extjs_body_items() {
           }
         } else {
 					buttons[buttons.length] = {
-						text: '<%= t(:'Yaron-CMS.common.approve') %>',
+						text: '<%= t(:'adva.common.approve') %>',
 						iconCls: 'silk-accept',
 						handler: function(btn, ev) {
 							if (grid.getSelectionModel().hasSelection()) {
 								var cell = grid.getSelectionModel().getSelected();
 								Ext.Msg.show({
 									id: 'publish-confirm',
-									title: '<%= t(:'Yaron-CMS.common.approve') %>',
-									msg: '<%= t(:'Yaron-CMS.confirm.approve.comments') %>',
+									title: '<%= t(:'adva.common.approve') %>',
+									msg: '<%= t(:'adva.confirm.approve.comments') %>',
 									buttons: {
-										ok: '<%= t(:'Yaron-CMS.common.approve') %>',
-										cancel: '<%= t(:'Yaron-CMS.common.cancel') %>'
+										ok: '<%= t(:'adva.common.approve') %>',
+										cancel: '<%= t(:'adva.common.cancel') %>'
 									},
 									icon: Ext.MessageBox.QUESTION,
 									fn: function(btn) {
@@ -135,7 +135,7 @@ function extjs_body_items() {
     },
 		destroy: {
 			url: '<%= admin_comment_path(@site, '!recordid!') %>',
-      message: '<%= t(:'Yaron-CMS.confirm.remove.comments') %>'
+      message: '<%= t(:'adva.confirm.remove.comments') %>'
 		}
 	});
 }

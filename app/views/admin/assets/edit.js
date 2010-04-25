@@ -24,20 +24,20 @@ popup_body_items = new Ext.FormPanel({
       name: 'asset[data]'
     }],
     buttons: [{
-      text: '<%= t(:'Yaron-CMS.common.cancel') %>',
+      text: '<%= t(:'adva.common.cancel') %>',
       iconCls: 'silk-cancel',
 			handler: function(btn, ev) {
         import_window.destroy();
       },
       scope: this
     },{
-      text: '<%= t(:'Yaron-CMS.common.remove') %>',
+      text: '<%= t(:'adva.common.remove') %>',
       iconCls: 'silk-delete',
       handler: function(btn, ev) {
         Ext.Msg.show({
             id: 'delete_confirm',
-            title: '<%= t(:'Yaron-CMS.titles.asset_remove') %>',
-            msg: '<%= t(:'Yaron-CMS.titles.asset_remove') %>?',
+            title: '<%= t(:'adva.titles.asset_remove') %>',
+            msg: '<%= t(:'adva.titles.asset_remove') %>?',
             buttons: {
                 ok: t['delete_text'],
                 cancel: t['cancel_text']
@@ -66,7 +66,7 @@ popup_body_items = new Ext.FormPanel({
       },
       scope: this
     },{
-      text:'<%= t(:'Yaron-CMS.common.save') %>',
+      text:'<%= t(:'adva.common.save') %>',
       iconCls: 'silk-add',
 			handler: function(btn, ev) {
         if(popup_body_items.getForm().isValid()){
@@ -86,7 +86,7 @@ popup_body_items = new Ext.FormPanel({
                  import_window.show();
                   generic_loader.hide();
                   Ext.MessageBox.show({
-                    title: '<%= t(:'Yaron-CMS.titles.asset_edit') %>',
+                    title: '<%= t(:'adva.titles.asset_edit') %>',
                     msg: __last_xhr_result,
                     buttons: Ext.MessageBox.OK,
                     icon: Ext.MessageBox.ERROR
@@ -102,7 +102,7 @@ popup_body_items = new Ext.FormPanel({
                  import_window.show();
                   generic_loader.hide();
                   Ext.MessageBox.show({
-                    title: '<%= t(:'Yaron-CMS.titles.asset_edit') %>',
+                    title: '<%= t(:'adva.titles.asset_edit') %>',
                     msg: __last_xhr_result,
                     buttons: Ext.MessageBox.OK,
                     icon: Ext.MessageBox.ERROR
