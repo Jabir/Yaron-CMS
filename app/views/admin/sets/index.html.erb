@@ -19,7 +19,7 @@
 	function extjs_body_items() {
 		return init_lico_adva_crud({
 			columns: [{
-				label: 'titel',
+				label: '<%= t(:'adva.common.title') %>',
 				name: 'title',
 				type: 'string',
 				submit_value: 'set[title]'
@@ -77,7 +77,7 @@
 					border: false,
 					items: [{
 						xtype: 'textfield',
-						fieldLabel: 'titel',
+						fieldLabel: '<%= t(:'adva.common.title') %>',
 						id: 'title',
 						name: 'title',
 						value: title

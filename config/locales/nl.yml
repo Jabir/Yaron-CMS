@@ -17,6 +17,7 @@ nl:
         categories: Weet je zeker dat je deze categorie wilt verwijderen?
         comments: Weet je zeker dat je dit commentaar wilt verwijderen?
     common:
+      titel: Titel
       locale: taalschema
       content_locale: Content locale
       about: Over
@@ -98,7 +99,7 @@ nl:
       general_settings: Algemene instellingen
       history: History
       import: Importeren
-      install: adva-cms installatie
+      install: Yaron-CMS installatie
       issues: Issues
       login: Inloggen
       logout: Uitloggen

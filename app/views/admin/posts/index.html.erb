@@ -35,7 +35,7 @@
         submit_value: 'post[commentable_id]',
         combo: {
           value: 'topic_id',
-          label: 'title',
+          label: '<%= t(:'adva.common.title') %>',
           store: topic_store
         },
 				hidden: true
@@ -45,11 +45,11 @@
 				type: 'string',
         submit_value: 'post[body]'
 			},{
-				label: 'Datum',
+				label: '<%= t(:'adva.common.date') %>',
 				name: 'updated_at',
 				type: 'string'
 			},{
-				label: 'Datum',
+				label: '<%= t(:'adva.common.date') %>',
 				name: 'updated_at_time',
 				type: 'string',
 				hidden: true
@@ -76,7 +76,7 @@
       },
       destroy: {
        url: '<%= admin_post_path(@site, @section, '!recordid!') %>',
-       message: 'Weet je zeker dat je dit topic wilt verwijderen?',
+       message: '<%= t(:'adva.confirm.remove.topics') %>',
        reload_page_after_destroy: true
        // na het verwijderen van de laatste post van een topic wordt ook het topic verwijderd..
        // hele scherm maar even vernieuwen totdat topic_store een remote store wordt..

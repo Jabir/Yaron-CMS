@@ -16,7 +16,7 @@
   var import_form = false;
 	function extjs_toolbar_items () {
     return [{
-        text: 'Toevoegen',
+        text: '<%= t(:'adva.common.add') %>',
         iconCls: 'silk-add',
         handler: function(btn, ev) {
           var import_form = new Ext.FormPanel({
@@ -28,7 +28,7 @@
             reader: new Ext.data.CrudReader(),
             items: [{
               xtype: 'textfield',
-              fieldLabel: 'Titel',
+              fieldLabel: '<%= t(:'adva.common.title') %>',
               name: 'photo[title]'
             },{
               xtype: 'fileuploadfield',
@@ -38,14 +38,14 @@
               name: 'photo[data]'
             }],
             buttons: [{
-              text: 'Annuleren',
+              text: '<%= t(:'adva.common.cancel') %>',
               iconCls: 'silk-cancel',
         			handler: function(btn, ev) {
                 import_window.destroy();
               },
               scope: this
             },{
-              text:'Importeren',
+              text:'<%= t(:'adva.common.import') %>',
               iconCls: 'silk-add',
         			handler: function(btn, ev) {
                 if(import_form.getForm().isValid()){
@@ -114,12 +114,12 @@
 	function extjs_body_items() {
 		return init_lico_adva_crud({
 			columns: [{
-				label: 'titel',
+				label: '<%= t(:'adva.common.title') %>',
 				name: 'title',
 				type: 'string',
 				submit_value: 'photo[title]'
 			},{
-        label: 'Concept',
+        label: '<%= t(:'adva.common.draft') %>',
         name: 'draft',
         type: 'boolean'
 			}],
@@ -131,7 +131,7 @@
         }
       },
       grid: {
-        empty_details: 'Selecteer een afbeelding voor details'
+        empty_details: '<%= t(:'adva.grid.photos') %>'
       },
       show: {
         url: '<%= edit_admin_photo_path(@site, @section, '!recordid!') %>',
@@ -145,7 +145,7 @@
           var draft = xmlvalue(doc,"draft");
           if (draft=="1") {
             return [{
-                text: 'Publiceren',
+                text: '<%= t(:'adva.common.publish') %>',
                 iconCls: 'silk-accept',
                 handler: function(btn, ev) {
                     if (grid.getSelectionModel().hasSelection()) {
@@ -156,8 +156,8 @@
                       		title: 'Foto publiceren',
                       		msg: 'Weet je zeker dat je deze foto wilt publiceren?',
                       		buttons: {
-                      			ok: 'Publiceren',
-                      			cancel: t['cancel_text']
+                      			ok: '<%= t(:'adva.common.publish') %>',
+                      			cancel: '<%= t(:'adva.common.cancel') %>'
                       		},
                       		icon: Ext.MessageBox.QUESTION,
                       		fn: function(btn) {
@@ -204,8 +204,8 @@
                       		title: 'Publicatie intrekken',
                       		msg: 'Weet je zeker dat je de publicatie van deze foto wilt intrekken?',
                       		buttons: {
-                      			ok: 'Intrekken',
-                      			cancel: t['cancel_text']
+                      			ok: '<%= t(:'adva.common.revoke') %>',
+                      			cancel: '<%= t(:'adva.common.cancel') %>'
                       		},
                       		icon: Ext.MessageBox.QUESTION,
                       		fn: function(btn) {
@@ -290,7 +290,7 @@
         border: false,
         items: [{
           xtype: 'textfield',
-          fieldLabel: 'Titel',
+          fieldLabel: '<%= t(:'adva.common.title') %>',
           id: 'record_title',
           name: 'title',
           anchor: '95%',

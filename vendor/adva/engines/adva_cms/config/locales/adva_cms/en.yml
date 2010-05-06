@@ -6,10 +6,11 @@ en:
   adva:
     grid:
       articles: Select an article for details.
-      boards: Select a board for details
+      boards: Select a board for details.
       calendar: 
       categories: Select a category for details.
       comments: 
+      photos: Select a photo for details.
     confirm:
       approve:
         comments: Weet je zeker dat je dit commentaar wilt goedkeuren?
@@ -19,6 +20,7 @@ en:
         boards: Do you really want to remove this board?
         categories: Do you really want to remove this category?
         comments: Do you really want to remove this comment?
+        topics: Are you sure you want to remove this topic?
     common:
       locale: Locale
       content_locale: Content locale
@@ -63,9 +65,10 @@ en:
       add: Add
       add_new: add new
     titles:
+      title: Title
       fixed_top: Fixed-top
       introduction: Introduction
-      article_full Full Article
+      article_full: Full Article
       description: Description
       copyright: Copyright
       comment_on: Comment on

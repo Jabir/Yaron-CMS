@@ -10,6 +10,7 @@ nl:
       calendar: 
       categories: Selecteer een categorie voor details.
       comments: Selecteer een commentaar voor details.
+      photos: Selecteer een foto voor details.
     confirm:
       approve:
         comments: Weet je zeker dat je dit commentaar wilt goedkeuren?
@@ -19,7 +20,9 @@ nl:
         boards: Weet je zeker dat je dit board wilt verwijderen?
         categories: Wil je de geselecteerde categorie echt verwijderen?
         comments: Weet je zeker dat je dit commentaar wilt verwijderen?
+        topics: Weet je zeker dat je dit topic wilt verwijderen?
     common:
+      title: Titel
       locale: taalschema
       content_locale: Content locale
       about: Over

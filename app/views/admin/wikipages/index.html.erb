@@ -39,12 +39,12 @@
 		load_custom_stores();
 		return init_lico_adva_crud({
 			columns: [{
-				label: 'titel',
+				label: '<%= t(:'adva.common.title') %>',
 				name: 'title',
 				type: 'string',
 				submit_value: 'wikipage[title]'
 			},{
-				label: 'Redacteur',
+				label: '<%= t(:'adva.common.author') %>',
 				name: 'author',
 				type: 'combo',
 				submit_value: 'wikipage[author_id]',
@@ -62,7 +62,7 @@
 				name: 'updated_at',
 				type: 'string',
 			},{
-				label: 'Commentaren',
+				label: '<%= t(:'adva.titles.comments') %>',
 				name: 'comment',
 				type: 'string',
 			}],
@@ -82,7 +82,7 @@
 				}
 			},
       grid: {
-        //empty_details: t['board']['selection_empty']
+        empty_details: '<%= t(:'adva.grid.wikipages') %>'
       },
       show: {
         url: '<%= edit_admin_wikipage_path(@site, @section, '!recordid!') %>',
@@ -126,7 +126,7 @@
 				border: false,
 				items: [{
 					xtype: 'textfield',
-					fieldLabel: 'titel',
+					fieldLabel: '<%= t(:'adva.common.title') %>',
 					id: 'record_title',
 					name: 'title',
 					value: title
@@ -150,7 +150,7 @@
             value: body
         }
 			},{
-				title: 'Opties',
+				title: '<%= t(:'adva.common.options') %>',
 				layout: 'column',
 				border: false,
 				items: [{
@@ -172,7 +172,7 @@
 						value: tag_list
 					},{
 						xtype: 'combo',
-						fieldLabel: 'Filter',
+						fieldLabel: '<%= t(:'adva.labels.filters') %>',
 						name: 'filter',
 						hiddenName: 'record_filter',
 						hiddenId: 'record_filter',
@@ -207,7 +207,7 @@
 						})
 					},{
 						xtype: 'combo',
-						fieldLabel: 'Gewijzigd door',
+						fieldLabel: '<%= t(:'adva.common.edited_by') %>',
 						name: 'author_id',
 						value: author,
 						triggerAction: 'all',
