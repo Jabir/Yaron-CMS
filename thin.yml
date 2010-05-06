@@ -7,7 +7,7 @@ port: 4001
 chdir: /var/www/Yaron-CMS
 environment: production
 max_persistent_conns: 128
-servers: 1
+servers: 2
 daemonize: true
 address: 0.0.0.0
 require: []

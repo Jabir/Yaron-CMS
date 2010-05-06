@@ -13,7 +13,7 @@ class ContentCell < BaseCell
     
     order = @opts[:order] ? @opts[:order] : "created_at DESC"
     limit = @opts[:count] ? @opts[:count] : 5
-    @content = Content.published(:order => order, :limit => limit)
+    @content = Content.published(:order => order, :limit => limit, :conditions => {:site_id => 1})
     nil
   end
 end

@@ -4,12 +4,32 @@ en:
       messages:
         only_integer: can only be whole number.
   adva:
+    grid:
+      articles: Select an article for details.
+      boards: Select a board for details
+      calendar: 
+      categories: Select a category for details.
+      comments: 
+    confirm:
+      approve:
+        comments: Weet je zeker dat je dit commentaar wilt goedkeuren?
+      revoke:
+        comments: Weet je zeker dat je de goedkeuring van dit commentaar wilt intrekken?
+      remove:
+        boards: Do you really want to remove this board?
+        categories: Do you really want to remove this category?
+        comments: Do you really want to remove this comment?
     common:
       locale: Locale
       content_locale: Content locale
       about: About
       details: Details
+      date: Date
+      author: Author
+      draft: Draft
       by_author: by {{author}}
+      edited_by: Edited by
+      publish_date: Publish date
       cancel: Cancel
       edit: Edit
       delete: Delete
@@ -21,6 +41,8 @@ en:
       import: Import
       subscribe: Subscribe
       approve: Approve
+      revoke: Revoke
+      approve_revoke: Revoke
       unapprove: Unapprove
       language: Language
       none: none
@@ -28,6 +50,9 @@ en:
       previous: Previous
       events: Events
       you: You
+      options: Options
+      preview: Preview
+      publish: Publish
       connector:
         or: or
       "yes": "yes"
@@ -37,7 +62,17 @@ en:
       unknown: unknown
       add: Add
       add_new: add new
-    titles: 
+    titles:
+      fixed_top: Fixed-top
+      introduction: Introduction
+      article_full Full Article
+      description: Description
+      copyright: Copyright
+      comment_on: Comment on
+      approved: Approved
+      geourl: Geo-URL
+      categories: Categories
+      keywords: Keywords
       accounts: Accounts
       actions: Actions
       activate: Activate
@@ -1064,66 +1099,3 @@ en:
             description: Display a list with a given number of users
             form:
               count: Number of users
-
-  Yaron-CMS:
-    common:
-      save: Save
-      cancel: Cancel
-      remove: Remove
-      add: Add
-      draft: Draft
-      title: Title
-      date: Date
-      author: Author
-      edited_by: Edited by
-      preview: Preview
-      publish: Publish
-      publish_revoke: Revoke Publish
-      options: Options
-      publish_date: Publish-date (UTC)
-      date: Date
-      revoke: Revoke
-    titles:
-      permalink: Permalink
-      tag_list: Tag list
-      fixed_top: Fixed top
-      meta_tags: Meta tags
-      assets: Assets
-      asset_add: Add Asset
-      asset_edit: Edit Asset
-      asset_remove: Remove Asset
-      asset_filter: Filter
-      approve: Approve
-      approve_revoke: Revoke Approval
-      approved: Approved
-      introduction: Introduction
-      article_full: Full article
-      body: Body
-      categories: Categories
-      keywords: Keywords
-      description: Description
-      copyright: Copyright
-      geourl: Geourl
-      field: Field
-      contains: Contains
-      host: Host
-      location: Location
-      start: Start
-      end: End
-      calendar: Calendar
-
-    grid:
-      articles: Selecteer een artikel voor details.
-      boards: Select a board for details
-      calendar: 
-      categories: Select a category for details.
-      comments: 
-    confirm:
-      remove:
-        boards: Do you really want to remove this board?
-        categories: Do you really want to remove this category?
-        comments: Do you really want to remove this comment?
-      approve:
-        comments: Weet je zeker dat je dit commentaar wilt goedkeuren?
-      revoke:
-        comments: Weet je zeker dat je de goedkeuring van dit commentaar wilt intrekken?

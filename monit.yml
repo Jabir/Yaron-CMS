@@ -11,5 +11,3 @@ max_persistent_conns: 256
 daemonize: true
 address: 0.0.0.0
 require: []
-
-
